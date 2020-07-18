@@ -1,0 +1,1924 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"udi_hid_kbd.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.udi_hid_kbd_getsetting,"ax",%progbits
+  18              		.align	1
+  19              		.global	udi_hid_kbd_getsetting
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	udi_hid_kbd_getsetting:
+  27              	.LFB142:
+  28              		.file 1 "tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c"
+   1:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** /**
+   2:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * \file
+   3:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+   4:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * \brief USB Device Human Interface Device (HID) keyboard interface.
+   5:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+   6:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
+   7:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+   8:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * \asf_license_start
+   9:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  10:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * \page License
+  11:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  12:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * Redistribution and use in source and binary forms, with or without
+  13:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * modification, are permitted provided that the following conditions are met:
+  14:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  15:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * 1. Redistributions of source code must retain the above copyright notice,
+  16:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *    this list of conditions and the following disclaimer.
+  17:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  18:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  19:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *    this list of conditions and the following disclaimer in the documentation
+  20:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *    and/or other materials provided with the distribution.
+  21:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  22:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * 3. The name of Atmel may not be used to endorse or promote products derived
+  23:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *    from this software without specific prior written permission.
+  24:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  25:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * 4. This software may only be redistributed and used in connection with an
+  26:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *    Atmel microcontroller product.
+  27:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  28:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+  29:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+  30:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+  31:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+  32:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  33:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  34:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+  35:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+  36:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * POSSIBILITY OF SUCH DAMAGE.
+  39:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  40:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * \asf_license_stop
+  41:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  *
+  42:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  */
+  43:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** /*
+  44:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
+  45:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****  */
+  46:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  47:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "samd51j18a.h"
+  48:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "d51_util.h"
+  49:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "conf_usb.h"
+  50:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "usb_protocol.h"
+  51:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "udd.h"
+  52:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "udc.h"
+  53:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "udi_device_conf.h"
+  54:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "udi_hid.h"
+  55:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "udi_hid_kbd.h"
+  56:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include <string.h>
+  57:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "report.h"
+  58:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #include "usb_descriptor_common.h"
+  59:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  60:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** //***************************************************************************
+  61:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** // KBD
+  62:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** //***************************************************************************
+  63:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool    udi_hid_kbd_enable(void);
+  64:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** void    udi_hid_kbd_disable(void);
+  65:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool    udi_hid_kbd_setup(void);
+  66:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_kbd_getsetting(void);
+  67:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  68:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** UDC_DESC_STORAGE udi_api_t udi_api_hid_kbd = {
+  69:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .enable     = (bool (*)(void))udi_hid_kbd_enable,
+  70:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .disable    = (void (*)(void))udi_hid_kbd_disable,
+  71:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .setup      = (bool (*)(void))udi_hid_kbd_setup,
+  72:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .getsetting = (uint8_t(*)(void))udi_hid_kbd_getsetting,
+  73:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .sof_notify = NULL,
+  74:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** };
+  75:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  76:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+  77:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_kbd_rate;
+  78:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  79:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+  80:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_kbd_protocol;
+  81:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  82:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+  83:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_kbd_report_set;
+  84:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  85:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_kbd_b_report_valid;
+  86:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  87:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+  88:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_kbd_report[UDI_HID_KBD_REPORT_SIZE];
+  89:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  90:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** volatile bool udi_hid_kbd_b_report_trans_ongoing;
+  91:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  92:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+  93:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_kbd_report_trans[UDI_HID_KBD_REPORT_SIZE];
+  94:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+  95:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+  96:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** UDC_DESC_STORAGE udi_hid_kbd_report_desc_t udi_hid_kbd_report_desc = {{
+  97:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x01,  // Usage Page (Generic Desktop)
+  98:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x09, 0x06,  // Usage (Keyboard)
+  99:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xA1, 0x01,  // Collection (Application)
+ 100:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Modifiers (8 bits)
+ 101:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x07,  //   Usage Page (Keyboard)
+ 102:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0xE0,  //   Usage Minimum (Keyboard Left Control)
+ 103:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x29, 0xE7,  //   Usage Maximum (Keyboard Right GUI)
+ 104:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x00,  //   Logical Minimum (0)
+ 105:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x25, 0x01,  //   Logical Maximum (1)
+ 106:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x08,  //   Report Count (8)
+ 107:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x01,  //   Report Size (1)
+ 108:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x02,  //   Input (Data, Variable, Absolute)
+ 109:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Reserved (1 byte)
+ 110:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x01,  //   Input (Constant)
+ 111:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Keycodes (6 bytes)
+ 112:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0x00,  //   Usage Minimum (0)
+ 113:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x29, 0xFF,  //   Usage Maximum (255)
+ 114:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x00,  //   Logical Minimum (0)
+ 115:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x25, 0xFF,  //   Logical Maximum (255)
+ 116:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x06,  //   Report Count (6)
+ 117:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x08,  //   Report Size (8)
+ 118:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x00,  //   Input (Data, Array, Absolute)
+ 119:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 120:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Status LEDs (5 bits)
+ 121:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x08,  //   Usage Page (LED)
+ 122:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0x01,  //   Usage Minimum (Num Lock)
+ 123:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x29, 0x05,  //   Usage Maximum (Kana)
+ 124:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x00,  //   Logical Minimum (0)
+ 125:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x25, 0x01,  //   Logical Maximum (1)
+ 126:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x05,  //   Report Count (5)
+ 127:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x01,  //   Report Size (1)
+ 128:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x91, 0x02,  //   Output (Data, Variable, Absolute)
+ 129:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // LED padding (3 bits)
+ 130:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x03,  //   Report Count (3)
+ 131:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x91, 0x01,  //   Output (Constant)
+ 132:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xC0         // End Collection
+ 133:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }};
+ 134:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 135:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_kbd_setreport(void);
+ 136:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 137:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_kbd_report_sent(udd_ep_status_t status, iram_size_t nb_sent, udd_ep_id_t ep);
+ 138:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 139:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_kbd_setreport_valid(void);
+ 140:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 141:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_kbd_enable(void) {
+ 142:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 143:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_rate                   = 0;
+ 144:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_protocol               = 0;
+ 145:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = false;
+ 146:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_kbd_report, 0, UDI_HID_KBD_REPORT_SIZE);
+ 147:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_valid = false;
+ 148:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_KBD_ENABLE_EXT();
+ 149:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 150:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 151:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** void udi_hid_kbd_disable(void) { UDI_HID_KBD_DISABLE_EXT(); }
+ 152:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 153:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_kbd_setup(void) { return udi_hid_setup(&udi_hid_kbd_rate, &udi_hid_kbd_protocol, (uint
+ 154:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 155:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_kbd_getsetting(void) { return 0; }
+  29              		.loc 1 155 38 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 155 40 view .LVU1
+  35              		.loc 1 155 1 is_stmt 0 view .LVU2
+  36 0000 0020     		movs	r0, #0
+  37 0002 7047     		bx	lr
+  38              		.cfi_endproc
+  39              	.LFE142:
+  41              		.section	.text.udi_hid_kbd_setreport,"ax",%progbits
+  42              		.align	1
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  46              		.fpu fpv4-sp-d16
+  48              	udi_hid_kbd_setreport:
+  49              	.LFB143:
+ 156:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 157:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_kbd_setreport(void) {
+  50              		.loc 1 157 41 is_stmt 1 view -0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              		@ link register save eliminated.
+ 158:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if ((USB_HID_REPORT_TYPE_OUTPUT == (udd_g_ctrlreq.req.wValue >> 8)) && (0 == (0xFF & udd_g_ctrl
+  55              		.loc 1 158 5 view .LVU4
+  56              		.loc 1 158 58 is_stmt 0 view .LVU5
+  57 0000 094B     		ldr	r3, .L7
+  58 0002 5888     		ldrh	r0, [r3, #2]
+  59              		.loc 1 158 8 view .LVU6
+  60 0004 020A     		lsrs	r2, r0, #8
+  61 0006 022A     		cmp	r2, #2
+  62 0008 0CD1     		bne	.L5
+  63              		.loc 1 158 73 discriminator 1 view .LVU7
+  64 000a 10F0FF00 		ands	r0, r0, #255
+  65 000e 09D1     		bne	.L5
+  66              		.loc 1 158 117 discriminator 2 view .LVU8
+  67 0010 DA88     		ldrh	r2, [r3, #6]
+  68 0012 012A     		cmp	r2, #1
+  69 0014 07D1     		bne	.L3
+ 159:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         // Report OUT type on report ID 0 from USB Host
+ 160:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.payload      = &udi_hid_kbd_report_set;
+  70              		.loc 1 160 9 is_stmt 1 view .LVU9
+  71              		.loc 1 160 36 is_stmt 0 view .LVU10
+  72 0016 0549     		ldr	r1, .L7+4
+  73 0018 9960     		str	r1, [r3, #8]
+ 161:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.callback     = udi_hid_kbd_setreport_valid;
+  74              		.loc 1 161 9 is_stmt 1 view .LVU11
+  75              		.loc 1 161 36 is_stmt 0 view .LVU12
+  76 001a 0549     		ldr	r1, .L7+8
+  77 001c 1961     		str	r1, [r3, #16]
+ 162:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.payload_size = 1;
+  78              		.loc 1 162 9 is_stmt 1 view .LVU13
+  79              		.loc 1 162 36 is_stmt 0 view .LVU14
+  80 001e 9A81     		strh	r2, [r3, #12]	@ movhi
+ 163:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return true;
+  81              		.loc 1 163 9 is_stmt 1 view .LVU15
+  82              		.loc 1 163 16 is_stmt 0 view .LVU16
+  83 0020 1046     		mov	r0, r2
+  84 0022 7047     		bx	lr
+  85              	.L5:
+ 164:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 165:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return false;
+  86              		.loc 1 165 12 view .LVU17
+  87 0024 0020     		movs	r0, #0
+  88              	.L3:
+ 166:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+  89              		.loc 1 166 1 view .LVU18
+  90 0026 7047     		bx	lr
+  91              	.L8:
+  92              		.align	2
+  93              	.L7:
+  94 0028 00000000 		.word	udd_g_ctrlreq
+  95 002c 00000000 		.word	udi_hid_kbd_report_set
+  96 0030 00000000 		.word	udi_hid_kbd_setreport_valid
+  97              		.cfi_endproc
+  98              	.LFE143:
+ 100              		.section	.text.udi_hid_kbd_setreport_valid,"ax",%progbits
+ 101              		.align	1
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.fpu fpv4-sp-d16
+ 107              	udi_hid_kbd_setreport_valid:
+ 108              	.LFB146:
+ 167:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 168:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_kbd_send_report(void) {
+ 169:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_kbd_enable) {
+ 170:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 171:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 172:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 173:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_kbd_b_report_trans_ongoing) {
+ 174:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 175:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 176:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 177:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memcpy(udi_hid_kbd_report_trans, udi_hid_kbd_report, UDI_HID_KBD_REPORT_SIZE);
+ 178:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_valid         = false;
+ 179:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = udd_ep_run(UDI_HID_KBD_EP_IN | USB_EP_DIR_IN, false, udi_h
+ 180:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 181:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return udi_hid_kbd_b_report_trans_ongoing;
+ 182:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 183:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 184:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_kbd_report_sent(udd_ep_status_t status, iram_size_t nb_sent, udd_ep_id_t ep) {
+ 185:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(status);
+ 186:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(nb_sent);
+ 187:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(ep);
+ 188:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = false;
+ 189:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_kbd_b_report_valid) {
+ 190:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_kbd_send_report();
+ 191:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 192:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 193:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 194:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_kbd_setreport_valid(void) {
+ 109              		.loc 1 194 47 is_stmt 1 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113              		@ link register save eliminated.
+ 195:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // UDI_HID_KBD_CHANGE_LED(udi_hid_kbd_report_set);
+ 196:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 114              		.loc 1 196 1 view .LVU20
+ 115 0000 7047     		bx	lr
+ 116              		.cfi_endproc
+ 117              	.LFE146:
+ 119              		.section	.text.udi_hid_nkro_setreport,"ax",%progbits
+ 120              		.align	1
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.fpu fpv4-sp-d16
+ 126              	udi_hid_nkro_setreport:
+ 127              	.LFB151:
+ 197:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 198:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** //********************************************************************************************
+ 199:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** // NKRO Keyboard
+ 200:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** //********************************************************************************************
+ 201:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #ifdef NKRO_ENABLE
+ 202:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 203:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool    udi_hid_nkro_enable(void);
+ 204:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** void    udi_hid_nkro_disable(void);
+ 205:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool    udi_hid_nkro_setup(void);
+ 206:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_nkro_getsetting(void);
+ 207:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 208:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** UDC_DESC_STORAGE udi_api_t udi_api_hid_nkro = {
+ 209:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .enable     = (bool (*)(void))udi_hid_nkro_enable,
+ 210:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .disable    = (void (*)(void))udi_hid_nkro_disable,
+ 211:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .setup      = (bool (*)(void))udi_hid_nkro_setup,
+ 212:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .getsetting = (uint8_t(*)(void))udi_hid_nkro_getsetting,
+ 213:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .sof_notify = NULL,
+ 214:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** };
+ 215:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 216:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 217:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_nkro_rate;
+ 218:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 219:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 220:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_nkro_protocol;
+ 221:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 222:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 223:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_nkro_report_set;
+ 224:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 225:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_nkro_b_report_valid;
+ 226:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 227:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 228:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_nkro_report[UDI_HID_NKRO_REPORT_SIZE];
+ 229:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 230:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** volatile bool udi_hid_nkro_b_report_trans_ongoing;
+ 231:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 232:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 233:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_nkro_report_trans[UDI_HID_NKRO_REPORT_SIZE];
+ 234:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 235:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 236:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** UDC_DESC_STORAGE udi_hid_nkro_report_desc_t udi_hid_nkro_report_desc = {{
+ 237:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x01,  // Usage Page (Generic Desktop)
+ 238:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x09, 0x06,  // Usage (Keyboard)
+ 239:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xA1, 0x01,  // Collection (Application)
+ 240:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 241:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Modifiers (8 bits)
+ 242:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x07,  //   Usage Page (Keyboard/Keypad)
+ 243:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0xE0,  //   Usage Minimum (Keyboard Left Control)
+ 244:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x29, 0xE7,  //   Usage Maximum (Keyboard Right GUI)
+ 245:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x00,  //   Logical Minimum (0)
+ 246:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x25, 0x01,  //   Logical Maximum (1)
+ 247:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x08,  //   Report Count (8)
+ 248:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x01,  //   Report Size (1)
+ 249:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x02,  //   Input (Data, Variable, Absolute)
+ 250:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Keycodes
+ 251:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x07,  //   Usage Page (Keyboard/Keypad)
+ 252:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0x00,  //   Usage Minimum (0)
+ 253:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x29, 0xF7,  //   Usage Maximum (247)
+ 254:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x00,  //   Logical Minimum (0)
+ 255:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x25, 0x01,  //   Logical Maximum (1)
+ 256:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0xF8,  //   Report Count (248)
+ 257:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x01,  //   Report Size (1)
+ 258:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x02,  //   Input (Data, Variable, Absolute, Bitfield)
+ 259:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 260:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Status LEDs (5 bits)
+ 261:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x08,  //   Usage Page (LED)
+ 262:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0x01,  //   Usage Minimum (Num Lock)
+ 263:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x29, 0x05,  //   Usage Maximum (Kana)
+ 264:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x05,  //   Report Count (5)
+ 265:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x01,  //   Report Size (1)
+ 266:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x91, 0x02,  //   Output (Data, Variable, Absolute)
+ 267:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // LED padding (3 bits)
+ 268:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x01,  //   Report Count (1)
+ 269:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x03,  //   Report Size (3)
+ 270:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x91, 0x03,  //   Output (Constant)
+ 271:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xC0         // End Collection
+ 272:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }};
+ 273:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 274:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_nkro_setreport(void);
+ 275:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_nkro_setreport_valid(void);
+ 276:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_nkro_report_sent(udd_ep_status_t status, iram_size_t nb_sent, udd_ep_id_t ep);
+ 277:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 278:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_nkro_enable(void) {
+ 279:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 280:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_rate                   = 0;
+ 281:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_protocol               = 0;
+ 282:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = false;
+ 283:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_nkro_report, 0, UDI_HID_NKRO_REPORT_SIZE);
+ 284:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_valid = false;
+ 285:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_NKRO_ENABLE_EXT();
+ 286:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 287:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 288:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** void udi_hid_nkro_disable(void) { UDI_HID_NKRO_DISABLE_EXT(); }
+ 289:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 290:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_nkro_setup(void) { return udi_hid_setup(&udi_hid_nkro_rate, &udi_hid_nkro_protocol, (u
+ 291:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 292:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_nkro_getsetting(void) { return 0; }
+ 293:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 294:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** // keyboard receives LED report here
+ 295:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_nkro_setreport(void) {
+ 128              		.loc 1 295 42 view -0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132              		@ link register save eliminated.
+ 296:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if ((USB_HID_REPORT_TYPE_OUTPUT == (udd_g_ctrlreq.req.wValue >> 8)) && (0 == (0xFF & udd_g_ctrl
+ 133              		.loc 1 296 5 view .LVU22
+ 134              		.loc 1 296 58 is_stmt 0 view .LVU23
+ 135 0000 094B     		ldr	r3, .L15
+ 136 0002 5888     		ldrh	r0, [r3, #2]
+ 137              		.loc 1 296 8 view .LVU24
+ 138 0004 020A     		lsrs	r2, r0, #8
+ 139 0006 022A     		cmp	r2, #2
+ 140 0008 0CD1     		bne	.L13
+ 141              		.loc 1 296 73 discriminator 1 view .LVU25
+ 142 000a 10F0FF00 		ands	r0, r0, #255
+ 143 000e 09D1     		bne	.L13
+ 144              		.loc 1 296 117 discriminator 2 view .LVU26
+ 145 0010 DA88     		ldrh	r2, [r3, #6]
+ 146 0012 012A     		cmp	r2, #1
+ 147 0014 07D1     		bne	.L11
+ 297:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         // Report OUT type on report ID 0 from USB Host
+ 298:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.payload      = &udi_hid_nkro_report_set;
+ 148              		.loc 1 298 9 is_stmt 1 view .LVU27
+ 149              		.loc 1 298 36 is_stmt 0 view .LVU28
+ 150 0016 0549     		ldr	r1, .L15+4
+ 151 0018 9960     		str	r1, [r3, #8]
+ 299:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.callback     = udi_hid_nkro_setreport_valid;  // must call routine to transfo
+ 152              		.loc 1 299 9 is_stmt 1 view .LVU29
+ 153              		.loc 1 299 36 is_stmt 0 view .LVU30
+ 154 001a 0549     		ldr	r1, .L15+8
+ 155 001c 1961     		str	r1, [r3, #16]
+ 300:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.payload_size = 1;
+ 156              		.loc 1 300 9 is_stmt 1 view .LVU31
+ 157              		.loc 1 300 36 is_stmt 0 view .LVU32
+ 158 001e 9A81     		strh	r2, [r3, #12]	@ movhi
+ 301:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return true;
+ 159              		.loc 1 301 9 is_stmt 1 view .LVU33
+ 160              		.loc 1 301 16 is_stmt 0 view .LVU34
+ 161 0020 1046     		mov	r0, r2
+ 162 0022 7047     		bx	lr
+ 163              	.L13:
+ 302:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 303:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return false;
+ 164              		.loc 1 303 12 view .LVU35
+ 165 0024 0020     		movs	r0, #0
+ 166              	.L11:
+ 304:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 167              		.loc 1 304 1 view .LVU36
+ 168 0026 7047     		bx	lr
+ 169              	.L16:
+ 170              		.align	2
+ 171              	.L15:
+ 172 0028 00000000 		.word	udd_g_ctrlreq
+ 173 002c 00000000 		.word	udi_hid_nkro_report_set
+ 174 0030 00000000 		.word	udi_hid_nkro_setreport_valid
+ 175              		.cfi_endproc
+ 176              	.LFE151:
+ 178              		.section	.text.udi_hid_exk_setreport,"ax",%progbits
+ 179              		.align	1
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.fpu fpv4-sp-d16
+ 185              	udi_hid_exk_setreport:
+ 186              	.LFB159:
+ 305:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 306:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_nkro_send_report(void) {
+ 307:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_nkro_enable) {
+ 308:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 309:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 310:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 311:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_nkro_b_report_trans_ongoing) {
+ 312:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 313:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 314:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 315:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memcpy(udi_hid_nkro_report_trans, udi_hid_nkro_report, UDI_HID_NKRO_REPORT_SIZE);
+ 316:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_valid         = false;
+ 317:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = udd_ep_run(UDI_HID_NKRO_EP_IN | USB_EP_DIR_IN, false, udi
+ 318:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 319:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return udi_hid_nkro_b_report_trans_ongoing;
+ 320:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 321:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 322:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_nkro_report_sent(udd_ep_status_t status, iram_size_t nb_sent, udd_ep_id_t ep) {
+ 323:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(status);
+ 324:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(nb_sent);
+ 325:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(ep);
+ 326:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = false;
+ 327:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_nkro_b_report_valid) {
+ 328:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_nkro_send_report();
+ 329:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 330:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 331:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 332:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_nkro_setreport_valid(void) {
+ 333:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // UDI_HID_NKRO_CHANGE_LED(udi_hid_nkro_report_set);
+ 334:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 335:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 336:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #endif  // NKRO_ENABLE
+ 337:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 338:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** //********************************************************************************************
+ 339:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** // EXK (extra-keys) SYS-CTRL  Keyboard
+ 340:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** //********************************************************************************************
+ 341:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** #ifdef EXTRAKEY_ENABLE
+ 342:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 343:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool    udi_hid_exk_enable(void);
+ 344:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** void    udi_hid_exk_disable(void);
+ 345:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool    udi_hid_exk_setup(void);
+ 346:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_exk_getsetting(void);
+ 347:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 348:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** UDC_DESC_STORAGE udi_api_t udi_api_hid_exk = {
+ 349:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .enable     = (bool (*)(void))udi_hid_exk_enable,
+ 350:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .disable    = (void (*)(void))udi_hid_exk_disable,
+ 351:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .setup      = (bool (*)(void))udi_hid_exk_setup,
+ 352:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .getsetting = (uint8_t(*)(void))udi_hid_exk_getsetting,
+ 353:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     .sof_notify = NULL,
+ 354:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** };
+ 355:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 356:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 357:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_exk_rate;
+ 358:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 359:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 360:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_exk_protocol;
+ 361:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 362:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 363:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_exk_report_set;
+ 364:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 365:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_exk_b_report_valid;
+ 366:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 367:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 368:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** udi_hid_exk_report_t udi_hid_exk_report;
+ 369:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 370:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_exk_b_report_trans_ongoing;
+ 371:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 372:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 373:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static uint8_t udi_hid_exk_report_trans[UDI_HID_EXK_REPORT_SIZE];
+ 374:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 375:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** COMPILER_WORD_ALIGNED
+ 376:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** UDC_DESC_STORAGE udi_hid_exk_report_desc_t udi_hid_exk_report_desc = {{
+ 377:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // clang-format off
+ 378:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x01,              // Usage Page (Generic Desktop)
+ 379:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x09, 0x80,              // Usage (System Control)
+ 380:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xA1, 0x01,              // Collection (Application)
+ 381:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x85, REPORT_ID_SYSTEM,  //   Report ID
+ 382:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0x01,              //   Usage Minimum (Pointer)
+ 383:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x2A, 0xB7, 0x00,        //   Usage Maximum (System Display LCD Autoscale)
+ 384:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x01,              //   Logical Minimum
+ 385:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x26, 0xB7, 0x00,        //   Logical Maximum
+ 386:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x01,              //   Report Count (1)
+ 387:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x10,              //   Report Size (16)
+ 388:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x00,              //   Input (Data, Array, Absolute)
+ 389:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xC0,                    // End Collection
+ 390:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 391:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x05, 0x0C,                // Usage Page (Consumer)
+ 392:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x09, 0x01,                // Usage (Consumer Control)
+ 393:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xA1, 0x01,                // Collection (Application)
+ 394:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x85, REPORT_ID_CONSUMER,  //   Report ID
+ 395:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x19, 0x01,                //   Usage Minimum (Consumer Control)
+ 396:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x2A, 0xA0, 0x02,          //   Usage Maximum (AC Desktop Show All Applications)
+ 397:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x15, 0x01,                //   Logical Minimum
+ 398:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x26, 0xA0, 0x02,          //   Logical Maximum
+ 399:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x95, 0x01,                //   Report Count (1)
+ 400:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x75, 0x10,                //   Report Size (16)
+ 401:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0x81, 0x00,                //   Input (Data, Array, Absolute)
+ 402:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     0xC0                       // End Collection
+ 403:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     //clang-format on
+ 404:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }};
+ 405:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 406:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_exk_setreport(void);
+ 407:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 408:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_exk_report_sent(udd_ep_status_t status, iram_size_t nb_sent, udd_ep_id_t ep);
+ 409:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 410:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_exk_setreport_valid(void);
+ 411:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 412:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_exk_enable(void) {
+ 413:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 414:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_rate                   = 0;
+ 415:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_protocol               = 0;
+ 416:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_trans_ongoing = false;
+ 417:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_exk_report.raw, 0, UDI_HID_EXK_REPORT_SIZE);
+ 418:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_valid = false;
+ 419:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_EXK_ENABLE_EXT();
+ 420:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 421:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 422:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** void udi_hid_exk_disable(void) { UDI_HID_EXK_DISABLE_EXT(); }
+ 423:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 424:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_exk_setup(void) { return udi_hid_setup(&udi_hid_exk_rate, &udi_hid_exk_protocol, (uint
+ 425:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 426:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** uint8_t udi_hid_exk_getsetting(void) { return 0; }
+ 427:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 428:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static bool udi_hid_exk_setreport(void) {
+ 187              		.loc 1 428 41 is_stmt 1 view -0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191              		@ link register save eliminated.
+ 429:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if ((USB_HID_REPORT_TYPE_OUTPUT == (udd_g_ctrlreq.req.wValue >> 8)) && (0 == (0xFF & udd_g_ctrl
+ 192              		.loc 1 429 5 view .LVU38
+ 193              		.loc 1 429 58 is_stmt 0 view .LVU39
+ 194 0000 094B     		ldr	r3, .L22
+ 195 0002 5888     		ldrh	r0, [r3, #2]
+ 196              		.loc 1 429 8 view .LVU40
+ 197 0004 020A     		lsrs	r2, r0, #8
+ 198 0006 022A     		cmp	r2, #2
+ 199 0008 0CD1     		bne	.L20
+ 200              		.loc 1 429 73 discriminator 1 view .LVU41
+ 201 000a 10F0FF00 		ands	r0, r0, #255
+ 202 000e 09D1     		bne	.L20
+ 203              		.loc 1 429 117 discriminator 2 view .LVU42
+ 204 0010 DA88     		ldrh	r2, [r3, #6]
+ 205 0012 012A     		cmp	r2, #1
+ 206 0014 07D1     		bne	.L18
+ 430:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         // Report OUT type on report ID 0 from USB Host
+ 431:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.payload      = &udi_hid_exk_report_set;
+ 207              		.loc 1 431 9 is_stmt 1 view .LVU43
+ 208              		.loc 1 431 36 is_stmt 0 view .LVU44
+ 209 0016 0549     		ldr	r1, .L22+4
+ 210 0018 9960     		str	r1, [r3, #8]
+ 432:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.callback     = udi_hid_exk_setreport_valid;
+ 211              		.loc 1 432 9 is_stmt 1 view .LVU45
+ 212              		.loc 1 432 36 is_stmt 0 view .LVU46
+ 213 001a 0549     		ldr	r1, .L22+8
+ 214 001c 1961     		str	r1, [r3, #16]
+ 433:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udd_g_ctrlreq.payload_size = 1;
+ 215              		.loc 1 433 9 is_stmt 1 view .LVU47
+ 216              		.loc 1 433 36 is_stmt 0 view .LVU48
+ 217 001e 9A81     		strh	r2, [r3, #12]	@ movhi
+ 434:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return true;
+ 218              		.loc 1 434 9 is_stmt 1 view .LVU49
+ 219              		.loc 1 434 16 is_stmt 0 view .LVU50
+ 220 0020 1046     		mov	r0, r2
+ 221 0022 7047     		bx	lr
+ 222              	.L20:
+ 435:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 436:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return false;
+ 223              		.loc 1 436 12 view .LVU51
+ 224 0024 0020     		movs	r0, #0
+ 225              	.L18:
+ 437:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 226              		.loc 1 437 1 view .LVU52
+ 227 0026 7047     		bx	lr
+ 228              	.L23:
+ 229              		.align	2
+ 230              	.L22:
+ 231 0028 00000000 		.word	udd_g_ctrlreq
+ 232 002c 00000000 		.word	udi_hid_exk_report_set
+ 233 0030 00000000 		.word	udi_hid_exk_setreport_valid
+ 234              		.cfi_endproc
+ 235              	.LFE159:
+ 237              		.section	.text.udi_hid_kbd_enable,"ax",%progbits
+ 238              		.align	1
+ 239              		.global	udi_hid_kbd_enable
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 243              		.fpu fpv4-sp-d16
+ 245              	udi_hid_kbd_enable:
+ 246              	.LFB139:
+ 141:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 247              		.loc 1 141 31 is_stmt 1 view -0
+ 248              		.cfi_startproc
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251              		@ link register save eliminated.
+ 143:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_protocol               = 0;
+ 252              		.loc 1 143 5 view .LVU54
+ 143:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_protocol               = 0;
+ 253              		.loc 1 143 40 is_stmt 0 view .LVU55
+ 254 0000 064A     		ldr	r2, .L25
+ 255 0002 0023     		movs	r3, #0
+ 256 0004 1370     		strb	r3, [r2]
+ 144:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = false;
+ 257              		.loc 1 144 5 is_stmt 1 view .LVU56
+ 144:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = false;
+ 258              		.loc 1 144 40 is_stmt 0 view .LVU57
+ 259 0006 1371     		strb	r3, [r2, #4]
+ 145:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_kbd_report, 0, UDI_HID_KBD_REPORT_SIZE);
+ 260              		.loc 1 145 5 is_stmt 1 view .LVU58
+ 145:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_kbd_report, 0, UDI_HID_KBD_REPORT_SIZE);
+ 261              		.loc 1 145 40 is_stmt 0 view .LVU59
+ 262 0008 054A     		ldr	r2, .L25+4
+ 263 000a 1370     		strb	r3, [r2]
+ 146:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_valid = false;
+ 264              		.loc 1 146 5 is_stmt 1 view .LVU60
+ 265 000c 054A     		ldr	r2, .L25+8
+ 266 000e C2E90033 		strd	r3, r3, [r2]
+ 147:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_KBD_ENABLE_EXT();
+ 267              		.loc 1 147 5 view .LVU61
+ 147:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_KBD_ENABLE_EXT();
+ 268              		.loc 1 147 32 is_stmt 0 view .LVU62
+ 269 0012 054A     		ldr	r2, .L25+12
+ 270 0014 1370     		strb	r3, [r2]
+ 148:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 271              		.loc 1 148 5 is_stmt 1 view .LVU63
+ 148:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 272              		.loc 1 148 12 is_stmt 0 view .LVU64
+ 273 0016 FFF7FEBF 		b	main_kbd_enable
+ 274              	.LVL0:
+ 275              	.L26:
+ 276 001a 00BF     		.align	2
+ 277              	.L25:
+ 278 001c 00000000 		.word	.LANCHOR0
+ 279 0020 00000000 		.word	udi_hid_kbd_b_report_trans_ongoing
+ 280 0024 00000000 		.word	udi_hid_kbd_report
+ 281 0028 00000000 		.word	udi_hid_kbd_b_report_valid
+ 282              		.cfi_endproc
+ 283              	.LFE139:
+ 285              		.section	.text.udi_hid_kbd_disable,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	udi_hid_kbd_disable
+ 288              		.syntax unified
+ 289              		.thumb
+ 290              		.thumb_func
+ 291              		.fpu fpv4-sp-d16
+ 293              	udi_hid_kbd_disable:
+ 294              	.LFB140:
+ 151:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 295              		.loc 1 151 32 is_stmt 1 view -0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299              		@ link register save eliminated.
+ 151:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 300              		.loc 1 151 34 view .LVU66
+ 301 0000 FFF7FEBF 		b	main_kbd_disable
+ 302              	.LVL1:
+ 303              		.cfi_endproc
+ 304              	.LFE140:
+ 306              		.section	.text.udi_hid_kbd_setup,"ax",%progbits
+ 307              		.align	1
+ 308              		.global	udi_hid_kbd_setup
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu fpv4-sp-d16
+ 314              	udi_hid_kbd_setup:
+ 315              	.LFB141:
+ 153:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 316              		.loc 1 153 30 view -0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 0
+ 319              		@ frame_needed = 0, uses_anonymous_args = 0
+ 320              		@ link register save eliminated.
+ 153:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 321              		.loc 1 153 32 view .LVU68
+ 153:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 322              		.loc 1 153 39 is_stmt 0 view .LVU69
+ 323 0000 0248     		ldr	r0, .L29
+ 324 0002 034B     		ldr	r3, .L29+4
+ 325 0004 034A     		ldr	r2, .L29+8
+ 326 0006 011D     		adds	r1, r0, #4
+ 327 0008 FFF7FEBF 		b	udi_hid_setup
+ 328              	.LVL2:
+ 329              	.L30:
+ 330              		.align	2
+ 331              	.L29:
+ 332 000c 00000000 		.word	.LANCHOR0
+ 333 0010 00000000 		.word	udi_hid_kbd_setreport
+ 334 0014 00000000 		.word	.LANCHOR1
+ 335              		.cfi_endproc
+ 336              	.LFE141:
+ 338              		.section	.text.udi_hid_nkro_setup,"ax",%progbits
+ 339              		.align	1
+ 340              		.global	udi_hid_nkro_setup
+ 341              		.syntax unified
+ 342              		.thumb
+ 343              		.thumb_func
+ 344              		.fpu fpv4-sp-d16
+ 346              	udi_hid_nkro_setup:
+ 347              	.LFB149:
+ 290:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 348              		.loc 1 290 31 is_stmt 1 view -0
+ 349              		.cfi_startproc
+ 350              		@ args = 0, pretend = 0, frame = 0
+ 351              		@ frame_needed = 0, uses_anonymous_args = 0
+ 352              		@ link register save eliminated.
+ 290:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 353              		.loc 1 290 33 view .LVU71
+ 290:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 354              		.loc 1 290 40 is_stmt 0 view .LVU72
+ 355 0000 0348     		ldr	r0, .L32
+ 356 0002 044B     		ldr	r3, .L32+4
+ 357 0004 044A     		ldr	r2, .L32+8
+ 358 0006 00F10801 		add	r1, r0, #8
+ 359 000a 0C30     		adds	r0, r0, #12
+ 360 000c FFF7FEBF 		b	udi_hid_setup
+ 361              	.LVL3:
+ 362              	.L33:
+ 363              		.align	2
+ 364              	.L32:
+ 365 0010 00000000 		.word	.LANCHOR0
+ 366 0014 00000000 		.word	udi_hid_nkro_setreport
+ 367 0018 3C000000 		.word	.LANCHOR1+60
+ 368              		.cfi_endproc
+ 369              	.LFE149:
+ 371              		.section	.text.udi_hid_exk_setup,"ax",%progbits
+ 372              		.align	1
+ 373              		.global	udi_hid_exk_setup
+ 374              		.syntax unified
+ 375              		.thumb
+ 376              		.thumb_func
+ 377              		.fpu fpv4-sp-d16
+ 379              	udi_hid_exk_setup:
+ 380              	.LFB157:
+ 424:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 381              		.loc 1 424 30 is_stmt 1 view -0
+ 382              		.cfi_startproc
+ 383              		@ args = 0, pretend = 0, frame = 0
+ 384              		@ frame_needed = 0, uses_anonymous_args = 0
+ 385              		@ link register save eliminated.
+ 424:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 386              		.loc 1 424 32 view .LVU74
+ 424:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 387              		.loc 1 424 39 is_stmt 0 view .LVU75
+ 388 0000 0348     		ldr	r0, .L35
+ 389 0002 044B     		ldr	r3, .L35+4
+ 390 0004 044A     		ldr	r2, .L35+8
+ 391 0006 00F11001 		add	r1, r0, #16
+ 392 000a 1430     		adds	r0, r0, #20
+ 393 000c FFF7FEBF 		b	udi_hid_setup
+ 394              	.LVL4:
+ 395              	.L36:
+ 396              		.align	2
+ 397              	.L35:
+ 398 0010 00000000 		.word	.LANCHOR0
+ 399 0014 00000000 		.word	udi_hid_exk_setreport
+ 400 0018 78000000 		.word	.LANCHOR1+120
+ 401              		.cfi_endproc
+ 402              	.LFE157:
+ 404              		.section	.text.udi_hid_nkro_enable,"ax",%progbits
+ 405              		.align	1
+ 406              		.global	udi_hid_nkro_enable
+ 407              		.syntax unified
+ 408              		.thumb
+ 409              		.thumb_func
+ 410              		.fpu fpv4-sp-d16
+ 412              	udi_hid_nkro_enable:
+ 413              	.LFB147:
+ 278:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 414              		.loc 1 278 32 is_stmt 1 view -0
+ 415              		.cfi_startproc
+ 416              		@ args = 0, pretend = 0, frame = 0
+ 417              		@ frame_needed = 0, uses_anonymous_args = 0
+ 280:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_protocol               = 0;
+ 418              		.loc 1 280 5 view .LVU77
+ 280:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_protocol               = 0;
+ 419              		.loc 1 280 41 is_stmt 0 view .LVU78
+ 420 0000 084B     		ldr	r3, .L38
+ 283:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_valid = false;
+ 421              		.loc 1 283 5 view .LVU79
+ 422 0002 0948     		ldr	r0, .L38+4
+ 278:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 423              		.loc 1 278 32 view .LVU80
+ 424 0004 10B5     		push	{r4, lr}
+ 425              		.cfi_def_cfa_offset 8
+ 426              		.cfi_offset 4, -8
+ 427              		.cfi_offset 14, -4
+ 280:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_protocol               = 0;
+ 428              		.loc 1 280 41 view .LVU81
+ 429 0006 0024     		movs	r4, #0
+ 430 0008 1C73     		strb	r4, [r3, #12]
+ 281:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = false;
+ 431              		.loc 1 281 5 is_stmt 1 view .LVU82
+ 281:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = false;
+ 432              		.loc 1 281 41 is_stmt 0 view .LVU83
+ 433 000a 1C72     		strb	r4, [r3, #8]
+ 282:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_nkro_report, 0, UDI_HID_NKRO_REPORT_SIZE);
+ 434              		.loc 1 282 5 is_stmt 1 view .LVU84
+ 282:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_nkro_report, 0, UDI_HID_NKRO_REPORT_SIZE);
+ 435              		.loc 1 282 41 is_stmt 0 view .LVU85
+ 436 000c 074B     		ldr	r3, .L38+8
+ 283:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_valid = false;
+ 437              		.loc 1 283 5 view .LVU86
+ 438 000e 2146     		mov	r1, r4
+ 439 0010 2022     		movs	r2, #32
+ 282:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_nkro_report, 0, UDI_HID_NKRO_REPORT_SIZE);
+ 440              		.loc 1 282 41 view .LVU87
+ 441 0012 1C70     		strb	r4, [r3]
+ 283:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_valid = false;
+ 442              		.loc 1 283 5 is_stmt 1 view .LVU88
+ 443 0014 FFF7FEFF 		bl	memset
+ 444              	.LVL5:
+ 284:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_NKRO_ENABLE_EXT();
+ 445              		.loc 1 284 5 view .LVU89
+ 284:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_NKRO_ENABLE_EXT();
+ 446              		.loc 1 284 33 is_stmt 0 view .LVU90
+ 447 0018 054B     		ldr	r3, .L38+12
+ 448 001a 1C70     		strb	r4, [r3]
+ 285:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 449              		.loc 1 285 5 is_stmt 1 view .LVU91
+ 286:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 450              		.loc 1 286 1 is_stmt 0 view .LVU92
+ 451 001c BDE81040 		pop	{r4, lr}
+ 452              		.cfi_restore 14
+ 453              		.cfi_restore 4
+ 454              		.cfi_def_cfa_offset 0
+ 285:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 455              		.loc 1 285 12 view .LVU93
+ 456 0020 FFF7FEBF 		b	main_nkro_enable
+ 457              	.LVL6:
+ 458              	.L39:
+ 459              		.align	2
+ 460              	.L38:
+ 461 0024 00000000 		.word	.LANCHOR0
+ 462 0028 00000000 		.word	udi_hid_nkro_report
+ 463 002c 00000000 		.word	udi_hid_nkro_b_report_trans_ongoing
+ 464 0030 00000000 		.word	udi_hid_nkro_b_report_valid
+ 465              		.cfi_endproc
+ 466              	.LFE147:
+ 468              		.section	.text.udi_hid_nkro_disable,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	udi_hid_nkro_disable
+ 471              		.syntax unified
+ 472              		.thumb
+ 473              		.thumb_func
+ 474              		.fpu fpv4-sp-d16
+ 476              	udi_hid_nkro_disable:
+ 477              	.LFB148:
+ 288:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 478              		.loc 1 288 33 is_stmt 1 view -0
+ 479              		.cfi_startproc
+ 480              		@ args = 0, pretend = 0, frame = 0
+ 481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 482              		@ link register save eliminated.
+ 288:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 483              		.loc 1 288 35 view .LVU95
+ 484 0000 FFF7FEBF 		b	main_nkro_disable
+ 485              	.LVL7:
+ 486              		.cfi_endproc
+ 487              	.LFE148:
+ 489              		.section	.text.udi_hid_exk_enable,"ax",%progbits
+ 490              		.align	1
+ 491              		.global	udi_hid_exk_enable
+ 492              		.syntax unified
+ 493              		.thumb
+ 494              		.thumb_func
+ 495              		.fpu fpv4-sp-d16
+ 497              	udi_hid_exk_enable:
+ 498              	.LFB155:
+ 412:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     // Initialize internal values
+ 499              		.loc 1 412 31 view -0
+ 500              		.cfi_startproc
+ 501              		@ args = 0, pretend = 0, frame = 0
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503              		@ link register save eliminated.
+ 414:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_protocol               = 0;
+ 504              		.loc 1 414 5 view .LVU97
+ 414:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_protocol               = 0;
+ 505              		.loc 1 414 40 is_stmt 0 view .LVU98
+ 506 0000 054A     		ldr	r2, .L42
+ 507 0002 0023     		movs	r3, #0
+ 508 0004 1375     		strb	r3, [r2, #20]
+ 415:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_trans_ongoing = false;
+ 509              		.loc 1 415 5 is_stmt 1 view .LVU99
+ 415:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_trans_ongoing = false;
+ 510              		.loc 1 415 40 is_stmt 0 view .LVU100
+ 511 0006 1374     		strb	r3, [r2, #16]
+ 416:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_exk_report.raw, 0, UDI_HID_EXK_REPORT_SIZE);
+ 512              		.loc 1 416 5 is_stmt 1 view .LVU101
+ 416:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memset(udi_hid_exk_report.raw, 0, UDI_HID_EXK_REPORT_SIZE);
+ 513              		.loc 1 416 40 is_stmt 0 view .LVU102
+ 514 0008 5375     		strb	r3, [r2, #21]
+ 417:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_valid = false;
+ 515              		.loc 1 417 5 is_stmt 1 view .LVU103
+ 516 000a 044A     		ldr	r2, .L42+4
+ 517 000c 1380     		strh	r3, [r2]	@ movhi
+ 518 000e 9370     		strb	r3, [r2, #2]
+ 418:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_EXK_ENABLE_EXT();
+ 519              		.loc 1 418 5 view .LVU104
+ 418:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return UDI_HID_EXK_ENABLE_EXT();
+ 520              		.loc 1 418 32 is_stmt 0 view .LVU105
+ 521 0010 034A     		ldr	r2, .L42+8
+ 522 0012 1370     		strb	r3, [r2]
+ 419:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 523              		.loc 1 419 5 is_stmt 1 view .LVU106
+ 419:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 524              		.loc 1 419 12 is_stmt 0 view .LVU107
+ 525 0014 FFF7FEBF 		b	main_exk_enable
+ 526              	.LVL8:
+ 527              	.L43:
+ 528              		.align	2
+ 529              	.L42:
+ 530 0018 00000000 		.word	.LANCHOR0
+ 531 001c 00000000 		.word	udi_hid_exk_report
+ 532 0020 00000000 		.word	udi_hid_exk_b_report_valid
+ 533              		.cfi_endproc
+ 534              	.LFE155:
+ 536              		.section	.text.udi_hid_exk_disable,"ax",%progbits
+ 537              		.align	1
+ 538              		.global	udi_hid_exk_disable
+ 539              		.syntax unified
+ 540              		.thumb
+ 541              		.thumb_func
+ 542              		.fpu fpv4-sp-d16
+ 544              	udi_hid_exk_disable:
+ 545              	.LFB156:
+ 422:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 546              		.loc 1 422 32 is_stmt 1 view -0
+ 547              		.cfi_startproc
+ 548              		@ args = 0, pretend = 0, frame = 0
+ 549              		@ frame_needed = 0, uses_anonymous_args = 0
+ 550              		@ link register save eliminated.
+ 422:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 551              		.loc 1 422 34 view .LVU109
+ 552 0000 FFF7FEBF 		b	main_exk_disable
+ 553              	.LVL9:
+ 554              		.cfi_endproc
+ 555              	.LFE156:
+ 557              		.section	.text.udi_hid_exk_setreport_valid,"ax",%progbits
+ 558              		.align	1
+ 559              		.syntax unified
+ 560              		.thumb
+ 561              		.thumb_func
+ 562              		.fpu fpv4-sp-d16
+ 564              	udi_hid_exk_setreport_valid:
+ 565              	.LFB170:
+ 566              		.cfi_startproc
+ 567              		@ args = 0, pretend = 0, frame = 0
+ 568              		@ frame_needed = 0, uses_anonymous_args = 0
+ 569              		@ link register save eliminated.
+ 570 0000 7047     		bx	lr
+ 571              		.cfi_endproc
+ 572              	.LFE170:
+ 574              		.section	.text.udi_hid_nkro_setreport_valid,"ax",%progbits
+ 575              		.align	1
+ 576              		.syntax unified
+ 577              		.thumb
+ 578              		.thumb_func
+ 579              		.fpu fpv4-sp-d16
+ 581              	udi_hid_nkro_setreport_valid:
+ 582              	.LFB168:
+ 583              		.cfi_startproc
+ 584              		@ args = 0, pretend = 0, frame = 0
+ 585              		@ frame_needed = 0, uses_anonymous_args = 0
+ 586              		@ link register save eliminated.
+ 587 0000 7047     		bx	lr
+ 588              		.cfi_endproc
+ 589              	.LFE168:
+ 591              		.section	.text.udi_hid_exk_getsetting,"ax",%progbits
+ 592              		.align	1
+ 593              		.global	udi_hid_exk_getsetting
+ 594              		.syntax unified
+ 595              		.thumb
+ 596              		.thumb_func
+ 597              		.fpu fpv4-sp-d16
+ 599              	udi_hid_exk_getsetting:
+ 600              	.LFB166:
+ 601              		.cfi_startproc
+ 602              		@ args = 0, pretend = 0, frame = 0
+ 603              		@ frame_needed = 0, uses_anonymous_args = 0
+ 604              		@ link register save eliminated.
+ 605 0000 0020     		movs	r0, #0
+ 606 0002 7047     		bx	lr
+ 607              		.cfi_endproc
+ 608              	.LFE166:
+ 610              		.section	.text.udi_hid_nkro_getsetting,"ax",%progbits
+ 611              		.align	1
+ 612              		.global	udi_hid_nkro_getsetting
+ 613              		.syntax unified
+ 614              		.thumb
+ 615              		.thumb_func
+ 616              		.fpu fpv4-sp-d16
+ 618              	udi_hid_nkro_getsetting:
+ 619              	.LFB164:
+ 620              		.cfi_startproc
+ 621              		@ args = 0, pretend = 0, frame = 0
+ 622              		@ frame_needed = 0, uses_anonymous_args = 0
+ 623              		@ link register save eliminated.
+ 624 0000 0020     		movs	r0, #0
+ 625 0002 7047     		bx	lr
+ 626              		.cfi_endproc
+ 627              	.LFE164:
+ 629              		.section	.text.udi_hid_kbd_send_report,"ax",%progbits
+ 630              		.align	1
+ 631              		.global	udi_hid_kbd_send_report
+ 632              		.syntax unified
+ 633              		.thumb
+ 634              		.thumb_func
+ 635              		.fpu fpv4-sp-d16
+ 637              	udi_hid_kbd_send_report:
+ 638              	.LFB144:
+ 168:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_kbd_enable) {
+ 639              		.loc 1 168 36 view -0
+ 640              		.cfi_startproc
+ 641              		@ args = 0, pretend = 0, frame = 0
+ 642              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 643              		.loc 1 169 5 view .LVU111
+ 168:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_kbd_enable) {
+ 644              		.loc 1 168 36 is_stmt 0 view .LVU112
+ 645 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 646              		.cfi_def_cfa_offset 24
+ 647              		.cfi_offset 4, -12
+ 648              		.cfi_offset 5, -8
+ 649              		.cfi_offset 14, -4
+ 169:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 650              		.loc 1 169 9 view .LVU113
+ 651 0002 104B     		ldr	r3, .L55
+ 652 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 169:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 653              		.loc 1 169 8 view .LVU114
+ 654 0006 03F0FF00 		and	r0, r3, #255
+ 655 000a B3B1     		cbz	r3, .L50
+ 173:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 656              		.loc 1 173 5 is_stmt 1 view .LVU115
+ 173:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 657              		.loc 1 173 9 is_stmt 0 view .LVU116
+ 658 000c 0E4C     		ldr	r4, .L55+4
+ 659 000e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 173:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 660              		.loc 1 173 8 view .LVU117
+ 661 0010 03F0FF05 		and	r5, r3, #255
+ 662 0014 9BB9     		cbnz	r3, .L51
+ 177:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_valid         = false;
+ 663              		.loc 1 177 5 is_stmt 1 view .LVU118
+ 664 0016 0D4B     		ldr	r3, .L55+8
+ 665 0018 0D4A     		ldr	r2, .L55+12
+ 666 001a 93E80300 		ldm	r3, {r0, r1}
+ 178:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = udd_ep_run(UDI_HID_KBD_EP_IN | USB_EP_DIR_IN, false, udi_h
+ 667              		.loc 1 178 40 is_stmt 0 view .LVU119
+ 668 001e 0D4B     		ldr	r3, .L55+16
+ 669 0020 1D70     		strb	r5, [r3]
+ 179:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 670              		.loc 1 179 42 view .LVU120
+ 671 0022 0D4B     		ldr	r3, .L55+20
+ 177:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_valid         = false;
+ 672              		.loc 1 177 5 view .LVU121
+ 673 0024 82E80300 		stm	r2, {r0, r1}
+ 178:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = udd_ep_run(UDI_HID_KBD_EP_IN | USB_EP_DIR_IN, false, udi_h
+ 674              		.loc 1 178 5 is_stmt 1 view .LVU122
+ 179:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 675              		.loc 1 179 5 view .LVU123
+ 179:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 676              		.loc 1 179 42 is_stmt 0 view .LVU124
+ 677 0028 0093     		str	r3, [sp]
+ 678 002a 2946     		mov	r1, r5
+ 679 002c 0823     		movs	r3, #8
+ 680 002e 8120     		movs	r0, #129
+ 681 0030 FFF7FEFF 		bl	udd_ep_run
+ 682              	.LVL10:
+ 179:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 683              		.loc 1 179 40 view .LVU125
+ 684 0034 2070     		strb	r0, [r4]
+ 181:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 685              		.loc 1 181 5 is_stmt 1 view .LVU126
+ 181:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 686              		.loc 1 181 12 is_stmt 0 view .LVU127
+ 687 0036 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 688 0038 C0B2     		uxtb	r0, r0
+ 689              	.L50:
+ 182:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 690              		.loc 1 182 1 view .LVU128
+ 691 003a 03B0     		add	sp, sp, #12
+ 692              		.cfi_remember_state
+ 693              		.cfi_def_cfa_offset 12
+ 694              		@ sp needed
+ 695 003c 30BD     		pop	{r4, r5, pc}
+ 696              	.L51:
+ 697              		.cfi_restore_state
+ 170:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 698              		.loc 1 170 16 view .LVU129
+ 699 003e 0020     		movs	r0, #0
+ 700 0040 FBE7     		b	.L50
+ 701              	.L56:
+ 702 0042 00BF     		.align	2
+ 703              	.L55:
+ 704 0044 00000000 		.word	main_b_kbd_enable
+ 705 0048 00000000 		.word	udi_hid_kbd_b_report_trans_ongoing
+ 706 004c 00000000 		.word	udi_hid_kbd_report
+ 707 0050 18000000 		.word	.LANCHOR0+24
+ 708 0054 00000000 		.word	udi_hid_kbd_b_report_valid
+ 709 0058 00000000 		.word	udi_hid_kbd_report_sent
+ 710              		.cfi_endproc
+ 711              	.LFE144:
+ 713              		.section	.text.udi_hid_kbd_report_sent,"ax",%progbits
+ 714              		.align	1
+ 715              		.syntax unified
+ 716              		.thumb
+ 717              		.thumb_func
+ 718              		.fpu fpv4-sp-d16
+ 720              	udi_hid_kbd_report_sent:
+ 721              	.LVL11:
+ 722              	.LFB145:
+ 184:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(status);
+ 723              		.loc 1 184 98 is_stmt 1 view -0
+ 724              		.cfi_startproc
+ 725              		@ args = 0, pretend = 0, frame = 0
+ 726              		@ frame_needed = 0, uses_anonymous_args = 0
+ 727              		@ link register save eliminated.
+ 185:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(nb_sent);
+ 728              		.loc 1 185 5 view .LVU131
+ 186:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(ep);
+ 729              		.loc 1 186 5 view .LVU132
+ 187:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_kbd_b_report_trans_ongoing = false;
+ 730              		.loc 1 187 5 view .LVU133
+ 188:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_kbd_b_report_valid) {
+ 731              		.loc 1 188 5 view .LVU134
+ 188:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_kbd_b_report_valid) {
+ 732              		.loc 1 188 40 is_stmt 0 view .LVU135
+ 733 0000 044B     		ldr	r3, .L59
+ 734 0002 0022     		movs	r2, #0
+ 735              	.LVL12:
+ 188:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_kbd_b_report_valid) {
+ 736              		.loc 1 188 40 view .LVU136
+ 737 0004 1A70     		strb	r2, [r3]
+ 189:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_kbd_send_report();
+ 738              		.loc 1 189 5 is_stmt 1 view .LVU137
+ 189:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_kbd_send_report();
+ 739              		.loc 1 189 9 is_stmt 0 view .LVU138
+ 740 0006 044B     		ldr	r3, .L59+4
+ 189:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_kbd_send_report();
+ 741              		.loc 1 189 8 view .LVU139
+ 742 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 743 000a 0BB1     		cbz	r3, .L57
+ 190:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 744              		.loc 1 190 9 is_stmt 1 view .LVU140
+ 745 000c FFF7FEBF 		b	udi_hid_kbd_send_report
+ 746              	.LVL13:
+ 747              	.L57:
+ 192:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 748              		.loc 1 192 1 is_stmt 0 view .LVU141
+ 749 0010 7047     		bx	lr
+ 750              	.L60:
+ 751 0012 00BF     		.align	2
+ 752              	.L59:
+ 753 0014 00000000 		.word	udi_hid_kbd_b_report_trans_ongoing
+ 754 0018 00000000 		.word	udi_hid_kbd_b_report_valid
+ 755              		.cfi_endproc
+ 756              	.LFE145:
+ 758              		.section	.text.udi_hid_nkro_send_report,"ax",%progbits
+ 759              		.align	1
+ 760              		.global	udi_hid_nkro_send_report
+ 761              		.syntax unified
+ 762              		.thumb
+ 763              		.thumb_func
+ 764              		.fpu fpv4-sp-d16
+ 766              	udi_hid_nkro_send_report:
+ 767              	.LFB152:
+ 306:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_nkro_enable) {
+ 768              		.loc 1 306 37 is_stmt 1 view -0
+ 769              		.cfi_startproc
+ 770              		@ args = 0, pretend = 0, frame = 0
+ 771              		@ frame_needed = 0, uses_anonymous_args = 0
+ 307:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 772              		.loc 1 307 5 view .LVU143
+ 306:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_nkro_enable) {
+ 773              		.loc 1 306 37 is_stmt 0 view .LVU144
+ 774 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 775              		.cfi_def_cfa_offset 32
+ 776              		.cfi_offset 4, -20
+ 777              		.cfi_offset 5, -16
+ 778              		.cfi_offset 6, -12
+ 779              		.cfi_offset 7, -8
+ 780              		.cfi_offset 14, -4
+ 307:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 781              		.loc 1 307 9 view .LVU145
+ 782 0002 124B     		ldr	r3, .L67
+ 783 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 307:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 784              		.loc 1 307 8 view .LVU146
+ 785 0006 03F0FF00 		and	r0, r3, #255
+ 786 000a D3B1     		cbz	r3, .L62
+ 311:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 787              		.loc 1 311 5 is_stmt 1 view .LVU147
+ 311:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 788              		.loc 1 311 9 is_stmt 0 view .LVU148
+ 789 000c 104E     		ldr	r6, .L67+4
+ 790 000e 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+ 311:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 791              		.loc 1 311 8 view .LVU149
+ 792 0010 03F0FF07 		and	r7, r3, #255
+ 793 0014 BBB9     		cbnz	r3, .L63
+ 315:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_valid         = false;
+ 794              		.loc 1 315 5 is_stmt 1 view .LVU150
+ 795 0016 0F4D     		ldr	r5, .L67+8
+ 796 0018 0F4C     		ldr	r4, .L67+12
+ 797 001a 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 798 001c 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 799 001e 95E80F00 		ldm	r5, {r0, r1, r2, r3}
+ 800 0022 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 316:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = udd_ep_run(UDI_HID_NKRO_EP_IN | USB_EP_DIR_IN, false, udi
+ 801              		.loc 1 316 5 view .LVU151
+ 316:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = udd_ep_run(UDI_HID_NKRO_EP_IN | USB_EP_DIR_IN, false, udi
+ 802              		.loc 1 316 41 is_stmt 0 view .LVU152
+ 803 0026 0D4B     		ldr	r3, .L67+16
+ 804 0028 1F70     		strb	r7, [r3]
+ 317:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 805              		.loc 1 317 5 is_stmt 1 view .LVU153
+ 317:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 806              		.loc 1 317 43 is_stmt 0 view .LVU154
+ 807 002a 0D4B     		ldr	r3, .L67+20
+ 808 002c 0093     		str	r3, [sp]
+ 809 002e A4F11002 		sub	r2, r4, #16
+ 810 0032 2023     		movs	r3, #32
+ 811 0034 3946     		mov	r1, r7
+ 812 0036 8320     		movs	r0, #131
+ 813 0038 FFF7FEFF 		bl	udd_ep_run
+ 814              	.LVL14:
+ 317:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 815              		.loc 1 317 41 view .LVU155
+ 816 003c 3070     		strb	r0, [r6]
+ 319:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 817              		.loc 1 319 5 is_stmt 1 view .LVU156
+ 319:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 818              		.loc 1 319 12 is_stmt 0 view .LVU157
+ 819 003e 3078     		ldrb	r0, [r6]	@ zero_extendqisi2
+ 820 0040 C0B2     		uxtb	r0, r0
+ 821              	.L62:
+ 320:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 822              		.loc 1 320 1 view .LVU158
+ 823 0042 03B0     		add	sp, sp, #12
+ 824              		.cfi_remember_state
+ 825              		.cfi_def_cfa_offset 20
+ 826              		@ sp needed
+ 827 0044 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 828              	.L63:
+ 829              		.cfi_restore_state
+ 308:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 830              		.loc 1 308 16 view .LVU159
+ 831 0046 0020     		movs	r0, #0
+ 832 0048 FBE7     		b	.L62
+ 833              	.L68:
+ 834 004a 00BF     		.align	2
+ 835              	.L67:
+ 836 004c 00000000 		.word	main_b_nkro_enable
+ 837 0050 00000000 		.word	udi_hid_nkro_b_report_trans_ongoing
+ 838 0054 00000000 		.word	udi_hid_nkro_report
+ 839 0058 20000000 		.word	.LANCHOR0+32
+ 840 005c 00000000 		.word	udi_hid_nkro_b_report_valid
+ 841 0060 00000000 		.word	udi_hid_nkro_report_sent
+ 842              		.cfi_endproc
+ 843              	.LFE152:
+ 845              		.section	.text.udi_hid_nkro_report_sent,"ax",%progbits
+ 846              		.align	1
+ 847              		.syntax unified
+ 848              		.thumb
+ 849              		.thumb_func
+ 850              		.fpu fpv4-sp-d16
+ 852              	udi_hid_nkro_report_sent:
+ 853              	.LVL15:
+ 854              	.LFB153:
+ 322:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(status);
+ 855              		.loc 1 322 99 is_stmt 1 view -0
+ 856              		.cfi_startproc
+ 857              		@ args = 0, pretend = 0, frame = 0
+ 858              		@ frame_needed = 0, uses_anonymous_args = 0
+ 859              		@ link register save eliminated.
+ 323:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(nb_sent);
+ 860              		.loc 1 323 5 view .LVU161
+ 324:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(ep);
+ 861              		.loc 1 324 5 view .LVU162
+ 325:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_nkro_b_report_trans_ongoing = false;
+ 862              		.loc 1 325 5 view .LVU163
+ 326:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_nkro_b_report_valid) {
+ 863              		.loc 1 326 5 view .LVU164
+ 326:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_nkro_b_report_valid) {
+ 864              		.loc 1 326 41 is_stmt 0 view .LVU165
+ 865 0000 044B     		ldr	r3, .L71
+ 866 0002 0022     		movs	r2, #0
+ 867              	.LVL16:
+ 326:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_nkro_b_report_valid) {
+ 868              		.loc 1 326 41 view .LVU166
+ 869 0004 1A70     		strb	r2, [r3]
+ 327:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_nkro_send_report();
+ 870              		.loc 1 327 5 is_stmt 1 view .LVU167
+ 327:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_nkro_send_report();
+ 871              		.loc 1 327 9 is_stmt 0 view .LVU168
+ 872 0006 044B     		ldr	r3, .L71+4
+ 327:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_nkro_send_report();
+ 873              		.loc 1 327 8 view .LVU169
+ 874 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 875 000a 0BB1     		cbz	r3, .L69
+ 328:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 876              		.loc 1 328 9 is_stmt 1 view .LVU170
+ 877 000c FFF7FEBF 		b	udi_hid_nkro_send_report
+ 878              	.LVL17:
+ 879              	.L69:
+ 330:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 880              		.loc 1 330 1 is_stmt 0 view .LVU171
+ 881 0010 7047     		bx	lr
+ 882              	.L72:
+ 883 0012 00BF     		.align	2
+ 884              	.L71:
+ 885 0014 00000000 		.word	udi_hid_nkro_b_report_trans_ongoing
+ 886 0018 00000000 		.word	udi_hid_nkro_b_report_valid
+ 887              		.cfi_endproc
+ 888              	.LFE153:
+ 890              		.section	.text.udi_hid_exk_send_report,"ax",%progbits
+ 891              		.align	1
+ 892              		.global	udi_hid_exk_send_report
+ 893              		.syntax unified
+ 894              		.thumb
+ 895              		.thumb_func
+ 896              		.fpu fpv4-sp-d16
+ 898              	udi_hid_exk_send_report:
+ 899              	.LFB160:
+ 438:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 439:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** bool udi_hid_exk_send_report(void) {
+ 900              		.loc 1 439 36 is_stmt 1 view -0
+ 901              		.cfi_startproc
+ 902              		@ args = 0, pretend = 0, frame = 0
+ 903              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_exk_enable) {
+ 904              		.loc 1 440 5 view .LVU173
+ 439:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (!main_b_exk_enable) {
+ 905              		.loc 1 439 36 is_stmt 0 view .LVU174
+ 906 0000 13B5     		push	{r0, r1, r4, lr}
+ 907              		.cfi_def_cfa_offset 16
+ 908              		.cfi_offset 4, -8
+ 909              		.cfi_offset 14, -4
+ 910              		.loc 1 440 9 view .LVU175
+ 911 0002 0F4B     		ldr	r3, .L79
+ 912 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 913              		.loc 1 440 8 view .LVU176
+ 914 0006 03F0FF00 		and	r0, r3, #255
+ 915 000a A3B1     		cbz	r3, .L74
+ 441:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 442:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 443:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 444:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_exk_b_report_trans_ongoing) {
+ 916              		.loc 1 444 5 is_stmt 1 view .LVU177
+ 917              		.loc 1 444 9 is_stmt 0 view .LVU178
+ 918 000c 0D4C     		ldr	r4, .L79+4
+ 919              		.loc 1 444 8 view .LVU179
+ 920 000e 617D     		ldrb	r1, [r4, #21]	@ zero_extendqisi2
+ 921 0010 99B9     		cbnz	r1, .L75
+ 445:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         return false;
+ 446:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 447:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 448:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     memcpy(udi_hid_exk_report_trans, udi_hid_exk_report.raw, UDI_HID_EXK_REPORT_SIZE);
+ 922              		.loc 1 448 5 is_stmt 1 view .LVU180
+ 923 0012 0D4B     		ldr	r3, .L79+8
+ 924 0014 1B68     		ldr	r3, [r3]
+ 925 0016 A4F84030 		strh	r3, [r4, #64]	@ movhi
+ 926 001a 1B0C     		lsrs	r3, r3, #16
+ 927 001c 84F84230 		strb	r3, [r4, #66]
+ 449:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_valid         = false;
+ 928              		.loc 1 449 5 view .LVU181
+ 929              		.loc 1 449 40 is_stmt 0 view .LVU182
+ 930 0020 0A4B     		ldr	r3, .L79+12
+ 931 0022 1970     		strb	r1, [r3]
+ 450:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_trans_ongoing = udd_ep_run(UDI_HID_EXK_EP_IN | USB_EP_DIR_IN, false, udi_h
+ 932              		.loc 1 450 5 is_stmt 1 view .LVU183
+ 933              		.loc 1 450 42 is_stmt 0 view .LVU184
+ 934 0024 0A4B     		ldr	r3, .L79+16
+ 935 0026 0093     		str	r3, [sp]
+ 936 0028 04F14002 		add	r2, r4, #64
+ 937 002c 0323     		movs	r3, #3
+ 938 002e 8220     		movs	r0, #130
+ 939 0030 FFF7FEFF 		bl	udd_ep_run
+ 940              	.LVL18:
+ 941              		.loc 1 450 40 view .LVU185
+ 942 0034 6075     		strb	r0, [r4, #21]
+ 451:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 452:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     return udi_hid_exk_b_report_trans_ongoing;
+ 943              		.loc 1 452 5 is_stmt 1 view .LVU186
+ 944              	.L74:
+ 453:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 945              		.loc 1 453 1 is_stmt 0 view .LVU187
+ 946 0036 02B0     		add	sp, sp, #8
+ 947              		.cfi_remember_state
+ 948              		.cfi_def_cfa_offset 8
+ 949              		@ sp needed
+ 950 0038 10BD     		pop	{r4, pc}
+ 951              	.L75:
+ 952              		.cfi_restore_state
+ 441:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 953              		.loc 1 441 16 view .LVU188
+ 954 003a 0020     		movs	r0, #0
+ 955 003c FBE7     		b	.L74
+ 956              	.L80:
+ 957 003e 00BF     		.align	2
+ 958              	.L79:
+ 959 0040 00000000 		.word	main_b_exk_enable
+ 960 0044 00000000 		.word	.LANCHOR0
+ 961 0048 00000000 		.word	udi_hid_exk_report
+ 962 004c 00000000 		.word	udi_hid_exk_b_report_valid
+ 963 0050 00000000 		.word	udi_hid_exk_report_sent
+ 964              		.cfi_endproc
+ 965              	.LFE160:
+ 967              		.section	.text.udi_hid_exk_report_sent,"ax",%progbits
+ 968              		.align	1
+ 969              		.syntax unified
+ 970              		.thumb
+ 971              		.thumb_func
+ 972              		.fpu fpv4-sp-d16
+ 974              	udi_hid_exk_report_sent:
+ 975              	.LVL19:
+ 976              	.LFB161:
+ 454:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** 
+ 455:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** static void udi_hid_exk_report_sent(udd_ep_status_t status, iram_size_t nb_sent, udd_ep_id_t ep) {
+ 977              		.loc 1 455 98 is_stmt 1 view -0
+ 978              		.cfi_startproc
+ 979              		@ args = 0, pretend = 0, frame = 0
+ 980              		@ frame_needed = 0, uses_anonymous_args = 0
+ 981              		@ link register save eliminated.
+ 456:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(status);
+ 982              		.loc 1 456 5 view .LVU190
+ 457:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(nb_sent);
+ 983              		.loc 1 457 5 view .LVU191
+ 458:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     UNUSED(ep);
+ 984              		.loc 1 458 5 view .LVU192
+ 459:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     udi_hid_exk_b_report_trans_ongoing = false;
+ 985              		.loc 1 459 5 view .LVU193
+ 986              		.loc 1 459 40 is_stmt 0 view .LVU194
+ 987 0000 044B     		ldr	r3, .L83
+ 988 0002 0022     		movs	r2, #0
+ 989              	.LVL20:
+ 990              		.loc 1 459 40 view .LVU195
+ 991 0004 5A75     		strb	r2, [r3, #21]
+ 460:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     if (udi_hid_exk_b_report_valid) {
+ 992              		.loc 1 460 5 is_stmt 1 view .LVU196
+ 993              		.loc 1 460 9 is_stmt 0 view .LVU197
+ 994 0006 044B     		ldr	r3, .L83+4
+ 995              		.loc 1 460 8 view .LVU198
+ 996 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 997 000a 0BB1     		cbz	r3, .L81
+ 461:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****         udi_hid_exk_send_report();
+ 998              		.loc 1 461 9 is_stmt 1 view .LVU199
+ 999 000c FFF7FEBF 		b	udi_hid_exk_send_report
+ 1000              	.LVL21:
+ 1001              	.L81:
+ 462:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c ****     }
+ 463:tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.c **** }
+ 1002              		.loc 1 463 1 is_stmt 0 view .LVU200
+ 1003 0010 7047     		bx	lr
+ 1004              	.L84:
+ 1005 0012 00BF     		.align	2
+ 1006              	.L83:
+ 1007 0014 00000000 		.word	.LANCHOR0
+ 1008 0018 00000000 		.word	udi_hid_exk_b_report_valid
+ 1009              		.cfi_endproc
+ 1010              	.LFE161:
+ 1012              		.global	udi_hid_exk_report_desc
+ 1013              		.comm	udi_hid_exk_report,3,4
+ 1014              		.comm	udi_hid_exk_b_report_valid,1,1
+ 1015              		.comm	udi_hid_exk_report_set,1,4
+ 1016              		.global	udi_api_hid_exk
+ 1017              		.global	udi_hid_nkro_report_desc
+ 1018              		.comm	udi_hid_nkro_b_report_trans_ongoing,1,1
+ 1019              		.comm	udi_hid_nkro_report,32,4
+ 1020              		.comm	udi_hid_nkro_b_report_valid,1,1
+ 1021              		.comm	udi_hid_nkro_report_set,1,4
+ 1022              		.global	udi_api_hid_nkro
+ 1023              		.global	udi_hid_kbd_report_desc
+ 1024              		.comm	udi_hid_kbd_b_report_trans_ongoing,1,1
+ 1025              		.comm	udi_hid_kbd_report,8,4
+ 1026              		.comm	udi_hid_kbd_b_report_valid,1,1
+ 1027              		.comm	udi_hid_kbd_report_set,1,4
+ 1028              		.global	udi_api_hid_kbd
+ 1029              		.data
+ 1030              		.align	2
+ 1031              		.set	.LANCHOR1,. + 0
+ 1034              	udi_hid_kbd_report_desc:
+ 1035 0000 05       		.byte	5
+ 1036 0001 01       		.byte	1
+ 1037 0002 09       		.byte	9
+ 1038 0003 06       		.byte	6
+ 1039 0004 A1       		.byte	-95
+ 1040 0005 01       		.byte	1
+ 1041 0006 05       		.byte	5
+ 1042 0007 07       		.byte	7
+ 1043 0008 19       		.byte	25
+ 1044 0009 E0       		.byte	-32
+ 1045 000a 29       		.byte	41
+ 1046 000b E7       		.byte	-25
+ 1047 000c 15       		.byte	21
+ 1048 000d 00       		.byte	0
+ 1049 000e 25       		.byte	37
+ 1050 000f 01       		.byte	1
+ 1051 0010 95       		.byte	-107
+ 1052 0011 08       		.byte	8
+ 1053 0012 75       		.byte	117
+ 1054 0013 01       		.byte	1
+ 1055 0014 81       		.byte	-127
+ 1056 0015 02       		.byte	2
+ 1057 0016 81       		.byte	-127
+ 1058 0017 01       		.byte	1
+ 1059 0018 19       		.byte	25
+ 1060 0019 00       		.byte	0
+ 1061 001a 29       		.byte	41
+ 1062 001b FF       		.byte	-1
+ 1063 001c 15       		.byte	21
+ 1064 001d 00       		.byte	0
+ 1065 001e 25       		.byte	37
+ 1066 001f FF       		.byte	-1
+ 1067 0020 95       		.byte	-107
+ 1068 0021 06       		.byte	6
+ 1069 0022 75       		.byte	117
+ 1070 0023 08       		.byte	8
+ 1071 0024 81       		.byte	-127
+ 1072 0025 00       		.byte	0
+ 1073 0026 05       		.byte	5
+ 1074 0027 08       		.byte	8
+ 1075 0028 19       		.byte	25
+ 1076 0029 01       		.byte	1
+ 1077 002a 29       		.byte	41
+ 1078 002b 05       		.byte	5
+ 1079 002c 15       		.byte	21
+ 1080 002d 00       		.byte	0
+ 1081 002e 25       		.byte	37
+ 1082 002f 01       		.byte	1
+ 1083 0030 95       		.byte	-107
+ 1084 0031 05       		.byte	5
+ 1085 0032 75       		.byte	117
+ 1086 0033 01       		.byte	1
+ 1087 0034 91       		.byte	-111
+ 1088 0035 02       		.byte	2
+ 1089 0036 95       		.byte	-107
+ 1090 0037 03       		.byte	3
+ 1091 0038 91       		.byte	-111
+ 1092 0039 01       		.byte	1
+ 1093 003a C0       		.byte	-64
+ 1094 003b 00       		.space	1
+ 1097              	udi_hid_nkro_report_desc:
+ 1098 003c 05       		.byte	5
+ 1099 003d 01       		.byte	1
+ 1100 003e 09       		.byte	9
+ 1101 003f 06       		.byte	6
+ 1102 0040 A1       		.byte	-95
+ 1103 0041 01       		.byte	1
+ 1104 0042 05       		.byte	5
+ 1105 0043 07       		.byte	7
+ 1106 0044 19       		.byte	25
+ 1107 0045 E0       		.byte	-32
+ 1108 0046 29       		.byte	41
+ 1109 0047 E7       		.byte	-25
+ 1110 0048 15       		.byte	21
+ 1111 0049 00       		.byte	0
+ 1112 004a 25       		.byte	37
+ 1113 004b 01       		.byte	1
+ 1114 004c 95       		.byte	-107
+ 1115 004d 08       		.byte	8
+ 1116 004e 75       		.byte	117
+ 1117 004f 01       		.byte	1
+ 1118 0050 81       		.byte	-127
+ 1119 0051 02       		.byte	2
+ 1120 0052 05       		.byte	5
+ 1121 0053 07       		.byte	7
+ 1122 0054 19       		.byte	25
+ 1123 0055 00       		.byte	0
+ 1124 0056 29       		.byte	41
+ 1125 0057 F7       		.byte	-9
+ 1126 0058 15       		.byte	21
+ 1127 0059 00       		.byte	0
+ 1128 005a 25       		.byte	37
+ 1129 005b 01       		.byte	1
+ 1130 005c 95       		.byte	-107
+ 1131 005d F8       		.byte	-8
+ 1132 005e 75       		.byte	117
+ 1133 005f 01       		.byte	1
+ 1134 0060 81       		.byte	-127
+ 1135 0061 02       		.byte	2
+ 1136 0062 05       		.byte	5
+ 1137 0063 08       		.byte	8
+ 1138 0064 19       		.byte	25
+ 1139 0065 01       		.byte	1
+ 1140 0066 29       		.byte	41
+ 1141 0067 05       		.byte	5
+ 1142 0068 95       		.byte	-107
+ 1143 0069 05       		.byte	5
+ 1144 006a 75       		.byte	117
+ 1145 006b 01       		.byte	1
+ 1146 006c 91       		.byte	-111
+ 1147 006d 02       		.byte	2
+ 1148 006e 95       		.byte	-107
+ 1149 006f 01       		.byte	1
+ 1150 0070 75       		.byte	117
+ 1151 0071 03       		.byte	3
+ 1152 0072 91       		.byte	-111
+ 1153 0073 03       		.byte	3
+ 1154 0074 C0       		.byte	-64
+ 1155 0075 000000   		.space	3
+ 1158              	udi_hid_exk_report_desc:
+ 1159 0078 05       		.byte	5
+ 1160 0079 01       		.byte	1
+ 1161 007a 09       		.byte	9
+ 1162 007b 80       		.byte	-128
+ 1163 007c A1       		.byte	-95
+ 1164 007d 01       		.byte	1
+ 1165 007e 85       		.byte	-123
+ 1166 007f 03       		.byte	3
+ 1167 0080 19       		.byte	25
+ 1168 0081 01       		.byte	1
+ 1169 0082 2A       		.byte	42
+ 1170 0083 B7       		.byte	-73
+ 1171 0084 00       		.byte	0
+ 1172 0085 15       		.byte	21
+ 1173 0086 01       		.byte	1
+ 1174 0087 26       		.byte	38
+ 1175 0088 B7       		.byte	-73
+ 1176 0089 00       		.byte	0
+ 1177 008a 95       		.byte	-107
+ 1178 008b 01       		.byte	1
+ 1179 008c 75       		.byte	117
+ 1180 008d 10       		.byte	16
+ 1181 008e 81       		.byte	-127
+ 1182 008f 00       		.byte	0
+ 1183 0090 C0       		.byte	-64
+ 1184 0091 05       		.byte	5
+ 1185 0092 0C       		.byte	12
+ 1186 0093 09       		.byte	9
+ 1187 0094 01       		.byte	1
+ 1188 0095 A1       		.byte	-95
+ 1189 0096 01       		.byte	1
+ 1190 0097 85       		.byte	-123
+ 1191 0098 04       		.byte	4
+ 1192 0099 19       		.byte	25
+ 1193 009a 01       		.byte	1
+ 1194 009b 2A       		.byte	42
+ 1195 009c A0       		.byte	-96
+ 1196 009d 02       		.byte	2
+ 1197 009e 15       		.byte	21
+ 1198 009f 01       		.byte	1
+ 1199 00a0 26       		.byte	38
+ 1200 00a1 A0       		.byte	-96
+ 1201 00a2 02       		.byte	2
+ 1202 00a3 95       		.byte	-107
+ 1203 00a4 01       		.byte	1
+ 1204 00a5 75       		.byte	117
+ 1205 00a6 10       		.byte	16
+ 1206 00a7 81       		.byte	-127
+ 1207 00a8 00       		.byte	0
+ 1208 00a9 C0       		.byte	-64
+ 1209 00aa 0000     		.space	2
+ 1212              	udi_api_hid_exk:
+ 1213 00ac 00000000 		.word	udi_hid_exk_enable
+ 1214 00b0 00000000 		.word	udi_hid_exk_disable
+ 1215 00b4 00000000 		.word	udi_hid_exk_setup
+ 1216 00b8 00000000 		.word	udi_hid_exk_getsetting
+ 1217 00bc 00000000 		.word	0
+ 1220              	udi_api_hid_nkro:
+ 1221 00c0 00000000 		.word	udi_hid_nkro_enable
+ 1222 00c4 00000000 		.word	udi_hid_nkro_disable
+ 1223 00c8 00000000 		.word	udi_hid_nkro_setup
+ 1224 00cc 00000000 		.word	udi_hid_nkro_getsetting
+ 1225 00d0 00000000 		.word	0
+ 1228              	udi_api_hid_kbd:
+ 1229 00d4 00000000 		.word	udi_hid_kbd_enable
+ 1230 00d8 00000000 		.word	udi_hid_kbd_disable
+ 1231 00dc 00000000 		.word	udi_hid_kbd_setup
+ 1232 00e0 00000000 		.word	udi_hid_kbd_getsetting
+ 1233 00e4 00000000 		.word	0
+ 1234              		.bss
+ 1235              		.align	2
+ 1236              		.set	.LANCHOR0,. + 0
+ 1239              	udi_hid_kbd_rate:
+ 1240 0000 00       		.space	1
+ 1241 0001 000000   		.space	3
+ 1244              	udi_hid_kbd_protocol:
+ 1245 0004 00       		.space	1
+ 1246 0005 000000   		.space	3
+ 1249              	udi_hid_nkro_protocol:
+ 1250 0008 00       		.space	1
+ 1251 0009 000000   		.space	3
+ 1254              	udi_hid_nkro_rate:
+ 1255 000c 00       		.space	1
+ 1256 000d 000000   		.space	3
+ 1259              	udi_hid_exk_protocol:
+ 1260 0010 00       		.space	1
+ 1261 0011 000000   		.space	3
+ 1264              	udi_hid_exk_rate:
+ 1265 0014 00       		.space	1
+ 1268              	udi_hid_exk_b_report_trans_ongoing:
+ 1269 0015 00       		.space	1
+ 1270 0016 0000     		.space	2
+ 1273              	udi_hid_kbd_report_trans:
+ 1274 0018 00000000 		.space	8
+ 1274      00000000 
+ 1277              	udi_hid_nkro_report_trans:
+ 1278 0020 00000000 		.space	32
+ 1278      00000000 
+ 1278      00000000 
+ 1278      00000000 
+ 1278      00000000 
+ 1281              	udi_hid_exk_report_trans:
+ 1282 0040 000000   		.space	3
+ 1283              		.text
+ 1284              	.Letext0:
+ 1285              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 1286              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 1287              		.file 4 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 1288              		.file 5 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 1289              		.file 6 "tmk_core/protocol/arm_atsam/d51_util.h"
+ 1290              		.file 7 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/stdd
+ 1291              		.file 8 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 1292              		.file 9 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 1293              		.file 10 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 1294              		.file 11 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 1295              		.file 12 "tmk_core/protocol/arm_atsam/usb/compiler.h"
+ 1296              		.file 13 "tmk_core/protocol/arm_atsam/usb/usb_protocol.h"
+ 1297              		.file 14 "tmk_core/protocol/arm_atsam/usb/udi_device_conf.h"
+ 1298              		.file 15 "tmk_core/protocol/arm_atsam/usb/udi.h"
+ 1299              		.file 16 "tmk_core/protocol/arm_atsam/usb/udc_desc.h"
+ 1300              		.file 17 "tmk_core/protocol/arm_atsam/usb/udi_hid_kbd.h"
+ 1301              		.file 18 "tmk_core/protocol/arm_atsam/usb/usb_main.h"
+ 1302              		.file 19 "tmk_core/protocol/arm_atsam/usb/udd.h"
+ 1303              		.file 20 "tmk_core/protocol/arm_atsam/usb/usb_protocol_hid.h"
+ 1304              		.file 21 "tmk_core/common/report.h"
+ 1305              		.file 22 "tmk_core/protocol/arm_atsam/usb/udi_hid.h"
+ 1306              		.file 23 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 udi_hid_kbd.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:18     .text.udi_hid_kbd_getsetting:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:26     .text.udi_hid_kbd_getsetting:0000000000000000 udi_hid_kbd_getsetting
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:42     .text.udi_hid_kbd_setreport:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:48     .text.udi_hid_kbd_setreport:0000000000000000 udi_hid_kbd_setreport
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:94     .text.udi_hid_kbd_setreport:0000000000000028 $d
+                            *COM*:0000000000000001 udi_hid_kbd_report_set
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:107    .text.udi_hid_kbd_setreport_valid:0000000000000000 udi_hid_kbd_setreport_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:101    .text.udi_hid_kbd_setreport_valid:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:120    .text.udi_hid_nkro_setreport:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:126    .text.udi_hid_nkro_setreport:0000000000000000 udi_hid_nkro_setreport
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:172    .text.udi_hid_nkro_setreport:0000000000000028 $d
+                            *COM*:0000000000000001 udi_hid_nkro_report_set
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:581    .text.udi_hid_nkro_setreport_valid:0000000000000000 udi_hid_nkro_setreport_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:179    .text.udi_hid_exk_setreport:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:185    .text.udi_hid_exk_setreport:0000000000000000 udi_hid_exk_setreport
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:231    .text.udi_hid_exk_setreport:0000000000000028 $d
+                            *COM*:0000000000000001 udi_hid_exk_report_set
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:564    .text.udi_hid_exk_setreport_valid:0000000000000000 udi_hid_exk_setreport_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:238    .text.udi_hid_kbd_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:245    .text.udi_hid_kbd_enable:0000000000000000 udi_hid_kbd_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:278    .text.udi_hid_kbd_enable:000000000000001c $d
+                            *COM*:0000000000000001 udi_hid_kbd_b_report_trans_ongoing
+                            *COM*:0000000000000008 udi_hid_kbd_report
+                            *COM*:0000000000000001 udi_hid_kbd_b_report_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:286    .text.udi_hid_kbd_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:293    .text.udi_hid_kbd_disable:0000000000000000 udi_hid_kbd_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:307    .text.udi_hid_kbd_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:314    .text.udi_hid_kbd_setup:0000000000000000 udi_hid_kbd_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:332    .text.udi_hid_kbd_setup:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:339    .text.udi_hid_nkro_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:346    .text.udi_hid_nkro_setup:0000000000000000 udi_hid_nkro_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:365    .text.udi_hid_nkro_setup:0000000000000010 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:372    .text.udi_hid_exk_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:379    .text.udi_hid_exk_setup:0000000000000000 udi_hid_exk_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:398    .text.udi_hid_exk_setup:0000000000000010 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:405    .text.udi_hid_nkro_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:412    .text.udi_hid_nkro_enable:0000000000000000 udi_hid_nkro_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:461    .text.udi_hid_nkro_enable:0000000000000024 $d
+                            *COM*:0000000000000020 udi_hid_nkro_report
+                            *COM*:0000000000000001 udi_hid_nkro_b_report_trans_ongoing
+                            *COM*:0000000000000001 udi_hid_nkro_b_report_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:469    .text.udi_hid_nkro_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:476    .text.udi_hid_nkro_disable:0000000000000000 udi_hid_nkro_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:490    .text.udi_hid_exk_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:497    .text.udi_hid_exk_enable:0000000000000000 udi_hid_exk_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:530    .text.udi_hid_exk_enable:0000000000000018 $d
+                            *COM*:0000000000000003 udi_hid_exk_report
+                            *COM*:0000000000000001 udi_hid_exk_b_report_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:537    .text.udi_hid_exk_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:544    .text.udi_hid_exk_disable:0000000000000000 udi_hid_exk_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:558    .text.udi_hid_exk_setreport_valid:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:575    .text.udi_hid_nkro_setreport_valid:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:592    .text.udi_hid_exk_getsetting:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:599    .text.udi_hid_exk_getsetting:0000000000000000 udi_hid_exk_getsetting
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:611    .text.udi_hid_nkro_getsetting:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:618    .text.udi_hid_nkro_getsetting:0000000000000000 udi_hid_nkro_getsetting
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:630    .text.udi_hid_kbd_send_report:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:637    .text.udi_hid_kbd_send_report:0000000000000000 udi_hid_kbd_send_report
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:704    .text.udi_hid_kbd_send_report:0000000000000044 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:720    .text.udi_hid_kbd_report_sent:0000000000000000 udi_hid_kbd_report_sent
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:714    .text.udi_hid_kbd_report_sent:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:753    .text.udi_hid_kbd_report_sent:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:759    .text.udi_hid_nkro_send_report:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:766    .text.udi_hid_nkro_send_report:0000000000000000 udi_hid_nkro_send_report
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:836    .text.udi_hid_nkro_send_report:000000000000004c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:852    .text.udi_hid_nkro_report_sent:0000000000000000 udi_hid_nkro_report_sent
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:846    .text.udi_hid_nkro_report_sent:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:885    .text.udi_hid_nkro_report_sent:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:891    .text.udi_hid_exk_send_report:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:898    .text.udi_hid_exk_send_report:0000000000000000 udi_hid_exk_send_report
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:959    .text.udi_hid_exk_send_report:0000000000000040 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:974    .text.udi_hid_exk_report_sent:0000000000000000 udi_hid_exk_report_sent
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:968    .text.udi_hid_exk_report_sent:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1007   .text.udi_hid_exk_report_sent:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1158   .data:0000000000000078 udi_hid_exk_report_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1212   .data:00000000000000ac udi_api_hid_exk
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1097   .data:000000000000003c udi_hid_nkro_report_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1220   .data:00000000000000c0 udi_api_hid_nkro
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1034   .data:0000000000000000 udi_hid_kbd_report_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1228   .data:00000000000000d4 udi_api_hid_kbd
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1030   .data:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1235   .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1239   .bss:0000000000000000 udi_hid_kbd_rate
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1244   .bss:0000000000000004 udi_hid_kbd_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1249   .bss:0000000000000008 udi_hid_nkro_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1254   .bss:000000000000000c udi_hid_nkro_rate
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1259   .bss:0000000000000010 udi_hid_exk_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1264   .bss:0000000000000014 udi_hid_exk_rate
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1268   .bss:0000000000000015 udi_hid_exk_b_report_trans_ongoing
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1273   .bss:0000000000000018 udi_hid_kbd_report_trans
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1277   .bss:0000000000000020 udi_hid_nkro_report_trans
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1281   .bss:0000000000000040 udi_hid_exk_report_trans
+
+UNDEFINED SYMBOLS
+udd_g_ctrlreq
+main_kbd_enable
+main_kbd_disable
+udi_hid_setup
+memset
+main_nkro_enable
+main_nkro_disable
+main_exk_enable
+main_exk_disable
+udd_ep_run
+main_b_kbd_enable
+main_b_nkro_enable
+main_b_exk_enable

@@ -1,0 +1,438 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"suspend.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.suspend_idle,"ax",%progbits
+  18              		.align	1
+  19              		.global	suspend_idle
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	suspend_idle:
+  27              	.LVL0:
+  28              	.LFB131:
+  29              		.file 1 "tmk_core/common/arm_atsam/suspend.c"
+   1:tmk_core/common/arm_atsam/suspend.c **** #include "matrix.h"
+   2:tmk_core/common/arm_atsam/suspend.c **** #include "i2c_master.h"
+   3:tmk_core/common/arm_atsam/suspend.c **** #include "led_matrix.h"
+   4:tmk_core/common/arm_atsam/suspend.c **** #include "suspend.h"
+   5:tmk_core/common/arm_atsam/suspend.c **** 
+   6:tmk_core/common/arm_atsam/suspend.c **** /** \brief Suspend idle
+   7:tmk_core/common/arm_atsam/suspend.c ****  *
+   8:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+   9:tmk_core/common/arm_atsam/suspend.c ****  */
+  10:tmk_core/common/arm_atsam/suspend.c **** void suspend_idle(uint8_t time) { /* Note: Not used anywhere currently */
+  30              		.loc 1 10 33 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  11:tmk_core/common/arm_atsam/suspend.c **** }
+  35              		.loc 1 11 1 view .LVU1
+  36 0000 7047     		bx	lr
+  37              		.cfi_endproc
+  38              	.LFE131:
+  40              		.section	.text.matrix_power_up,"ax",%progbits
+  41              		.align	1
+  42              		.weak	matrix_power_up
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  46              		.fpu fpv4-sp-d16
+  48              	matrix_power_up:
+  49              	.LFB135:
+  12:tmk_core/common/arm_atsam/suspend.c **** 
+  13:tmk_core/common/arm_atsam/suspend.c **** /** \brief Run user level Power down
+  14:tmk_core/common/arm_atsam/suspend.c ****  *
+  15:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+  16:tmk_core/common/arm_atsam/suspend.c ****  */
+  17:tmk_core/common/arm_atsam/suspend.c **** __attribute__((weak)) void suspend_power_down_user(void) {}
+  18:tmk_core/common/arm_atsam/suspend.c **** 
+  19:tmk_core/common/arm_atsam/suspend.c **** /** \brief Run keyboard level Power down
+  20:tmk_core/common/arm_atsam/suspend.c ****  *
+  21:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+  22:tmk_core/common/arm_atsam/suspend.c ****  */
+  23:tmk_core/common/arm_atsam/suspend.c **** __attribute__((weak)) void suspend_power_down_kb(void) { suspend_power_down_user(); }
+  24:tmk_core/common/arm_atsam/suspend.c **** 
+  25:tmk_core/common/arm_atsam/suspend.c **** /** \brief Suspend power down
+  26:tmk_core/common/arm_atsam/suspend.c ****  *
+  27:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+  28:tmk_core/common/arm_atsam/suspend.c ****  */
+  29:tmk_core/common/arm_atsam/suspend.c **** void suspend_power_down(void) {
+  30:tmk_core/common/arm_atsam/suspend.c **** #ifdef RGB_MATRIX_ENABLE
+  31:tmk_core/common/arm_atsam/suspend.c ****     I2C3733_Control_Set(0);  // Disable LED driver
+  32:tmk_core/common/arm_atsam/suspend.c **** #endif
+  33:tmk_core/common/arm_atsam/suspend.c **** 
+  34:tmk_core/common/arm_atsam/suspend.c ****     suspend_power_down_kb();
+  35:tmk_core/common/arm_atsam/suspend.c **** }
+  36:tmk_core/common/arm_atsam/suspend.c **** 
+  37:tmk_core/common/arm_atsam/suspend.c **** __attribute__((weak)) void matrix_power_up(void) {}
+  50              		.loc 1 37 50 view -0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              		@ link register save eliminated.
+  55              		.loc 1 37 51 view .LVU3
+  56              		.loc 1 37 1 is_stmt 0 view .LVU4
+  57 0000 7047     		bx	lr
+  58              		.cfi_endproc
+  59              	.LFE135:
+  61              		.thumb_set matrix_power_up.localalias.0,matrix_power_up
+  62              		.section	.text.suspend_power_down_user,"ax",%progbits
+  63              		.align	1
+  64              		.weak	suspend_power_down_user
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  68              		.fpu fpv4-sp-d16
+  70              	suspend_power_down_user:
+  71              	.LFB146:
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  76 0000 7047     		bx	lr
+  77              		.cfi_endproc
+  78              	.LFE146:
+  80              		.section	.text.suspend_power_down_kb,"ax",%progbits
+  81              		.align	1
+  82              		.weak	suspend_power_down_kb
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  86              		.fpu fpv4-sp-d16
+  88              	suspend_power_down_kb:
+  89              	.LFB133:
+  23:tmk_core/common/arm_atsam/suspend.c **** 
+  90              		.loc 1 23 56 is_stmt 1 view -0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  23:tmk_core/common/arm_atsam/suspend.c **** 
+  94              		.loc 1 23 58 view .LVU6
+  23:tmk_core/common/arm_atsam/suspend.c **** 
+  95              		.loc 1 23 56 is_stmt 0 view .LVU7
+  96 0000 08B5     		push	{r3, lr}
+  97              		.cfi_def_cfa_offset 8
+  98              		.cfi_offset 3, -8
+  99              		.cfi_offset 14, -4
+  23:tmk_core/common/arm_atsam/suspend.c **** 
+ 100              		.loc 1 23 58 view .LVU8
+ 101 0002 FFF7FEFF 		bl	suspend_power_down_user
+ 102              	.LVL1:
+  23:tmk_core/common/arm_atsam/suspend.c **** 
+ 103              		.loc 1 23 1 view .LVU9
+ 104 0006 08BD     		pop	{r3, pc}
+ 105              		.cfi_endproc
+ 106              	.LFE133:
+ 108              		.section	.text.suspend_power_down,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	suspend_power_down
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 114              		.fpu fpv4-sp-d16
+ 116              	suspend_power_down:
+ 117              	.LFB134:
+  29:tmk_core/common/arm_atsam/suspend.c **** #ifdef RGB_MATRIX_ENABLE
+ 118              		.loc 1 29 31 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+  31:tmk_core/common/arm_atsam/suspend.c **** #endif
+ 122              		.loc 1 31 5 view .LVU11
+  29:tmk_core/common/arm_atsam/suspend.c **** #ifdef RGB_MATRIX_ENABLE
+ 123              		.loc 1 29 31 is_stmt 0 view .LVU12
+ 124 0000 08B5     		push	{r3, lr}
+ 125              		.cfi_def_cfa_offset 8
+ 126              		.cfi_offset 3, -8
+ 127              		.cfi_offset 14, -4
+  31:tmk_core/common/arm_atsam/suspend.c **** #endif
+ 128              		.loc 1 31 5 view .LVU13
+ 129 0002 0020     		movs	r0, #0
+ 130 0004 FFF7FEFF 		bl	I2C3733_Control_Set
+ 131              	.LVL2:
+  34:tmk_core/common/arm_atsam/suspend.c **** }
+ 132              		.loc 1 34 5 is_stmt 1 view .LVU14
+ 133 0008 FFF7FEFF 		bl	suspend_power_down_kb
+ 134              	.LVL3:
+  35:tmk_core/common/arm_atsam/suspend.c **** 
+ 135              		.loc 1 35 1 is_stmt 0 view .LVU15
+ 136 000c 08BD     		pop	{r3, pc}
+ 137              		.cfi_endproc
+ 138              	.LFE134:
+ 140              		.section	.text.matrix_power_down,"ax",%progbits
+ 141              		.align	1
+ 142              		.weak	matrix_power_down
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 146              		.fpu fpv4-sp-d16
+ 148              	matrix_power_down:
+ 149              	.LFB142:
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153              		@ link register save eliminated.
+ 154 0000 7047     		bx	lr
+ 155              		.cfi_endproc
+ 156              	.LFE142:
+ 158              		.section	.text.suspend_wakeup_condition,"ax",%progbits
+ 159              		.align	1
+ 160              		.global	suspend_wakeup_condition
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 164              		.fpu fpv4-sp-d16
+ 166              	suspend_wakeup_condition:
+ 167              	.LFB137:
+  38:tmk_core/common/arm_atsam/suspend.c **** __attribute__((weak)) void matrix_power_down(void) {}
+  39:tmk_core/common/arm_atsam/suspend.c **** bool                       suspend_wakeup_condition(void) {
+ 168              		.loc 1 39 59 is_stmt 1 view -0
+ 169              		.cfi_startproc
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+  40:tmk_core/common/arm_atsam/suspend.c ****     matrix_power_up();
+ 172              		.loc 1 40 5 view .LVU17
+  39:tmk_core/common/arm_atsam/suspend.c ****     matrix_power_up();
+ 173              		.loc 1 39 59 is_stmt 0 view .LVU18
+ 174 0000 10B5     		push	{r4, lr}
+ 175              		.cfi_def_cfa_offset 8
+ 176              		.cfi_offset 4, -8
+ 177              		.cfi_offset 14, -4
+ 178              		.loc 1 40 5 view .LVU19
+ 179 0002 FFF7FEFF 		bl	matrix_power_up
+ 180              	.LVL4:
+  41:tmk_core/common/arm_atsam/suspend.c ****     matrix_scan();
+ 181              		.loc 1 41 5 is_stmt 1 view .LVU20
+ 182 0006 FFF7FEFF 		bl	matrix_scan
+ 183              	.LVL5:
+  42:tmk_core/common/arm_atsam/suspend.c ****     matrix_power_down();
+ 184              		.loc 1 42 5 view .LVU21
+ 185 000a FFF7FEFF 		bl	matrix_power_down
+ 186              	.LVL6:
+  43:tmk_core/common/arm_atsam/suspend.c ****     for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
+ 187              		.loc 1 43 5 view .LVU22
+ 188              	.LBB2:
+ 189              		.loc 1 43 10 view .LVU23
+ 190              		.loc 1 43 10 is_stmt 0 view .LVU24
+ 191              	.LBE2:
+  42:tmk_core/common/arm_atsam/suspend.c ****     matrix_power_down();
+ 192              		.loc 1 42 5 view .LVU25
+ 193 000e 0024     		movs	r4, #0
+ 194              	.LVL7:
+ 195              	.L9:
+ 196              	.LBB3:
+  44:tmk_core/common/arm_atsam/suspend.c ****         if (matrix_get_row(r)) return true;
+ 197              		.loc 1 44 9 is_stmt 1 view .LVU26
+ 198              		.loc 1 44 13 is_stmt 0 view .LVU27
+ 199 0010 E0B2     		uxtb	r0, r4
+ 200 0012 FFF7FEFF 		bl	matrix_get_row
+ 201              	.LVL8:
+ 202              		.loc 1 44 12 view .LVU28
+ 203 0016 18B9     		cbnz	r0, .L10
+ 204              	.LVL9:
+ 205              		.loc 1 44 12 view .LVU29
+ 206 0018 0134     		adds	r4, r4, #1
+ 207              	.LVL10:
+  43:tmk_core/common/arm_atsam/suspend.c ****     for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
+ 208              		.loc 1 43 5 discriminator 2 view .LVU30
+ 209 001a 0B2C     		cmp	r4, #11
+ 210 001c F8D1     		bne	.L9
+ 211              	.L8:
+  43:tmk_core/common/arm_atsam/suspend.c ****     for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
+ 212              		.loc 1 43 5 discriminator 2 view .LVU31
+ 213              	.LBE3:
+  45:tmk_core/common/arm_atsam/suspend.c ****     }
+  46:tmk_core/common/arm_atsam/suspend.c ****     return false;
+  47:tmk_core/common/arm_atsam/suspend.c **** }
+ 214              		.loc 1 47 1 view .LVU32
+ 215 001e 10BD     		pop	{r4, pc}
+ 216              	.LVL11:
+ 217              	.L10:
+ 218              	.LBB4:
+  44:tmk_core/common/arm_atsam/suspend.c ****         if (matrix_get_row(r)) return true;
+ 219              		.loc 1 44 39 view .LVU33
+ 220 0020 0120     		movs	r0, #1
+ 221 0022 FCE7     		b	.L8
+ 222              	.LBE4:
+ 223              		.cfi_endproc
+ 224              	.LFE137:
+ 226              		.section	.text.suspend_wakeup_init_user,"ax",%progbits
+ 227              		.align	1
+ 228              		.weak	suspend_wakeup_init_user
+ 229              		.syntax unified
+ 230              		.thumb
+ 231              		.thumb_func
+ 232              		.fpu fpv4-sp-d16
+ 234              	suspend_wakeup_init_user:
+ 235              	.LFB144:
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		@ link register save eliminated.
+ 240 0000 7047     		bx	lr
+ 241              		.cfi_endproc
+ 242              	.LFE144:
+ 244              		.section	.text.suspend_wakeup_init_kb,"ax",%progbits
+ 245              		.align	1
+ 246              		.weak	suspend_wakeup_init_kb
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 250              		.fpu fpv4-sp-d16
+ 252              	suspend_wakeup_init_kb:
+ 253              	.LFB139:
+  48:tmk_core/common/arm_atsam/suspend.c **** 
+  49:tmk_core/common/arm_atsam/suspend.c **** /** \brief run user level code immediately after wakeup
+  50:tmk_core/common/arm_atsam/suspend.c ****  *
+  51:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+  52:tmk_core/common/arm_atsam/suspend.c ****  */
+  53:tmk_core/common/arm_atsam/suspend.c **** __attribute__((weak)) void suspend_wakeup_init_user(void) {}
+  54:tmk_core/common/arm_atsam/suspend.c **** 
+  55:tmk_core/common/arm_atsam/suspend.c **** /** \brief run keyboard level code immediately after wakeup
+  56:tmk_core/common/arm_atsam/suspend.c ****  *
+  57:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+  58:tmk_core/common/arm_atsam/suspend.c ****  */
+  59:tmk_core/common/arm_atsam/suspend.c **** __attribute__((weak)) void suspend_wakeup_init_kb(void) { suspend_wakeup_init_user(); }
+ 254              		.loc 1 59 57 is_stmt 1 view -0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              		.loc 1 59 59 view .LVU35
+ 259              		.loc 1 59 57 is_stmt 0 view .LVU36
+ 260 0000 08B5     		push	{r3, lr}
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 3, -8
+ 263              		.cfi_offset 14, -4
+ 264              		.loc 1 59 59 view .LVU37
+ 265 0002 FFF7FEFF 		bl	suspend_wakeup_init_user
+ 266              	.LVL12:
+ 267              		.loc 1 59 1 view .LVU38
+ 268 0006 08BD     		pop	{r3, pc}
+ 269              		.cfi_endproc
+ 270              	.LFE139:
+ 272              		.section	.text.suspend_wakeup_init,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	suspend_wakeup_init
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 278              		.fpu fpv4-sp-d16
+ 280              	suspend_wakeup_init:
+ 281              	.LFB140:
+  60:tmk_core/common/arm_atsam/suspend.c **** 
+  61:tmk_core/common/arm_atsam/suspend.c **** /** \brief run immediately after wakeup
+  62:tmk_core/common/arm_atsam/suspend.c ****  *
+  63:tmk_core/common/arm_atsam/suspend.c ****  * FIXME: needs doc
+  64:tmk_core/common/arm_atsam/suspend.c ****  */
+  65:tmk_core/common/arm_atsam/suspend.c **** void suspend_wakeup_init(void) {
+ 282              		.loc 1 65 32 is_stmt 1 view -0
+ 283              		.cfi_startproc
+ 284              		@ args = 0, pretend = 0, frame = 0
+ 285              		@ frame_needed = 0, uses_anonymous_args = 0
+  66:tmk_core/common/arm_atsam/suspend.c **** #ifdef RGB_MATRIX_ENABLE
+  67:tmk_core/common/arm_atsam/suspend.c **** #    ifdef USE_MASSDROP_CONFIGURATOR
+  68:tmk_core/common/arm_atsam/suspend.c ****     if (led_enabled) {
+  69:tmk_core/common/arm_atsam/suspend.c ****         I2C3733_Control_Set(1);
+  70:tmk_core/common/arm_atsam/suspend.c ****     }
+  71:tmk_core/common/arm_atsam/suspend.c **** #    else
+  72:tmk_core/common/arm_atsam/suspend.c ****     I2C3733_Control_Set(1);
+ 286              		.loc 1 72 5 view .LVU40
+  65:tmk_core/common/arm_atsam/suspend.c **** #ifdef RGB_MATRIX_ENABLE
+ 287              		.loc 1 65 32 is_stmt 0 view .LVU41
+ 288 0000 08B5     		push	{r3, lr}
+ 289              		.cfi_def_cfa_offset 8
+ 290              		.cfi_offset 3, -8
+ 291              		.cfi_offset 14, -4
+ 292              		.loc 1 72 5 view .LVU42
+ 293 0002 0120     		movs	r0, #1
+ 294 0004 FFF7FEFF 		bl	I2C3733_Control_Set
+ 295              	.LVL13:
+  73:tmk_core/common/arm_atsam/suspend.c **** #    endif
+  74:tmk_core/common/arm_atsam/suspend.c **** #endif
+  75:tmk_core/common/arm_atsam/suspend.c **** 
+  76:tmk_core/common/arm_atsam/suspend.c ****     suspend_wakeup_init_kb();
+ 296              		.loc 1 76 5 is_stmt 1 view .LVU43
+ 297 0008 FFF7FEFF 		bl	suspend_wakeup_init_kb
+ 298              	.LVL14:
+  77:tmk_core/common/arm_atsam/suspend.c **** }
+ 299              		.loc 1 77 1 is_stmt 0 view .LVU44
+ 300 000c 08BD     		pop	{r3, pc}
+ 301              		.cfi_endproc
+ 302              	.LFE140:
+ 304              		.comm	dmac_desc_wb,16,16
+ 305              		.comm	dmac_desc,16,16
+ 306              		.text
+ 307              	.Letext0:
+ 308              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 309              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 310              		.file 4 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 311              		.file 5 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 312              		.file 6 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/dmac.h"
+ 313              		.file 7 "tmk_core/protocol/arm_atsam/i2c_master.h"
+ 314              		.file 8 "tmk_core/protocol/arm_atsam/clks.h"
+ 315              		.file 9 "tmk_core/common/action.h"
+ 316              		.file 10 "tmk_core/common/report.h"
+ 317              		.file 11 "tmk_core/common/host.h"
+ 318              		.file 12 "tmk_core/common/debug.h"
+ 319              		.file 13 "quantum/keycode_config.h"
+ 320              		.file 14 "quantum/keymap.h"
+ 321              		.file 15 "quantum/color.h"
+ 322              		.file 16 "quantum/rgb_matrix_types.h"
+ 323              		.file 17 "quantum/rgb_matrix.h"
+ 324              		.file 18 "tmk_core/common/action_layer.h"
+ 325              		.file 19 "tmk_core/common/timer.h"
+ 326              		.file 20 "tmk_core/common/action_util.h"
+ 327              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 328              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 329              		.file 23 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 330              		.file 24 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 331              		.file 25 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 332              		.file 26 "quantum/quantum.h"
+ 333              		.file 27 "tmk_core/protocol/arm_atsam/led_matrix.h"
+ 334              		.file 28 "keyboards/massdrop/ctrl/matrix.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 suspend.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:18     .text.suspend_idle:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:26     .text.suspend_idle:0000000000000000 suspend_idle
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:41     .text.matrix_power_up:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:48     .text.matrix_power_up:0000000000000000 matrix_power_up
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:48     .text.matrix_power_up:0000000000000000 matrix_power_up.localalias.0
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:63     .text.suspend_power_down_user:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:70     .text.suspend_power_down_user:0000000000000000 suspend_power_down_user
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:81     .text.suspend_power_down_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:88     .text.suspend_power_down_kb:0000000000000000 suspend_power_down_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:109    .text.suspend_power_down:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:116    .text.suspend_power_down:0000000000000000 suspend_power_down
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:141    .text.matrix_power_down:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:148    .text.matrix_power_down:0000000000000000 matrix_power_down
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:159    .text.suspend_wakeup_condition:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:166    .text.suspend_wakeup_condition:0000000000000000 suspend_wakeup_condition
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:227    .text.suspend_wakeup_init_user:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:234    .text.suspend_wakeup_init_user:0000000000000000 suspend_wakeup_init_user
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:245    .text.suspend_wakeup_init_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:252    .text.suspend_wakeup_init_kb:0000000000000000 suspend_wakeup_init_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:273    .text.suspend_wakeup_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:280    .text.suspend_wakeup_init:0000000000000000 suspend_wakeup_init
+                            *COM*:0000000000000010 dmac_desc_wb
+                            *COM*:0000000000000010 dmac_desc
+
+UNDEFINED SYMBOLS
+I2C3733_Control_Set
+matrix_scan
+matrix_get_row

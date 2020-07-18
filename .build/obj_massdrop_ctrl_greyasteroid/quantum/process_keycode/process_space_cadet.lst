@@ -1,0 +1,598 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"process_space_cadet.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.perform_space_cadet,"ax",%progbits
+  18              		.align	1
+  19              		.global	perform_space_cadet
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	perform_space_cadet:
+  27              	.LVL0:
+  28              	.LFB8:
+  29              		.file 1 "quantum/process_keycode/process_space_cadet.c"
+   1:quantum/process_keycode/process_space_cadet.c **** /* Copyright 2019 Jack Humbert
+   2:quantum/process_keycode/process_space_cadet.c ****  *
+   3:quantum/process_keycode/process_space_cadet.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/process_keycode/process_space_cadet.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/process_keycode/process_space_cadet.c ****  * the Free Software Foundation, either version 2 of the License, or
+   6:quantum/process_keycode/process_space_cadet.c ****  * (at your option) any later version.
+   7:quantum/process_keycode/process_space_cadet.c ****  *
+   8:quantum/process_keycode/process_space_cadet.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/process_keycode/process_space_cadet.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/process_keycode/process_space_cadet.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/process_keycode/process_space_cadet.c ****  * GNU General Public License for more details.
+  12:quantum/process_keycode/process_space_cadet.c ****  *
+  13:quantum/process_keycode/process_space_cadet.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/process_keycode/process_space_cadet.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/process_keycode/process_space_cadet.c ****  */
+  16:quantum/process_keycode/process_space_cadet.c **** #include "process_space_cadet.h"
+  17:quantum/process_keycode/process_space_cadet.c **** 
+  18:quantum/process_keycode/process_space_cadet.c **** #ifndef TAPPING_TERM
+  19:quantum/process_keycode/process_space_cadet.c **** #    define TAPPING_TERM 200
+  20:quantum/process_keycode/process_space_cadet.c **** #endif
+  21:quantum/process_keycode/process_space_cadet.c **** 
+  22:quantum/process_keycode/process_space_cadet.c **** // ********** OBSOLETE DEFINES, STOP USING! (pls?) **********
+  23:quantum/process_keycode/process_space_cadet.c **** // Shift / paren setup
+  24:quantum/process_keycode/process_space_cadet.c **** #ifndef LSPO_KEY
+  25:quantum/process_keycode/process_space_cadet.c **** #    define LSPO_KEY KC_9
+  26:quantum/process_keycode/process_space_cadet.c **** #endif
+  27:quantum/process_keycode/process_space_cadet.c **** #ifndef RSPC_KEY
+  28:quantum/process_keycode/process_space_cadet.c **** #    define RSPC_KEY KC_0
+  29:quantum/process_keycode/process_space_cadet.c **** #endif
+  30:quantum/process_keycode/process_space_cadet.c **** 
+  31:quantum/process_keycode/process_space_cadet.c **** // Shift / Enter setup
+  32:quantum/process_keycode/process_space_cadet.c **** #ifndef SFTENT_KEY
+  33:quantum/process_keycode/process_space_cadet.c **** #    define SFTENT_KEY KC_ENT
+  34:quantum/process_keycode/process_space_cadet.c **** #endif
+  35:quantum/process_keycode/process_space_cadet.c **** 
+  36:quantum/process_keycode/process_space_cadet.c **** #ifdef DISABLE_SPACE_CADET_MODIFIER
+  37:quantum/process_keycode/process_space_cadet.c **** #    ifndef LSPO_MOD
+  38:quantum/process_keycode/process_space_cadet.c **** #        define LSPO_MOD KC_TRNS
+  39:quantum/process_keycode/process_space_cadet.c **** #    endif
+  40:quantum/process_keycode/process_space_cadet.c **** #    ifndef RSPC_MOD
+  41:quantum/process_keycode/process_space_cadet.c **** #        define RSPC_MOD KC_TRNS
+  42:quantum/process_keycode/process_space_cadet.c **** #    endif
+  43:quantum/process_keycode/process_space_cadet.c **** #else
+  44:quantum/process_keycode/process_space_cadet.c **** #    ifndef LSPO_MOD
+  45:quantum/process_keycode/process_space_cadet.c **** #        define LSPO_MOD KC_LSFT
+  46:quantum/process_keycode/process_space_cadet.c **** #    endif
+  47:quantum/process_keycode/process_space_cadet.c **** #    ifndef RSPC_MOD
+  48:quantum/process_keycode/process_space_cadet.c **** #        define RSPC_MOD KC_RSFT
+  49:quantum/process_keycode/process_space_cadet.c **** #    endif
+  50:quantum/process_keycode/process_space_cadet.c **** #endif
+  51:quantum/process_keycode/process_space_cadet.c **** // **********************************************************
+  52:quantum/process_keycode/process_space_cadet.c **** 
+  53:quantum/process_keycode/process_space_cadet.c **** // Shift / paren setup
+  54:quantum/process_keycode/process_space_cadet.c **** #ifndef LSPO_KEYS
+  55:quantum/process_keycode/process_space_cadet.c **** #    define LSPO_KEYS KC_LSFT, LSPO_MOD, LSPO_KEY
+  56:quantum/process_keycode/process_space_cadet.c **** #endif
+  57:quantum/process_keycode/process_space_cadet.c **** #ifndef RSPC_KEYS
+  58:quantum/process_keycode/process_space_cadet.c **** #    define RSPC_KEYS KC_RSFT, RSPC_MOD, RSPC_KEY
+  59:quantum/process_keycode/process_space_cadet.c **** #endif
+  60:quantum/process_keycode/process_space_cadet.c **** 
+  61:quantum/process_keycode/process_space_cadet.c **** // Control / paren setup
+  62:quantum/process_keycode/process_space_cadet.c **** #ifndef LCPO_KEYS
+  63:quantum/process_keycode/process_space_cadet.c **** #    define LCPO_KEYS KC_LCTL, KC_LSFT, KC_9
+  64:quantum/process_keycode/process_space_cadet.c **** #endif
+  65:quantum/process_keycode/process_space_cadet.c **** #ifndef RCPC_KEYS
+  66:quantum/process_keycode/process_space_cadet.c **** #    define RCPC_KEYS KC_RCTL, KC_RSFT, KC_0
+  67:quantum/process_keycode/process_space_cadet.c **** #endif
+  68:quantum/process_keycode/process_space_cadet.c **** 
+  69:quantum/process_keycode/process_space_cadet.c **** // Alt / paren setup
+  70:quantum/process_keycode/process_space_cadet.c **** #ifndef LAPO_KEYS
+  71:quantum/process_keycode/process_space_cadet.c **** #    define LAPO_KEYS KC_LALT, KC_LSFT, KC_9
+  72:quantum/process_keycode/process_space_cadet.c **** #endif
+  73:quantum/process_keycode/process_space_cadet.c **** #ifndef RAPC_KEYS
+  74:quantum/process_keycode/process_space_cadet.c **** #    define RAPC_KEYS KC_RALT, KC_RSFT, KC_0
+  75:quantum/process_keycode/process_space_cadet.c **** #endif
+  76:quantum/process_keycode/process_space_cadet.c **** 
+  77:quantum/process_keycode/process_space_cadet.c **** // Shift / Enter setup
+  78:quantum/process_keycode/process_space_cadet.c **** #ifndef SFTENT_KEYS
+  79:quantum/process_keycode/process_space_cadet.c **** #    define SFTENT_KEYS KC_RSFT, KC_TRNS, SFTENT_KEY
+  80:quantum/process_keycode/process_space_cadet.c **** #endif
+  81:quantum/process_keycode/process_space_cadet.c **** 
+  82:quantum/process_keycode/process_space_cadet.c **** static uint8_t  sc_last  = 0;
+  83:quantum/process_keycode/process_space_cadet.c **** static uint16_t sc_timer = 0;
+  84:quantum/process_keycode/process_space_cadet.c **** #ifdef SPACE_CADET_MODIFIER_CARRYOVER
+  85:quantum/process_keycode/process_space_cadet.c **** static uint8_t sc_mods = 0;
+  86:quantum/process_keycode/process_space_cadet.c **** #endif
+  87:quantum/process_keycode/process_space_cadet.c **** 
+  88:quantum/process_keycode/process_space_cadet.c **** void perform_space_cadet(keyrecord_t *record, uint8_t holdMod, uint8_t tapMod, uint8_t keycode) {
+  30              		.loc 1 88 97 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  89:quantum/process_keycode/process_space_cadet.c ****     if (record->event.pressed) {
+  34              		.loc 1 89 5 view .LVU1
+  88:quantum/process_keycode/process_space_cadet.c ****     if (record->event.pressed) {
+  35              		.loc 1 88 97 is_stmt 0 view .LVU2
+  36 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  37              		.cfi_def_cfa_offset 24
+  38              		.cfi_offset 4, -24
+  39              		.cfi_offset 5, -20
+  40              		.cfi_offset 6, -16
+  41              		.cfi_offset 7, -12
+  42              		.cfi_offset 8, -8
+  43              		.cfi_offset 14, -4
+  88:quantum/process_keycode/process_space_cadet.c ****     if (record->event.pressed) {
+  44              		.loc 1 88 97 view .LVU3
+  45 0004 9846     		mov	r8, r3
+  46              		.loc 1 89 8 view .LVU4
+  47 0006 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+  48              	.LVL1:
+  49              		.loc 1 89 8 view .LVU5
+  50 0008 294F     		ldr	r7, .L12
+  88:quantum/process_keycode/process_space_cadet.c ****     if (record->event.pressed) {
+  51              		.loc 1 88 97 view .LVU6
+  52 000a 0C46     		mov	r4, r1
+  53 000c 1546     		mov	r5, r2
+  54              		.loc 1 89 8 view .LVU7
+  55 000e 8BB1     		cbz	r3, .L2
+  90:quantum/process_keycode/process_space_cadet.c ****         sc_last  = holdMod;
+  56              		.loc 1 90 9 is_stmt 1 view .LVU8
+  57              		.loc 1 90 18 is_stmt 0 view .LVU9
+  58 0010 3970     		strb	r1, [r7]
+  91:quantum/process_keycode/process_space_cadet.c ****         sc_timer = timer_read();
+  59              		.loc 1 91 9 is_stmt 1 view .LVU10
+  60              		.loc 1 91 20 is_stmt 0 view .LVU11
+  61 0012 FFF7FEFF 		bl	timer_read
+  62              	.LVL2:
+  92:quantum/process_keycode/process_space_cadet.c **** #ifdef SPACE_CADET_MODIFIER_CARRYOVER
+  93:quantum/process_keycode/process_space_cadet.c ****         sc_mods = get_mods();
+  94:quantum/process_keycode/process_space_cadet.c **** #endif
+  95:quantum/process_keycode/process_space_cadet.c ****         if (IS_MOD(holdMod)) {
+  63              		.loc 1 95 13 view .LVU12
+  64 0016 04F12003 		add	r3, r4, #32
+  65              		.loc 1 95 12 view .LVU13
+  66 001a DBB2     		uxtb	r3, r3
+  67 001c 072B     		cmp	r3, #7
+  91:quantum/process_keycode/process_space_cadet.c ****         sc_timer = timer_read();
+  68              		.loc 1 91 18 view .LVU14
+  69 001e 7880     		strh	r0, [r7, #2]	@ movhi
+  70              		.loc 1 95 9 is_stmt 1 view .LVU15
+  71              		.loc 1 95 12 is_stmt 0 view .LVU16
+  72 0020 43D8     		bhi	.L1
+  96:quantum/process_keycode/process_space_cadet.c ****             register_mods(MOD_BIT(holdMod));
+  73              		.loc 1 96 13 is_stmt 1 view .LVU17
+  74              		.loc 1 96 27 is_stmt 0 view .LVU18
+  75 0022 04F00704 		and	r4, r4, #7
+  76 0026 0120     		movs	r0, #1
+  77 0028 A040     		lsls	r0, r0, r4
+  78              		.loc 1 96 13 view .LVU19
+  79 002a C0B2     		uxtb	r0, r0
+  97:quantum/process_keycode/process_space_cadet.c ****         }
+  98:quantum/process_keycode/process_space_cadet.c ****     } else {
+  99:quantum/process_keycode/process_space_cadet.c ****         if (sc_last == holdMod && timer_elapsed(sc_timer) < TAPPING_TERM) {
+ 100:quantum/process_keycode/process_space_cadet.c ****             if (holdMod != tapMod) {
+ 101:quantum/process_keycode/process_space_cadet.c ****                 if (IS_MOD(holdMod)) {
+ 102:quantum/process_keycode/process_space_cadet.c ****                     unregister_mods(MOD_BIT(holdMod));
+ 103:quantum/process_keycode/process_space_cadet.c ****                 }
+ 104:quantum/process_keycode/process_space_cadet.c ****                 if (IS_MOD(tapMod)) {
+ 105:quantum/process_keycode/process_space_cadet.c ****                     register_mods(MOD_BIT(tapMod));
+ 106:quantum/process_keycode/process_space_cadet.c ****                 }
+ 107:quantum/process_keycode/process_space_cadet.c ****             }
+ 108:quantum/process_keycode/process_space_cadet.c **** #ifdef SPACE_CADET_MODIFIER_CARRYOVER
+ 109:quantum/process_keycode/process_space_cadet.c ****             set_weak_mods(sc_mods);
+ 110:quantum/process_keycode/process_space_cadet.c **** #endif
+ 111:quantum/process_keycode/process_space_cadet.c ****             tap_code(keycode);
+ 112:quantum/process_keycode/process_space_cadet.c **** #ifdef SPACE_CADET_MODIFIER_CARRYOVER
+ 113:quantum/process_keycode/process_space_cadet.c ****             clear_weak_mods();
+ 114:quantum/process_keycode/process_space_cadet.c **** #endif
+ 115:quantum/process_keycode/process_space_cadet.c ****             if (IS_MOD(tapMod)) {
+ 116:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(tapMod));
+ 117:quantum/process_keycode/process_space_cadet.c ****             }
+ 118:quantum/process_keycode/process_space_cadet.c ****         } else {
+ 119:quantum/process_keycode/process_space_cadet.c ****             if (IS_MOD(holdMod)) {
+ 120:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(holdMod));
+ 121:quantum/process_keycode/process_space_cadet.c ****             }
+ 122:quantum/process_keycode/process_space_cadet.c ****         }
+ 123:quantum/process_keycode/process_space_cadet.c ****     }
+ 124:quantum/process_keycode/process_space_cadet.c **** }
+  80              		.loc 1 124 1 view .LVU20
+  81 002c BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+  82              		.cfi_remember_state
+  83              		.cfi_restore 14
+  84              		.cfi_restore 8
+  85              		.cfi_restore 7
+  86              		.cfi_restore 6
+  87              		.cfi_restore 5
+  88              		.cfi_restore 4
+  89              		.cfi_def_cfa_offset 0
+  96:quantum/process_keycode/process_space_cadet.c ****             register_mods(MOD_BIT(holdMod));
+  90              		.loc 1 96 13 view .LVU21
+  91 0030 FFF7FEBF 		b	register_mods
+  92              	.LVL3:
+  93              	.L2:
+  94              		.cfi_restore_state
+  99:quantum/process_keycode/process_space_cadet.c ****             if (holdMod != tapMod) {
+  95              		.loc 1 99 9 is_stmt 1 view .LVU22
+  99:quantum/process_keycode/process_space_cadet.c ****             if (holdMod != tapMod) {
+  96              		.loc 1 99 12 is_stmt 0 view .LVU23
+  97 0034 3E78     		ldrb	r6, [r7]	@ zero_extendqisi2
+  98 0036 8E42     		cmp	r6, r1
+  99 0038 2DD1     		bne	.L5
+  99:quantum/process_keycode/process_space_cadet.c ****             if (holdMod != tapMod) {
+ 100              		.loc 1 99 35 discriminator 1 view .LVU24
+ 101 003a 7888     		ldrh	r0, [r7, #2]
+ 102              	.LVL4:
+  99:quantum/process_keycode/process_space_cadet.c ****             if (holdMod != tapMod) {
+ 103              		.loc 1 99 35 discriminator 1 view .LVU25
+ 104 003c FFF7FEFF 		bl	timer_elapsed
+ 105              	.LVL5:
+  99:quantum/process_keycode/process_space_cadet.c ****             if (holdMod != tapMod) {
+ 106              		.loc 1 99 32 discriminator 1 view .LVU26
+ 107 0040 C728     		cmp	r0, #199
+ 108 0042 28D8     		bhi	.L5
+ 100:quantum/process_keycode/process_space_cadet.c ****                 if (IS_MOD(holdMod)) {
+ 109              		.loc 1 100 13 is_stmt 1 view .LVU27
+ 100:quantum/process_keycode/process_space_cadet.c ****                 if (IS_MOD(holdMod)) {
+ 110              		.loc 1 100 16 is_stmt 0 view .LVU28
+ 111 0044 AE42     		cmp	r6, r5
+ 112 0046 05F12004 		add	r4, r5, #32
+ 113 004a 15D0     		beq	.L7
+ 101:quantum/process_keycode/process_space_cadet.c ****                     unregister_mods(MOD_BIT(holdMod));
+ 114              		.loc 1 101 17 is_stmt 1 view .LVU29
+ 101:quantum/process_keycode/process_space_cadet.c ****                     unregister_mods(MOD_BIT(holdMod));
+ 115              		.loc 1 101 21 is_stmt 0 view .LVU30
+ 116 004c 06F12003 		add	r3, r6, #32
+ 101:quantum/process_keycode/process_space_cadet.c ****                     unregister_mods(MOD_BIT(holdMod));
+ 117              		.loc 1 101 20 view .LVU31
+ 118 0050 DBB2     		uxtb	r3, r3
+ 119 0052 072B     		cmp	r3, #7
+ 120 0054 06D8     		bhi	.L8
+ 102:quantum/process_keycode/process_space_cadet.c ****                 }
+ 121              		.loc 1 102 21 is_stmt 1 view .LVU32
+ 102:quantum/process_keycode/process_space_cadet.c ****                 }
+ 122              		.loc 1 102 37 is_stmt 0 view .LVU33
+ 123 0056 06F00706 		and	r6, r6, #7
+ 124 005a 0120     		movs	r0, #1
+ 125 005c B040     		lsls	r0, r0, r6
+ 102:quantum/process_keycode/process_space_cadet.c ****                 }
+ 126              		.loc 1 102 21 view .LVU34
+ 127 005e C0B2     		uxtb	r0, r0
+ 128 0060 FFF7FEFF 		bl	unregister_mods
+ 129              	.LVL6:
+ 130              	.L8:
+ 104:quantum/process_keycode/process_space_cadet.c ****                     register_mods(MOD_BIT(tapMod));
+ 131              		.loc 1 104 17 is_stmt 1 view .LVU35
+ 104:quantum/process_keycode/process_space_cadet.c ****                     register_mods(MOD_BIT(tapMod));
+ 132              		.loc 1 104 20 is_stmt 0 view .LVU36
+ 133 0064 E3B2     		uxtb	r3, r4
+ 134 0066 072B     		cmp	r3, #7
+ 135 0068 06D8     		bhi	.L7
+ 105:quantum/process_keycode/process_space_cadet.c ****                 }
+ 136              		.loc 1 105 21 is_stmt 1 view .LVU37
+ 105:quantum/process_keycode/process_space_cadet.c ****                 }
+ 137              		.loc 1 105 35 is_stmt 0 view .LVU38
+ 138 006a 05F00703 		and	r3, r5, #7
+ 139 006e 0120     		movs	r0, #1
+ 140 0070 9840     		lsls	r0, r0, r3
+ 105:quantum/process_keycode/process_space_cadet.c ****                 }
+ 141              		.loc 1 105 21 view .LVU39
+ 142 0072 C0B2     		uxtb	r0, r0
+ 143 0074 FFF7FEFF 		bl	register_mods
+ 144              	.LVL7:
+ 145              	.L7:
+ 111:quantum/process_keycode/process_space_cadet.c **** #ifdef SPACE_CADET_MODIFIER_CARRYOVER
+ 146              		.loc 1 111 13 is_stmt 1 view .LVU40
+ 147 0078 4046     		mov	r0, r8
+ 115:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(tapMod));
+ 148              		.loc 1 115 16 is_stmt 0 view .LVU41
+ 149 007a E4B2     		uxtb	r4, r4
+ 111:quantum/process_keycode/process_space_cadet.c **** #ifdef SPACE_CADET_MODIFIER_CARRYOVER
+ 150              		.loc 1 111 13 view .LVU42
+ 151 007c FFF7FEFF 		bl	tap_code
+ 152              	.LVL8:
+ 115:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(tapMod));
+ 153              		.loc 1 115 13 is_stmt 1 view .LVU43
+ 115:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(tapMod));
+ 154              		.loc 1 115 16 is_stmt 0 view .LVU44
+ 155 0080 072C     		cmp	r4, #7
+ 156 0082 12D8     		bhi	.L1
+ 116:quantum/process_keycode/process_space_cadet.c ****             }
+ 157              		.loc 1 116 17 is_stmt 1 view .LVU45
+ 116:quantum/process_keycode/process_space_cadet.c ****             }
+ 158              		.loc 1 116 33 is_stmt 0 view .LVU46
+ 159 0084 05F00705 		and	r5, r5, #7
+ 160 0088 0120     		movs	r0, #1
+ 161 008a A840     		lsls	r0, r0, r5
+ 162              	.L11:
+ 120:quantum/process_keycode/process_space_cadet.c ****             }
+ 163              		.loc 1 120 17 view .LVU47
+ 164 008c C0B2     		uxtb	r0, r0
+ 165              		.loc 1 124 1 view .LVU48
+ 166 008e BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 167              		.cfi_remember_state
+ 168              		.cfi_restore 14
+ 169              		.cfi_restore 8
+ 170              		.cfi_restore 7
+ 171              		.cfi_restore 6
+ 172              		.cfi_restore 5
+ 173              		.cfi_restore 4
+ 174              		.cfi_def_cfa_offset 0
+ 120:quantum/process_keycode/process_space_cadet.c ****             }
+ 175              		.loc 1 120 17 view .LVU49
+ 176 0092 FFF7FEBF 		b	unregister_mods
+ 177              	.LVL9:
+ 178              	.L5:
+ 179              		.cfi_restore_state
+ 119:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(holdMod));
+ 180              		.loc 1 119 13 is_stmt 1 view .LVU50
+ 119:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(holdMod));
+ 181              		.loc 1 119 17 is_stmt 0 view .LVU51
+ 182 0096 04F12003 		add	r3, r4, #32
+ 119:quantum/process_keycode/process_space_cadet.c ****                 unregister_mods(MOD_BIT(holdMod));
+ 183              		.loc 1 119 16 view .LVU52
+ 184 009a DBB2     		uxtb	r3, r3
+ 185 009c 072B     		cmp	r3, #7
+ 186 009e 04D8     		bhi	.L1
+ 120:quantum/process_keycode/process_space_cadet.c ****             }
+ 187              		.loc 1 120 17 is_stmt 1 view .LVU53
+ 120:quantum/process_keycode/process_space_cadet.c ****             }
+ 188              		.loc 1 120 33 is_stmt 0 view .LVU54
+ 189 00a0 04F00704 		and	r4, r4, #7
+ 190 00a4 0120     		movs	r0, #1
+ 191 00a6 A040     		lsls	r0, r0, r4
+ 192 00a8 F0E7     		b	.L11
+ 193              	.L1:
+ 194              		.loc 1 124 1 view .LVU55
+ 195 00aa BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 196              	.L13:
+ 197 00ae 00BF     		.align	2
+ 198              	.L12:
+ 199 00b0 00000000 		.word	.LANCHOR0
+ 200              		.cfi_endproc
+ 201              	.LFE8:
+ 203              		.section	.text.process_space_cadet,"ax",%progbits
+ 204              		.align	1
+ 205              		.global	process_space_cadet
+ 206              		.syntax unified
+ 207              		.thumb
+ 208              		.thumb_func
+ 209              		.fpu fpv4-sp-d16
+ 211              	process_space_cadet:
+ 212              	.LVL10:
+ 213              	.LFB9:
+ 125:quantum/process_keycode/process_space_cadet.c **** 
+ 126:quantum/process_keycode/process_space_cadet.c **** bool process_space_cadet(uint16_t keycode, keyrecord_t *record) {
+ 214              		.loc 1 126 65 is_stmt 1 view -0
+ 215              		.cfi_startproc
+ 216              		@ args = 0, pretend = 0, frame = 0
+ 217              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127:quantum/process_keycode/process_space_cadet.c ****     switch (keycode) {
+ 218              		.loc 1 127 5 view .LVU57
+ 126:quantum/process_keycode/process_space_cadet.c ****     switch (keycode) {
+ 219              		.loc 1 126 65 is_stmt 0 view .LVU58
+ 220 0000 08B5     		push	{r3, lr}
+ 221              		.cfi_def_cfa_offset 8
+ 222              		.cfi_offset 3, -8
+ 223              		.cfi_offset 14, -4
+ 224              		.loc 1 127 5 view .LVU59
+ 225 0002 45F6F342 		movw	r2, #23795
+ 126:quantum/process_keycode/process_space_cadet.c ****     switch (keycode) {
+ 226              		.loc 1 126 65 view .LVU60
+ 227 0006 0346     		mov	r3, r0
+ 228              		.loc 1 127 5 view .LVU61
+ 229 0008 9342     		cmp	r3, r2
+ 126:quantum/process_keycode/process_space_cadet.c ****     switch (keycode) {
+ 230              		.loc 1 126 65 view .LVU62
+ 231 000a 0846     		mov	r0, r1
+ 232              	.LVL11:
+ 233              		.loc 1 127 5 view .LVU63
+ 234 000c 26D0     		beq	.L15
+ 235 000e 12D8     		bhi	.L16
+ 236 0010 45F6D842 		movw	r2, #23768
+ 237 0014 9342     		cmp	r3, r2
+ 238 0016 1DD0     		beq	.L17
+ 239 0018 45F6D942 		movw	r2, #23769
+ 240 001c 9342     		cmp	r3, r2
+ 241 001e 2DD0     		beq	.L18
+ 242 0020 45F6D742 		movw	r2, #23767
+ 243 0024 9342     		cmp	r3, r2
+ 244 0026 0FD1     		bne	.L20
+ 128:quantum/process_keycode/process_space_cadet.c ****         case KC_LSPO: {
+ 129:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, LSPO_KEYS);
+ 245              		.loc 1 129 13 is_stmt 1 view .LVU64
+ 246 0028 E122     		movs	r2, #225
+ 247 002a 2623     		movs	r3, #38
+ 248 002c 1146     		mov	r1, r2
+ 249              	.LVL12:
+ 250              	.L26:
+ 130:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 131:quantum/process_keycode/process_space_cadet.c ****         }
+ 132:quantum/process_keycode/process_space_cadet.c ****         case KC_RSPC: {
+ 133:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, RSPC_KEYS);
+ 134:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 135:quantum/process_keycode/process_space_cadet.c ****         }
+ 136:quantum/process_keycode/process_space_cadet.c ****         case KC_LCPO: {
+ 137:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, LCPO_KEYS);
+ 138:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 139:quantum/process_keycode/process_space_cadet.c ****         }
+ 140:quantum/process_keycode/process_space_cadet.c ****         case KC_RCPC: {
+ 141:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, RCPC_KEYS);
+ 142:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 143:quantum/process_keycode/process_space_cadet.c ****         }
+ 144:quantum/process_keycode/process_space_cadet.c ****         case KC_LAPO: {
+ 145:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, LAPO_KEYS);
+ 146:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 147:quantum/process_keycode/process_space_cadet.c ****         }
+ 148:quantum/process_keycode/process_space_cadet.c ****         case KC_RAPC: {
+ 149:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, RAPC_KEYS);
+ 150:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 151:quantum/process_keycode/process_space_cadet.c ****         }
+ 152:quantum/process_keycode/process_space_cadet.c ****         case KC_SFTENT: {
+ 153:quantum/process_keycode/process_space_cadet.c ****             perform_space_cadet(record, SFTENT_KEYS);
+ 251              		.loc 1 153 13 is_stmt 0 view .LVU65
+ 252 002e FFF7FEFF 		bl	perform_space_cadet
+ 253              	.LVL13:
+ 154:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 254              		.loc 1 154 13 is_stmt 1 view .LVU66
+ 255              		.loc 1 154 20 is_stmt 0 view .LVU67
+ 256 0032 0020     		movs	r0, #0
+ 257              	.L24:
+ 155:quantum/process_keycode/process_space_cadet.c ****         }
+ 156:quantum/process_keycode/process_space_cadet.c ****         default: {
+ 157:quantum/process_keycode/process_space_cadet.c ****             if (record->event.pressed) {
+ 158:quantum/process_keycode/process_space_cadet.c ****                 sc_last = 0;
+ 159:quantum/process_keycode/process_space_cadet.c ****             }
+ 160:quantum/process_keycode/process_space_cadet.c ****             break;
+ 161:quantum/process_keycode/process_space_cadet.c ****         }
+ 162:quantum/process_keycode/process_space_cadet.c ****     }
+ 163:quantum/process_keycode/process_space_cadet.c ****     return true;
+ 164:quantum/process_keycode/process_space_cadet.c **** }
+ 258              		.loc 1 164 1 view .LVU68
+ 259 0034 08BD     		pop	{r3, pc}
+ 260              	.LVL14:
+ 261              	.L16:
+ 127:quantum/process_keycode/process_space_cadet.c ****         case KC_LSPO: {
+ 262              		.loc 1 127 5 view .LVU69
+ 263 0036 45F6F542 		movw	r2, #23797
+ 264 003a 9342     		cmp	r3, r2
+ 265 003c 16D0     		beq	.L21
+ 266 003e 11D3     		bcc	.L22
+ 267 0040 45F6F642 		movw	r2, #23798
+ 268 0044 9342     		cmp	r3, r2
+ 269 0046 15D0     		beq	.L23
+ 270              	.L20:
+ 157:quantum/process_keycode/process_space_cadet.c ****                 sc_last = 0;
+ 271              		.loc 1 157 13 is_stmt 1 view .LVU70
+ 157:quantum/process_keycode/process_space_cadet.c ****                 sc_last = 0;
+ 272              		.loc 1 157 30 is_stmt 0 view .LVU71
+ 273 0048 8078     		ldrb	r0, [r0, #2]	@ zero_extendqisi2
+ 274              	.LVL15:
+ 157:quantum/process_keycode/process_space_cadet.c ****                 sc_last = 0;
+ 275              		.loc 1 157 16 view .LVU72
+ 276 004a D0B1     		cbz	r0, .L25
+ 158:quantum/process_keycode/process_space_cadet.c ****             }
+ 277              		.loc 1 158 17 is_stmt 1 view .LVU73
+ 158:quantum/process_keycode/process_space_cadet.c ****             }
+ 278              		.loc 1 158 25 is_stmt 0 view .LVU74
+ 279 004c 0E4B     		ldr	r3, .L28
+ 280 004e 0022     		movs	r2, #0
+ 281 0050 1A70     		strb	r2, [r3]
+ 282 0052 EFE7     		b	.L24
+ 283              	.LVL16:
+ 284              	.L17:
+ 133:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 285              		.loc 1 133 13 is_stmt 1 view .LVU75
+ 286 0054 2723     		movs	r3, #39
+ 287 0056 E522     		movs	r2, #229
+ 288              	.L27:
+ 153:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 289              		.loc 1 153 13 is_stmt 0 view .LVU76
+ 290 0058 E521     		movs	r1, #229
+ 291 005a E8E7     		b	.L26
+ 292              	.L15:
+ 137:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 293              		.loc 1 137 13 is_stmt 1 view .LVU77
+ 294 005c 2623     		movs	r3, #38
+ 295 005e E122     		movs	r2, #225
+ 296 0060 E021     		movs	r1, #224
+ 297 0062 E4E7     		b	.L26
+ 298              	.L22:
+ 141:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 299              		.loc 1 141 13 view .LVU78
+ 300 0064 2723     		movs	r3, #39
+ 301 0066 E522     		movs	r2, #229
+ 302 0068 E421     		movs	r1, #228
+ 303 006a E0E7     		b	.L26
+ 304              	.L21:
+ 145:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 305              		.loc 1 145 13 view .LVU79
+ 306 006c 2623     		movs	r3, #38
+ 307 006e E122     		movs	r2, #225
+ 308 0070 E221     		movs	r1, #226
+ 309 0072 DCE7     		b	.L26
+ 310              	.L23:
+ 149:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 311              		.loc 1 149 13 view .LVU80
+ 312 0074 2723     		movs	r3, #39
+ 313 0076 E522     		movs	r2, #229
+ 314 0078 E621     		movs	r1, #230
+ 315 007a D8E7     		b	.L26
+ 316              	.L18:
+ 153:quantum/process_keycode/process_space_cadet.c ****             return false;
+ 317              		.loc 1 153 13 view .LVU81
+ 318 007c 2823     		movs	r3, #40
+ 319 007e 0122     		movs	r2, #1
+ 320 0080 EAE7     		b	.L27
+ 321              	.LVL17:
+ 322              	.L25:
+ 163:quantum/process_keycode/process_space_cadet.c **** }
+ 323              		.loc 1 163 12 is_stmt 0 view .LVU82
+ 324 0082 0120     		movs	r0, #1
+ 325 0084 D6E7     		b	.L24
+ 326              	.L29:
+ 327 0086 00BF     		.align	2
+ 328              	.L28:
+ 329 0088 00000000 		.word	.LANCHOR0
+ 330              		.cfi_endproc
+ 331              	.LFE9:
+ 333              		.bss
+ 334              		.align	1
+ 335              		.set	.LANCHOR0,. + 0
+ 338              	sc_last:
+ 339 0000 00       		.space	1
+ 340 0001 00       		.space	1
+ 343              	sc_timer:
+ 344 0002 0000     		.space	2
+ 345              		.text
+ 346              	.Letext0:
+ 347              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 348              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 349              		.file 4 "tmk_core/protocol/arm_atsam/clks.h"
+ 350              		.file 5 "tmk_core/common/keyboard.h"
+ 351              		.file 6 "tmk_core/common/action.h"
+ 352              		.file 7 "tmk_core/common/report.h"
+ 353              		.file 8 "tmk_core/common/host.h"
+ 354              		.file 9 "tmk_core/common/debug.h"
+ 355              		.file 10 "quantum/keycode_config.h"
+ 356              		.file 11 "tmk_core/common/keycode.h"
+ 357              		.file 12 "quantum/quantum_keycodes.h"
+ 358              		.file 13 "quantum/keymap.h"
+ 359              		.file 14 "quantum/color.h"
+ 360              		.file 15 "quantum/rgb_matrix_types.h"
+ 361              		.file 16 "quantum/rgb_matrix.h"
+ 362              		.file 17 "tmk_core/common/action_layer.h"
+ 363              		.file 18 "tmk_core/common/timer.h"
+ 364              		.file 19 "tmk_core/common/action_util.h"
+ 365              		.file 20 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 366              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 367              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 368              		.file 23 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 369              		.file 24 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 370              		.file 25 "quantum/quantum.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 process_space_cadet.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:18     .text.perform_space_cadet:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:199    .text.perform_space_cadet:00000000000000b0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:204    .text.process_space_cadet:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:211    .text.process_space_cadet:0000000000000000 process_space_cadet
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:329    .text.process_space_cadet:0000000000000088 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:334    .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:338    .bss:0000000000000000 sc_last
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:343    .bss:0000000000000002 sc_timer
+
+UNDEFINED SYMBOLS
+timer_read
+register_mods
+timer_elapsed
+unregister_mods
+tap_code

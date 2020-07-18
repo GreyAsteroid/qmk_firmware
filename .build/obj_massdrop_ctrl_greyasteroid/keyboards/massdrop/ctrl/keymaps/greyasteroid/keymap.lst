@@ -1,0 +1,239 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"keymap.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	keymaps
+  18              		.comm	dmac_desc_wb,16,16
+  19              		.comm	dmac_desc,16,16
+  20              		.section	.rodata
+  21              		.align	1
+  24              	keymaps:
+  25 0000 2900     		.short	41
+  26 0002 3A00     		.short	58
+  27 0004 3B00     		.short	59
+  28 0006 3C00     		.short	60
+  29 0008 3D00     		.short	61
+  30 000a 3E00     		.short	62
+  31 000c 3F00     		.short	63
+  32 000e 4000     		.short	64
+  33 0010 3500     		.short	53
+  34 0012 1E00     		.short	30
+  35 0014 1F00     		.short	31
+  36 0016 2000     		.short	32
+  37 0018 2100     		.short	33
+  38 001a 2200     		.short	34
+  39 001c 2300     		.short	35
+  40 001e 2400     		.short	36
+  41 0020 2B00     		.short	43
+  42 0022 1400     		.short	20
+  43 0024 1A00     		.short	26
+  44 0026 0800     		.short	8
+  45 0028 1500     		.short	21
+  46 002a 1700     		.short	23
+  47 002c 1C00     		.short	28
+  48 002e 1800     		.short	24
+  49 0030 3900     		.short	57
+  50 0032 0400     		.short	4
+  51 0034 1600     		.short	22
+  52 0036 0700     		.short	7
+  53 0038 0900     		.short	9
+  54 003a 0A00     		.short	10
+  55 003c 0B00     		.short	11
+  56 003e 0D00     		.short	13
+  57 0040 E100     		.short	225
+  58 0042 1D00     		.short	29
+  59 0044 1B00     		.short	27
+  60 0046 0600     		.short	6
+  61 0048 1900     		.short	25
+  62 004a 0500     		.short	5
+  63 004c 1100     		.short	17
+  64 004e 1000     		.short	16
+  65 0050 E000     		.short	224
+  66 0052 E300     		.short	227
+  67 0054 E200     		.short	226
+  68 0056 2C00     		.short	44
+  69 0058 E600     		.short	230
+  70 005a E700     		.short	231
+  71 005c 0151     		.short	20737
+  72 005e E400     		.short	228
+  73 0060 4100     		.short	65
+  74 0062 4200     		.short	66
+  75 0064 4300     		.short	67
+  76 0066 4400     		.short	68
+  77 0068 4500     		.short	69
+  78 006a 4600     		.short	70
+  79 006c 4700     		.short	71
+  80 006e 4800     		.short	72
+  81 0070 2500     		.short	37
+  82 0072 2600     		.short	38
+  83 0074 2700     		.short	39
+  84 0076 2D00     		.short	45
+  85 0078 2E00     		.short	46
+  86 007a 2A00     		.short	42
+  87 007c 4900     		.short	73
+  88 007e 4A00     		.short	74
+  89 0080 0C00     		.short	12
+  90 0082 1200     		.short	18
+  91 0084 1300     		.short	19
+  92 0086 2F00     		.short	47
+  93 0088 3000     		.short	48
+  94 008a 3100     		.short	49
+  95 008c 4C00     		.short	76
+  96 008e 4D00     		.short	77
+  97 0090 0E00     		.short	14
+  98 0092 0F00     		.short	15
+  99 0094 3300     		.short	51
+ 100 0096 3400     		.short	52
+ 101 0098 2800     		.short	40
+ 102 009a 5200     		.short	82
+ 103 009c 4E00     		.short	78
+ 104 009e 4B00     		.short	75
+ 105 00a0 3600     		.short	54
+ 106 00a2 3700     		.short	55
+ 107 00a4 3800     		.short	56
+ 108 00a6 E500     		.short	229
+ 109 00a8 5000     		.short	80
+ 110 00aa 5100     		.short	81
+ 111 00ac 4F00     		.short	79
+ 112 00ae 0000     		.space	2
+ 113 00b0 A500     		.short	165
+ 114 00b2 6800     		.short	104
+ 115 00b4 6900     		.short	105
+ 116 00b6 6A00     		.short	106
+ 117 00b8 6B00     		.short	107
+ 118 00ba 6C00     		.short	108
+ 119 00bc 6D00     		.short	109
+ 120 00be 6E00     		.short	110
+ 121 00c0 0100     		.short	1
+ 122 00c2 0100     		.short	1
+ 123 00c4 0100     		.short	1
+ 124 00c6 0100     		.short	1
+ 125 00c8 0100     		.short	1
+ 126 00ca 0100     		.short	1
+ 127 00cc 0100     		.short	1
+ 128 00ce 0100     		.short	1
+ 129 00d0 0100     		.short	1
+ 130 00d2 CC5C     		.short	23756
+ 131 00d4 C95C     		.short	23753
+ 132 00d6 CB5C     		.short	23755
+ 133 00d8 C55C     		.short	23749
+ 134 00da C75C     		.short	23751
+ 135 00dc 0100     		.short	1
+ 136 00de 0100     		.short	1
+ 137 00e0 0100     		.short	1
+ 138 00e2 C45C     		.short	23748
+ 139 00e4 CA5C     		.short	23754
+ 140 00e6 C35C     		.short	23747
+ 141 00e8 C65C     		.short	23750
+ 142 00ea C85C     		.short	23752
+ 143 00ec 0100     		.short	1
+ 144 00ee 0100     		.short	1
+ 145 00f0 0100     		.short	1
+ 146 00f2 C25C     		.short	23746
+ 147 00f4 0100     		.short	1
+ 148 00f6 0100     		.short	1
+ 149 00f8 0100     		.short	1
+ 150 00fa 0100     		.short	1
+ 151 00fc 0100     		.short	1
+ 152 00fe 0100     		.short	1
+ 153 0100 0100     		.short	1
+ 154 0102 0100     		.short	1
+ 155 0104 0100     		.short	1
+ 156 0106 0100     		.short	1
+ 157 0108 0100     		.short	1
+ 158 010a 0100     		.short	1
+ 159 010c 0100     		.short	1
+ 160 010e 0100     		.short	1
+ 161 0110 6F00     		.short	111
+ 162 0112 7000     		.short	112
+ 163 0114 7100     		.short	113
+ 164 0116 7200     		.short	114
+ 165 0118 7300     		.short	115
+ 166 011a 0100     		.short	1
+ 167 011c 0100     		.short	1
+ 168 011e 0100     		.short	1
+ 169 0120 0100     		.short	1
+ 170 0122 0100     		.short	1
+ 171 0124 0100     		.short	1
+ 172 0126 0100     		.short	1
+ 173 0128 0100     		.short	1
+ 174 012a 0100     		.short	1
+ 175 012c 0100     		.short	1
+ 176 012e 0100     		.short	1
+ 177 0130 0100     		.short	1
+ 178 0132 0100     		.short	1
+ 179 0134 0100     		.short	1
+ 180 0136 0100     		.short	1
+ 181 0138 0100     		.short	1
+ 182 013a 0100     		.short	1
+ 183 013c 0100     		.short	1
+ 184 013e 0100     		.short	1
+ 185 0140 0100     		.short	1
+ 186 0142 0100     		.short	1
+ 187 0144 0100     		.short	1
+ 188 0146 0100     		.short	1
+ 189 0148 0100     		.short	1
+ 190 014a 0100     		.short	1
+ 191 014c 0100     		.short	1
+ 192 014e 0100     		.short	1
+ 193 0150 0100     		.short	1
+ 194 0152 0100     		.short	1
+ 195 0154 0100     		.short	1
+ 196 0156 0100     		.short	1
+ 197 0158 0100     		.short	1
+ 198 015a 0100     		.short	1
+ 199 015c 0100     		.short	1
+ 200 015e 0000     		.space	2
+ 201              		.text
+ 202              	.Letext0:
+ 203              		.file 1 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 204              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 205              		.file 3 "tmk_core/protocol/arm_atsam/clks.h"
+ 206              		.file 4 "tmk_core/common/keycode.h"
+ 207              		.file 5 "tmk_core/common/action.h"
+ 208              		.file 6 "tmk_core/common/report.h"
+ 209              		.file 7 "tmk_core/common/host.h"
+ 210              		.file 8 "tmk_core/common/debug.h"
+ 211              		.file 9 "quantum/keycode_config.h"
+ 212              		.file 10 "quantum/quantum_keycodes.h"
+ 213              		.file 11 "quantum/keymap.h"
+ 214              		.file 12 "quantum/color.h"
+ 215              		.file 13 "quantum/rgb_matrix_types.h"
+ 216              		.file 14 "quantum/rgb_matrix.h"
+ 217              		.file 15 "tmk_core/common/action_layer.h"
+ 218              		.file 16 "tmk_core/common/timer.h"
+ 219              		.file 17 "tmk_core/common/action_util.h"
+ 220              		.file 18 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 221              		.file 19 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 222              		.file 20 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 223              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 224              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 225              		.file 23 "quantum/quantum.h"
+ 226              		.file 24 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 227              		.file 25 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 228              		.file 26 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/dmac.h"
+ 229              		.file 27 "tmk_core/protocol/arm_atsam/i2c_master.h"
+ 230              		.file 28 "tmk_core/protocol/arm_atsam/led_matrix.h"
+ 231              		.file 29 "tmk_core/protocol/arm_atsam/usb/udi_cdc.h"
+ 232              		.file 30 "tmk_core/protocol/arm_atsam/usb/usb2422.h"
+ 233              		.file 31 "keyboards/massdrop/ctrl/keymaps/greyasteroid/keymap.c"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 keymap.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccQ7zBu1.s:24     .rodata:0000000000000000 keymaps
+                            *COM*:0000000000000010 dmac_desc_wb
+                            *COM*:0000000000000010 dmac_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccQ7zBu1.s:21     .rodata:0000000000000000 $d
+
+NO UNDEFINED SYMBOLS

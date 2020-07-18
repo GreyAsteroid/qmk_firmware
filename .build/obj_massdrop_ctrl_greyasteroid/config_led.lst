@@ -1,0 +1,605 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"config_led.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.rgb_matrix_indicators_kb,"ax",%progbits
+  18              		.align	1
+  19              		.global	rgb_matrix_indicators_kb
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	rgb_matrix_indicators_kb:
+  27              	.LFB131:
+  28              		.file 1 "keyboards/massdrop/ctrl/config_led.c"
+   1:keyboards/massdrop/ctrl/config_led.c **** #ifdef RGB_MATRIX_ENABLE
+   2:keyboards/massdrop/ctrl/config_led.c **** #include "ctrl.h"
+   3:keyboards/massdrop/ctrl/config_led.c **** 
+   4:keyboards/massdrop/ctrl/config_led.c **** #include "led_matrix.h"
+   5:keyboards/massdrop/ctrl/config_led.c **** #include "rgb_matrix.h"
+   6:keyboards/massdrop/ctrl/config_led.c **** #include "config_led.h"
+   7:keyboards/massdrop/ctrl/config_led.c **** 
+   8:keyboards/massdrop/ctrl/config_led.c **** led_config_t g_led_config = { {
+   9:keyboards/massdrop/ctrl/config_led.c ****     {   0,   1,   2,   3,   4,   5,   6,   7 },
+  10:keyboards/massdrop/ctrl/config_led.c ****     {  16,  17,  18,  19,  20,  21,  22,  23 },
+  11:keyboards/massdrop/ctrl/config_led.c ****     {  33,  34,  35,  36,  37,  38,  39,  40 },
+  12:keyboards/massdrop/ctrl/config_led.c ****     {  50,  51,  52,  53,  54,  55,  56,  57 },
+  13:keyboards/massdrop/ctrl/config_led.c ****     {  63,  64,  65,  66,  67,  68,  69,  70 },
+  14:keyboards/massdrop/ctrl/config_led.c ****     {  76,  77,  78,  79,  80,  81,  82,  83 },
+  15:keyboards/massdrop/ctrl/config_led.c ****     {   8,   9,  10,  11,  12,  13,  14,  15 },
+  16:keyboards/massdrop/ctrl/config_led.c ****     {  24,  25,  26,  27,  28,  29,  30,  31 },
+  17:keyboards/massdrop/ctrl/config_led.c ****     {  41,  42,  43,  44,  45,  46,  47,  48 },
+  18:keyboards/massdrop/ctrl/config_led.c ****     {  58,  59,  60,  61,  62,  75,  49,  32 },
+  19:keyboards/massdrop/ctrl/config_led.c ****     {  71,  72,  73,  74,  84,  85,  86, NO_LED }
+  20:keyboards/massdrop/ctrl/config_led.c **** }, {
+  21:keyboards/massdrop/ctrl/config_led.c ****   // KC_ESC, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,
+  22:keyboards/massdrop/ctrl/config_led.c ****     {   7,   5 }, {  31,   5 }, {  43,   5 }, {  55,   5 }, {  67,   5 }, {  85,   5 }, {  97,   5 
+  23:keyboards/massdrop/ctrl/config_led.c ****     { 121,   5 }, { 139,   5 }, { 151,   5 }, { 163,   5 }, { 175,   5 }, { 193,   5 }, { 205,   5 
+  24:keyboards/massdrop/ctrl/config_led.c ****   // KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC, 
+  25:keyboards/massdrop/ctrl/config_led.c ****     {   7,  20 }, {  19,  20 }, {  31,  20 }, {  43,  20 }, {  55,  20 }, {  67,  20 }, {  79,  20 
+  26:keyboards/massdrop/ctrl/config_led.c ****     { 103,  20 }, { 115,  20 }, { 127,  20 }, { 139,  20 }, { 151,  20 }, { 169,  20 }, { 193,  20 
+  27:keyboards/massdrop/ctrl/config_led.c ****     { 217,  20 },
+  28:keyboards/massdrop/ctrl/config_led.c ****   // KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
+  29:keyboards/massdrop/ctrl/config_led.c ****     {  10,  30 }, {  25,  30 }, {  37,  30 }, {  49,  30 }, {  61,  30 }, {  73,  30 }, {  85,  30 
+  30:keyboards/massdrop/ctrl/config_led.c ****     { 109,  30 }, { 121,  30 }, { 133,  30 }, { 145,  30 }, { 157,  30 }, { 172,  30 }, { 193,  30 
+  31:keyboards/massdrop/ctrl/config_led.c ****     { 217,  30 },
+  32:keyboards/massdrop/ctrl/config_led.c ****   // KC_CAPS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT
+  33:keyboards/massdrop/ctrl/config_led.c ****     {  11,  39 }, {  28,  39 }, {  40,  39 }, {  52,  39 }, {  64,  39 }, {  76,  39 }, {  88,  39 
+  34:keyboards/massdrop/ctrl/config_led.c ****     { 112,  39 }, { 124,  39 }, { 136,  39 }, { 148,  39 }, { 168,  39 },
+  35:keyboards/massdrop/ctrl/config_led.c ****   // KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_UP
+  36:keyboards/massdrop/ctrl/config_led.c ****     {  14,  49 }, {  34,  49 }, {  46,  49 }, {  58,  49 }, {  70,  49 }, {  82,  49 }, {  94,  49 
+  37:keyboards/massdrop/ctrl/config_led.c ****     { 118,  49 }, { 130,  49 }, { 142,  49 }, { 165,  49 }, { 205,  49 },
+  38:keyboards/massdrop/ctrl/config_led.c ****   // KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, MO(1), KC_APP, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
+  39:keyboards/massdrop/ctrl/config_led.c ****     {   8,  59 }, {  23,  59 }, {  38,  59 }, {  83,  59 }, { 129,  59 }, { 144,  59 }, { 159,  59 
+  40:keyboards/massdrop/ctrl/config_led.c ****     { 193,  59 }, { 205,  59 }, { 217,  59 },
+  41:keyboards/massdrop/ctrl/config_led.c ****   // Underglow / Border
+  42:keyboards/massdrop/ctrl/config_led.c ****     { 224,  64 }, { 204,  64 }, { 186,  64 }, { 167,  64 }, { 149,  64 }, { 130,  64 }, { 112,  64 
+  43:keyboards/massdrop/ctrl/config_led.c ****     {  75,  64 }, {  57,  64 }, {  38,  64 }, {  20,  64 }, {   0,  64 }, {   0,  47 }, {   0,  32 
+  44:keyboards/massdrop/ctrl/config_led.c ****     {   0,   0 }, {  20,   0 }, {  38,   0 }, {  57,   0 }, {  75,   0 }, {  94,   0 }, { 112,   0 
+  45:keyboards/massdrop/ctrl/config_led.c ****     { 149,   0 }, { 167,   0 }, { 186,   0 }, { 204,   0 }, { 224,   0 }, { 224,  17 }, { 224,  32 
+  46:keyboards/massdrop/ctrl/config_led.c **** }, {
+  47:keyboards/massdrop/ctrl/config_led.c ****   // KC_ESC, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,
+  48:keyboards/massdrop/ctrl/config_led.c ****     1, 4, 4, 4, 4, 1, 1, 1,
+  49:keyboards/massdrop/ctrl/config_led.c ****     1, 4, 4, 4, 4, 1, 1, 1,
+  50:keyboards/massdrop/ctrl/config_led.c ****   // KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC, 
+  51:keyboards/massdrop/ctrl/config_led.c ****     4, 4, 4, 4, 4, 4, 4, 4,
+  52:keyboards/massdrop/ctrl/config_led.c ****     4, 4, 4, 4, 4, 1, 1, 1,
+  53:keyboards/massdrop/ctrl/config_led.c ****     1,
+  54:keyboards/massdrop/ctrl/config_led.c ****   // KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
+  55:keyboards/massdrop/ctrl/config_led.c ****     1, 4, 4, 4, 4, 4, 4, 4,
+  56:keyboards/massdrop/ctrl/config_led.c ****     4, 4, 4, 4, 4, 4, 1, 1,
+  57:keyboards/massdrop/ctrl/config_led.c ****     1,
+  58:keyboards/massdrop/ctrl/config_led.c ****   // KC_CAPS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT
+  59:keyboards/massdrop/ctrl/config_led.c ****     1, 4, 4, 4, 4, 4, 4, 4,
+  60:keyboards/massdrop/ctrl/config_led.c ****     4, 4, 4, 4, 1,
+  61:keyboards/massdrop/ctrl/config_led.c ****   // KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_UP
+  62:keyboards/massdrop/ctrl/config_led.c ****     1, 4, 4, 4, 4, 4, 4, 4,
+  63:keyboards/massdrop/ctrl/config_led.c ****     4, 4, 4, 1, 1,
+  64:keyboards/massdrop/ctrl/config_led.c ****   // KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, MO(1), KC_APP, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
+  65:keyboards/massdrop/ctrl/config_led.c ****     1, 1, 1, 4, 1, 1, 1, 1,
+  66:keyboards/massdrop/ctrl/config_led.c ****     1, 1, 1,
+  67:keyboards/massdrop/ctrl/config_led.c ****   // Underglow / Border
+  68:keyboards/massdrop/ctrl/config_led.c ****     2, 2, 2, 2, 2, 2, 2, 2,
+  69:keyboards/massdrop/ctrl/config_led.c ****     2, 2, 2, 2, 2, 2, 2, 2,
+  70:keyboards/massdrop/ctrl/config_led.c ****     2, 2, 2, 2, 2, 2, 2, 2,
+  71:keyboards/massdrop/ctrl/config_led.c ****     2, 2, 2, 2, 2, 2, 2, 2
+  72:keyboards/massdrop/ctrl/config_led.c **** } };
+  73:keyboards/massdrop/ctrl/config_led.c **** 
+  74:keyboards/massdrop/ctrl/config_led.c **** 
+  75:keyboards/massdrop/ctrl/config_led.c **** #ifdef USB_LED_INDICATOR_ENABLE
+  76:keyboards/massdrop/ctrl/config_led.c **** void rgb_matrix_indicators_kb(void)
+  77:keyboards/massdrop/ctrl/config_led.c **** {
+  29              		.loc 1 77 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  78:keyboards/massdrop/ctrl/config_led.c ****   led_matrix_indicators();
+  34              		.loc 1 78 3 view .LVU1
+  35 0000 FFF7FEBF 		b	led_matrix_indicators
+  36              	.LVL0:
+  37              		.cfi_endproc
+  38              	.LFE131:
+  40              		.global	g_led_config
+  41              		.comm	dmac_desc_wb,16,16
+  42              		.comm	dmac_desc,16,16
+  43              		.data
+  46              	g_led_config:
+  47 0000 00       		.byte	0
+  48 0001 01       		.byte	1
+  49 0002 02       		.byte	2
+  50 0003 03       		.byte	3
+  51 0004 04       		.byte	4
+  52 0005 05       		.byte	5
+  53 0006 06       		.byte	6
+  54 0007 07       		.byte	7
+  55 0008 10       		.byte	16
+  56 0009 11       		.byte	17
+  57 000a 12       		.byte	18
+  58 000b 13       		.byte	19
+  59 000c 14       		.byte	20
+  60 000d 15       		.byte	21
+  61 000e 16       		.byte	22
+  62 000f 17       		.byte	23
+  63 0010 21       		.byte	33
+  64 0011 22       		.byte	34
+  65 0012 23       		.byte	35
+  66 0013 24       		.byte	36
+  67 0014 25       		.byte	37
+  68 0015 26       		.byte	38
+  69 0016 27       		.byte	39
+  70 0017 28       		.byte	40
+  71 0018 32       		.byte	50
+  72 0019 33       		.byte	51
+  73 001a 34       		.byte	52
+  74 001b 35       		.byte	53
+  75 001c 36       		.byte	54
+  76 001d 37       		.byte	55
+  77 001e 38       		.byte	56
+  78 001f 39       		.byte	57
+  79 0020 3F       		.byte	63
+  80 0021 40       		.byte	64
+  81 0022 41       		.byte	65
+  82 0023 42       		.byte	66
+  83 0024 43       		.byte	67
+  84 0025 44       		.byte	68
+  85 0026 45       		.byte	69
+  86 0027 46       		.byte	70
+  87 0028 4C       		.byte	76
+  88 0029 4D       		.byte	77
+  89 002a 4E       		.byte	78
+  90 002b 4F       		.byte	79
+  91 002c 50       		.byte	80
+  92 002d 51       		.byte	81
+  93 002e 52       		.byte	82
+  94 002f 53       		.byte	83
+  95 0030 08       		.byte	8
+  96 0031 09       		.byte	9
+  97 0032 0A       		.byte	10
+  98 0033 0B       		.byte	11
+  99 0034 0C       		.byte	12
+ 100 0035 0D       		.byte	13
+ 101 0036 0E       		.byte	14
+ 102 0037 0F       		.byte	15
+ 103 0038 18       		.byte	24
+ 104 0039 19       		.byte	25
+ 105 003a 1A       		.byte	26
+ 106 003b 1B       		.byte	27
+ 107 003c 1C       		.byte	28
+ 108 003d 1D       		.byte	29
+ 109 003e 1E       		.byte	30
+ 110 003f 1F       		.byte	31
+ 111 0040 29       		.byte	41
+ 112 0041 2A       		.byte	42
+ 113 0042 2B       		.byte	43
+ 114 0043 2C       		.byte	44
+ 115 0044 2D       		.byte	45
+ 116 0045 2E       		.byte	46
+ 117 0046 2F       		.byte	47
+ 118 0047 30       		.byte	48
+ 119 0048 3A       		.byte	58
+ 120 0049 3B       		.byte	59
+ 121 004a 3C       		.byte	60
+ 122 004b 3D       		.byte	61
+ 123 004c 3E       		.byte	62
+ 124 004d 4B       		.byte	75
+ 125 004e 31       		.byte	49
+ 126 004f 20       		.byte	32
+ 127 0050 47       		.byte	71
+ 128 0051 48       		.byte	72
+ 129 0052 49       		.byte	73
+ 130 0053 4A       		.byte	74
+ 131 0054 54       		.byte	84
+ 132 0055 55       		.byte	85
+ 133 0056 56       		.byte	86
+ 134 0057 FF       		.byte	-1
+ 135 0058 07       		.byte	7
+ 136 0059 05       		.byte	5
+ 137 005a 1F       		.byte	31
+ 138 005b 05       		.byte	5
+ 139 005c 2B       		.byte	43
+ 140 005d 05       		.byte	5
+ 141 005e 37       		.byte	55
+ 142 005f 05       		.byte	5
+ 143 0060 43       		.byte	67
+ 144 0061 05       		.byte	5
+ 145 0062 55       		.byte	85
+ 146 0063 05       		.byte	5
+ 147 0064 61       		.byte	97
+ 148 0065 05       		.byte	5
+ 149 0066 6D       		.byte	109
+ 150 0067 05       		.byte	5
+ 151 0068 79       		.byte	121
+ 152 0069 05       		.byte	5
+ 153 006a 8B       		.byte	-117
+ 154 006b 05       		.byte	5
+ 155 006c 97       		.byte	-105
+ 156 006d 05       		.byte	5
+ 157 006e A3       		.byte	-93
+ 158 006f 05       		.byte	5
+ 159 0070 AF       		.byte	-81
+ 160 0071 05       		.byte	5
+ 161 0072 C1       		.byte	-63
+ 162 0073 05       		.byte	5
+ 163 0074 CD       		.byte	-51
+ 164 0075 05       		.byte	5
+ 165 0076 D9       		.byte	-39
+ 166 0077 05       		.byte	5
+ 167 0078 07       		.byte	7
+ 168 0079 14       		.byte	20
+ 169 007a 13       		.byte	19
+ 170 007b 14       		.byte	20
+ 171 007c 1F       		.byte	31
+ 172 007d 14       		.byte	20
+ 173 007e 2B       		.byte	43
+ 174 007f 14       		.byte	20
+ 175 0080 37       		.byte	55
+ 176 0081 14       		.byte	20
+ 177 0082 43       		.byte	67
+ 178 0083 14       		.byte	20
+ 179 0084 4F       		.byte	79
+ 180 0085 14       		.byte	20
+ 181 0086 5B       		.byte	91
+ 182 0087 14       		.byte	20
+ 183 0088 67       		.byte	103
+ 184 0089 14       		.byte	20
+ 185 008a 73       		.byte	115
+ 186 008b 14       		.byte	20
+ 187 008c 7F       		.byte	127
+ 188 008d 14       		.byte	20
+ 189 008e 8B       		.byte	-117
+ 190 008f 14       		.byte	20
+ 191 0090 97       		.byte	-105
+ 192 0091 14       		.byte	20
+ 193 0092 A9       		.byte	-87
+ 194 0093 14       		.byte	20
+ 195 0094 C1       		.byte	-63
+ 196 0095 14       		.byte	20
+ 197 0096 CD       		.byte	-51
+ 198 0097 14       		.byte	20
+ 199 0098 D9       		.byte	-39
+ 200 0099 14       		.byte	20
+ 201 009a 0A       		.byte	10
+ 202 009b 1E       		.byte	30
+ 203 009c 19       		.byte	25
+ 204 009d 1E       		.byte	30
+ 205 009e 25       		.byte	37
+ 206 009f 1E       		.byte	30
+ 207 00a0 31       		.byte	49
+ 208 00a1 1E       		.byte	30
+ 209 00a2 3D       		.byte	61
+ 210 00a3 1E       		.byte	30
+ 211 00a4 49       		.byte	73
+ 212 00a5 1E       		.byte	30
+ 213 00a6 55       		.byte	85
+ 214 00a7 1E       		.byte	30
+ 215 00a8 61       		.byte	97
+ 216 00a9 1E       		.byte	30
+ 217 00aa 6D       		.byte	109
+ 218 00ab 1E       		.byte	30
+ 219 00ac 79       		.byte	121
+ 220 00ad 1E       		.byte	30
+ 221 00ae 85       		.byte	-123
+ 222 00af 1E       		.byte	30
+ 223 00b0 91       		.byte	-111
+ 224 00b1 1E       		.byte	30
+ 225 00b2 9D       		.byte	-99
+ 226 00b3 1E       		.byte	30
+ 227 00b4 AC       		.byte	-84
+ 228 00b5 1E       		.byte	30
+ 229 00b6 C1       		.byte	-63
+ 230 00b7 1E       		.byte	30
+ 231 00b8 CD       		.byte	-51
+ 232 00b9 1E       		.byte	30
+ 233 00ba D9       		.byte	-39
+ 234 00bb 1E       		.byte	30
+ 235 00bc 0B       		.byte	11
+ 236 00bd 27       		.byte	39
+ 237 00be 1C       		.byte	28
+ 238 00bf 27       		.byte	39
+ 239 00c0 28       		.byte	40
+ 240 00c1 27       		.byte	39
+ 241 00c2 34       		.byte	52
+ 242 00c3 27       		.byte	39
+ 243 00c4 40       		.byte	64
+ 244 00c5 27       		.byte	39
+ 245 00c6 4C       		.byte	76
+ 246 00c7 27       		.byte	39
+ 247 00c8 58       		.byte	88
+ 248 00c9 27       		.byte	39
+ 249 00ca 64       		.byte	100
+ 250 00cb 27       		.byte	39
+ 251 00cc 70       		.byte	112
+ 252 00cd 27       		.byte	39
+ 253 00ce 7C       		.byte	124
+ 254 00cf 27       		.byte	39
+ 255 00d0 88       		.byte	-120
+ 256 00d1 27       		.byte	39
+ 257 00d2 94       		.byte	-108
+ 258 00d3 27       		.byte	39
+ 259 00d4 A8       		.byte	-88
+ 260 00d5 27       		.byte	39
+ 261 00d6 0E       		.byte	14
+ 262 00d7 31       		.byte	49
+ 263 00d8 22       		.byte	34
+ 264 00d9 31       		.byte	49
+ 265 00da 2E       		.byte	46
+ 266 00db 31       		.byte	49
+ 267 00dc 3A       		.byte	58
+ 268 00dd 31       		.byte	49
+ 269 00de 46       		.byte	70
+ 270 00df 31       		.byte	49
+ 271 00e0 52       		.byte	82
+ 272 00e1 31       		.byte	49
+ 273 00e2 5E       		.byte	94
+ 274 00e3 31       		.byte	49
+ 275 00e4 6A       		.byte	106
+ 276 00e5 31       		.byte	49
+ 277 00e6 76       		.byte	118
+ 278 00e7 31       		.byte	49
+ 279 00e8 82       		.byte	-126
+ 280 00e9 31       		.byte	49
+ 281 00ea 8E       		.byte	-114
+ 282 00eb 31       		.byte	49
+ 283 00ec A5       		.byte	-91
+ 284 00ed 31       		.byte	49
+ 285 00ee CD       		.byte	-51
+ 286 00ef 31       		.byte	49
+ 287 00f0 08       		.byte	8
+ 288 00f1 3B       		.byte	59
+ 289 00f2 17       		.byte	23
+ 290 00f3 3B       		.byte	59
+ 291 00f4 26       		.byte	38
+ 292 00f5 3B       		.byte	59
+ 293 00f6 53       		.byte	83
+ 294 00f7 3B       		.byte	59
+ 295 00f8 81       		.byte	-127
+ 296 00f9 3B       		.byte	59
+ 297 00fa 90       		.byte	-112
+ 298 00fb 3B       		.byte	59
+ 299 00fc 9F       		.byte	-97
+ 300 00fd 3B       		.byte	59
+ 301 00fe AE       		.byte	-82
+ 302 00ff 3B       		.byte	59
+ 303 0100 C1       		.byte	-63
+ 304 0101 3B       		.byte	59
+ 305 0102 CD       		.byte	-51
+ 306 0103 3B       		.byte	59
+ 307 0104 D9       		.byte	-39
+ 308 0105 3B       		.byte	59
+ 309 0106 E0       		.byte	-32
+ 310 0107 40       		.byte	64
+ 311 0108 CC       		.byte	-52
+ 312 0109 40       		.byte	64
+ 313 010a BA       		.byte	-70
+ 314 010b 40       		.byte	64
+ 315 010c A7       		.byte	-89
+ 316 010d 40       		.byte	64
+ 317 010e 95       		.byte	-107
+ 318 010f 40       		.byte	64
+ 319 0110 82       		.byte	-126
+ 320 0111 40       		.byte	64
+ 321 0112 70       		.byte	112
+ 322 0113 40       		.byte	64
+ 323 0114 5E       		.byte	94
+ 324 0115 40       		.byte	64
+ 325 0116 4B       		.byte	75
+ 326 0117 40       		.byte	64
+ 327 0118 39       		.byte	57
+ 328 0119 40       		.byte	64
+ 329 011a 26       		.byte	38
+ 330 011b 40       		.byte	64
+ 331 011c 14       		.byte	20
+ 332 011d 40       		.byte	64
+ 333 011e 00       		.byte	0
+ 334 011f 40       		.byte	64
+ 335 0120 00       		.byte	0
+ 336 0121 2F       		.byte	47
+ 337 0122 00       		.byte	0
+ 338 0123 20       		.byte	32
+ 339 0124 00       		.byte	0
+ 340 0125 11       		.byte	17
+ 341 0126 00       		.byte	0
+ 342 0127 00       		.byte	0
+ 343 0128 14       		.byte	20
+ 344 0129 00       		.byte	0
+ 345 012a 26       		.byte	38
+ 346 012b 00       		.byte	0
+ 347 012c 39       		.byte	57
+ 348 012d 00       		.byte	0
+ 349 012e 4B       		.byte	75
+ 350 012f 00       		.byte	0
+ 351 0130 5E       		.byte	94
+ 352 0131 00       		.byte	0
+ 353 0132 70       		.byte	112
+ 354 0133 00       		.byte	0
+ 355 0134 82       		.byte	-126
+ 356 0135 00       		.byte	0
+ 357 0136 95       		.byte	-107
+ 358 0137 00       		.byte	0
+ 359 0138 A7       		.byte	-89
+ 360 0139 00       		.byte	0
+ 361 013a BA       		.byte	-70
+ 362 013b 00       		.byte	0
+ 363 013c CC       		.byte	-52
+ 364 013d 00       		.byte	0
+ 365 013e E0       		.byte	-32
+ 366 013f 00       		.byte	0
+ 367 0140 E0       		.byte	-32
+ 368 0141 11       		.byte	17
+ 369 0142 E0       		.byte	-32
+ 370 0143 20       		.byte	32
+ 371 0144 E0       		.byte	-32
+ 372 0145 2F       		.byte	47
+ 373 0146 01       		.byte	1
+ 374 0147 04       		.byte	4
+ 375 0148 04       		.byte	4
+ 376 0149 04       		.byte	4
+ 377 014a 04       		.byte	4
+ 378 014b 01       		.byte	1
+ 379 014c 01       		.byte	1
+ 380 014d 01       		.byte	1
+ 381 014e 01       		.byte	1
+ 382 014f 04       		.byte	4
+ 383 0150 04       		.byte	4
+ 384 0151 04       		.byte	4
+ 385 0152 04       		.byte	4
+ 386 0153 01       		.byte	1
+ 387 0154 01       		.byte	1
+ 388 0155 01       		.byte	1
+ 389 0156 04       		.byte	4
+ 390 0157 04       		.byte	4
+ 391 0158 04       		.byte	4
+ 392 0159 04       		.byte	4
+ 393 015a 04       		.byte	4
+ 394 015b 04       		.byte	4
+ 395 015c 04       		.byte	4
+ 396 015d 04       		.byte	4
+ 397 015e 04       		.byte	4
+ 398 015f 04       		.byte	4
+ 399 0160 04       		.byte	4
+ 400 0161 04       		.byte	4
+ 401 0162 04       		.byte	4
+ 402 0163 01       		.byte	1
+ 403 0164 01       		.byte	1
+ 404 0165 01       		.byte	1
+ 405 0166 01       		.byte	1
+ 406 0167 01       		.byte	1
+ 407 0168 04       		.byte	4
+ 408 0169 04       		.byte	4
+ 409 016a 04       		.byte	4
+ 410 016b 04       		.byte	4
+ 411 016c 04       		.byte	4
+ 412 016d 04       		.byte	4
+ 413 016e 04       		.byte	4
+ 414 016f 04       		.byte	4
+ 415 0170 04       		.byte	4
+ 416 0171 04       		.byte	4
+ 417 0172 04       		.byte	4
+ 418 0173 04       		.byte	4
+ 419 0174 04       		.byte	4
+ 420 0175 01       		.byte	1
+ 421 0176 01       		.byte	1
+ 422 0177 01       		.byte	1
+ 423 0178 01       		.byte	1
+ 424 0179 04       		.byte	4
+ 425 017a 04       		.byte	4
+ 426 017b 04       		.byte	4
+ 427 017c 04       		.byte	4
+ 428 017d 04       		.byte	4
+ 429 017e 04       		.byte	4
+ 430 017f 04       		.byte	4
+ 431 0180 04       		.byte	4
+ 432 0181 04       		.byte	4
+ 433 0182 04       		.byte	4
+ 434 0183 04       		.byte	4
+ 435 0184 01       		.byte	1
+ 436 0185 01       		.byte	1
+ 437 0186 04       		.byte	4
+ 438 0187 04       		.byte	4
+ 439 0188 04       		.byte	4
+ 440 0189 04       		.byte	4
+ 441 018a 04       		.byte	4
+ 442 018b 04       		.byte	4
+ 443 018c 04       		.byte	4
+ 444 018d 04       		.byte	4
+ 445 018e 04       		.byte	4
+ 446 018f 04       		.byte	4
+ 447 0190 01       		.byte	1
+ 448 0191 01       		.byte	1
+ 449 0192 01       		.byte	1
+ 450 0193 01       		.byte	1
+ 451 0194 01       		.byte	1
+ 452 0195 04       		.byte	4
+ 453 0196 01       		.byte	1
+ 454 0197 01       		.byte	1
+ 455 0198 01       		.byte	1
+ 456 0199 01       		.byte	1
+ 457 019a 01       		.byte	1
+ 458 019b 01       		.byte	1
+ 459 019c 01       		.byte	1
+ 460 019d 02       		.byte	2
+ 461 019e 02       		.byte	2
+ 462 019f 02       		.byte	2
+ 463 01a0 02       		.byte	2
+ 464 01a1 02       		.byte	2
+ 465 01a2 02       		.byte	2
+ 466 01a3 02       		.byte	2
+ 467 01a4 02       		.byte	2
+ 468 01a5 02       		.byte	2
+ 469 01a6 02       		.byte	2
+ 470 01a7 02       		.byte	2
+ 471 01a8 02       		.byte	2
+ 472 01a9 02       		.byte	2
+ 473 01aa 02       		.byte	2
+ 474 01ab 02       		.byte	2
+ 475 01ac 02       		.byte	2
+ 476 01ad 02       		.byte	2
+ 477 01ae 02       		.byte	2
+ 478 01af 02       		.byte	2
+ 479 01b0 02       		.byte	2
+ 480 01b1 02       		.byte	2
+ 481 01b2 02       		.byte	2
+ 482 01b3 02       		.byte	2
+ 483 01b4 02       		.byte	2
+ 484 01b5 02       		.byte	2
+ 485 01b6 02       		.byte	2
+ 486 01b7 02       		.byte	2
+ 487 01b8 02       		.byte	2
+ 488 01b9 02       		.byte	2
+ 489 01ba 02       		.byte	2
+ 490 01bb 02       		.byte	2
+ 491 01bc 02       		.byte	2
+ 492              		.text
+ 493              	.Letext0:
+ 494              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 495              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 496              		.file 4 "tmk_core/protocol/arm_atsam/clks.h"
+ 497              		.file 5 "tmk_core/common/action.h"
+ 498              		.file 6 "tmk_core/common/report.h"
+ 499              		.file 7 "tmk_core/common/host.h"
+ 500              		.file 8 "tmk_core/common/debug.h"
+ 501              		.file 9 "quantum/keycode_config.h"
+ 502              		.file 10 "quantum/keymap.h"
+ 503              		.file 11 "quantum/color.h"
+ 504              		.file 12 "quantum/rgb_matrix_types.h"
+ 505              		.file 13 "quantum/rgb_matrix.h"
+ 506              		.file 14 "tmk_core/common/action_layer.h"
+ 507              		.file 15 "tmk_core/common/timer.h"
+ 508              		.file 16 "tmk_core/common/action_util.h"
+ 509              		.file 17 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 510              		.file 18 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 511              		.file 19 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 512              		.file 20 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 513              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 514              		.file 22 "quantum/quantum.h"
+ 515              		.file 23 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 516              		.file 24 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 517              		.file 25 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/dmac.h"
+ 518              		.file 26 "tmk_core/protocol/arm_atsam/i2c_master.h"
+ 519              		.file 27 "tmk_core/protocol/arm_atsam/led_matrix.h"
+ 520              		.file 28 "tmk_core/protocol/arm_atsam/usb/udi_cdc.h"
+ 521              		.file 29 "tmk_core/protocol/arm_atsam/usb/usb2422.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 config_led.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccqz5FfQ.s:18     .text.rgb_matrix_indicators_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccqz5FfQ.s:26     .text.rgb_matrix_indicators_kb:0000000000000000 rgb_matrix_indicators_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccqz5FfQ.s:46     .data:0000000000000000 g_led_config
+                            *COM*:0000000000000010 dmac_desc_wb
+                            *COM*:0000000000000010 dmac_desc
+
+UNDEFINED SYMBOLS
+led_matrix_indicators

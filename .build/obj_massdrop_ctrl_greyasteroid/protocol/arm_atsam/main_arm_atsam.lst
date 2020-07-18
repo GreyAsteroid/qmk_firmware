@@ -1,0 +1,2665 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"main_arm_atsam.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.keyboard_leds,"ax",%progbits
+  18              		.align	1
+  19              		.global	keyboard_leds
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	keyboard_leds:
+  27              	.LFB145:
+  28              		.file 1 "tmk_core/protocol/arm_atsam/main_arm_atsam.c"
+   1:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** /*
+   2:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** Copyright 2018 Massdrop Inc.
+   3:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+   4:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** (at your option) any later version.
+   8:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+   9:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** GNU General Public License for more details.
+  13:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  14:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** You should have received a copy of the GNU General Public License
+  15:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** */
+  17:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  18:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "samd51j18a.h"
+  19:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "tmk_core/common/keyboard.h"
+  20:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  21:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "report.h"
+  22:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "host.h"
+  23:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "host_driver.h"
+  24:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "keycode_config.h"
+  25:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include <string.h>
+  26:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "quantum.h"
+  27:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  28:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** // From protocol directory
+  29:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "arm_atsam_protocol.h"
+  30:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  31:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** // From keyboard's directory
+  32:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #include "config_led.h"
+  33:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  34:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** uint8_t g_usb_state = USB_FSMSTATUS_FSMSTATE_OFF_Val;  // Saved USB state from hardware value to de
+  35:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  36:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void    main_subtasks(void);
+  37:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** uint8_t keyboard_leds(void);
+  38:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void    send_keyboard(report_keyboard_t *report);
+  39:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void    send_mouse(report_mouse_t *report);
+  40:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void    send_system(uint16_t data);
+  41:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void    send_consumer(uint16_t data);
+  42:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  43:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** host_driver_t arm_atsam_driver = {keyboard_leds, send_keyboard, send_mouse, send_system, send_consu
+  44:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  45:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** uint8_t led_states;
+  46:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  47:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** uint8_t keyboard_leds(void) {
+  29              		.loc 1 47 29 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  48:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef NKRO_ENABLE
+  49:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     if (keymap_config.nkro)
+  34              		.loc 1 49 5 view .LVU1
+  35              		.loc 1 49 9 is_stmt 0 view .LVU2
+  36 0000 044B     		ldr	r3, .L5
+  37              		.loc 1 49 8 view .LVU3
+  38 0002 93F90030 		ldrsb	r3, [r3]
+  39 0006 002B     		cmp	r3, #0
+  50:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         return udi_hid_nkro_report_set;
+  40              		.loc 1 50 9 is_stmt 1 view .LVU4
+  41              		.loc 1 50 16 is_stmt 0 view .LVU5
+  42 0008 B4BF     		ite	lt
+  43 000a 034B     		ldrlt	r3, .L5+4
+  51:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     else
+  52:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+  53:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         return udi_hid_kbd_report_set;
+  44              		.loc 1 53 9 is_stmt 1 view .LVU6
+  45              		.loc 1 53 16 is_stmt 0 view .LVU7
+  46 000c 034B     		ldrge	r3, .L5+8
+  47 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  54:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+  48              		.loc 1 54 1 view .LVU8
+  49 0010 7047     		bx	lr
+  50              	.L6:
+  51 0012 00BF     		.align	2
+  52              	.L5:
+  53 0014 00000000 		.word	keymap_config
+  54 0018 00000000 		.word	udi_hid_nkro_report_set
+  55 001c 00000000 		.word	udi_hid_kbd_report_set
+  56              		.cfi_endproc
+  57              	.LFE145:
+  59              		.section	.text.send_mouse,"ax",%progbits
+  60              		.align	1
+  61              		.global	send_mouse
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  65              		.fpu fpv4-sp-d16
+  67              	send_mouse:
+  68              	.LVL0:
+  69              	.LFB147:
+  55:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  56:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void send_keyboard(report_keyboard_t *report) {
+  57:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+  58:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  59:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef NKRO_ENABLE
+  60:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     if (!keymap_config.nkro) {
+  61:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+  62:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         while (udi_hid_kbd_b_report_trans_ongoing) {
+  63:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+  64:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }  // Run other tasks while waiting for USB to be free
+  65:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  66:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         irqflags = __get_PRIMASK();
+  67:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __disable_irq();
+  68:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __DMB();
+  69:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  70:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         memcpy(udi_hid_kbd_report, report->raw, UDI_HID_KBD_REPORT_SIZE);
+  71:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_kbd_b_report_valid = 1;
+  72:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_kbd_send_report();
+  73:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  74:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __DMB();
+  75:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __set_PRIMASK(irqflags);
+  76:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef NKRO_ENABLE
+  77:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     } else {
+  78:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         while (udi_hid_nkro_b_report_trans_ongoing) {
+  79:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+  80:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }  // Run other tasks while waiting for USB to be free
+  81:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  82:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         irqflags = __get_PRIMASK();
+  83:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __disable_irq();
+  84:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __DMB();
+  85:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  86:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         memcpy(udi_hid_nkro_report, report->raw, UDI_HID_NKRO_REPORT_SIZE);
+  87:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_nkro_b_report_valid = 1;
+  88:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_nkro_send_report();
+  89:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  90:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __DMB();
+  91:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __set_PRIMASK(irqflags);
+  92:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+  93:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+  94:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+  95:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+  96:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void send_mouse(report_mouse_t *report) {
+  70              		.loc 1 96 41 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+  97:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef MOUSEKEY_ENABLE
+  98:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+  99:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 100:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     irqflags = __get_PRIMASK();
+ 101:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __disable_irq();
+ 102:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __DMB();
+ 103:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 104:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     memcpy(udi_hid_mou_report, report, UDI_HID_MOU_REPORT_SIZE);
+ 105:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udi_hid_mou_b_report_valid = 1;
+ 106:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udi_hid_mou_send_report();
+ 107:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 108:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __DMB();
+ 109:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __set_PRIMASK(irqflags);
+ 110:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // MOUSEKEY_ENABLE
+ 111:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+  75              		.loc 1 111 1 view .LVU10
+  76 0000 7047     		bx	lr
+  77              		.cfi_endproc
+  78              	.LFE147:
+  80              		.section	.text.send_extra,"ax",%progbits
+  81              		.align	1
+  82              		.global	send_extra
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  86              		.fpu fpv4-sp-d16
+  88              	send_extra:
+  89              	.LVL1:
+  90              	.LFB148:
+ 112:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 113:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef EXTRAKEY_ENABLE
+ 114:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void send_extra(uint8_t report_id, uint16_t data) {
+  91              		.loc 1 114 51 view -0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+  95              		.loc 1 115 5 view .LVU12
+ 116:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 117:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     irqflags = __get_PRIMASK();
+  96              		.loc 1 117 5 view .LVU13
+  97              	.LBB35:
+  98              	.LBI35:
+  99              		.file 2 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h"
+   1:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * @version  V5.0.1
+   5:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * @date     02. February 2017
+   6:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /*
+   8:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  *
+  10:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  *
+  12:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  *
+  16:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  *
+  18:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * limitations under the License.
+  23:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+  24:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  25:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  28:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  34:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
+  36:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  38:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
+  39:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  41:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  44:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  47:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __USED
+  48:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  50:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
+  51:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  53:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+  56:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  61:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  64:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
+  65:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  67:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+  70:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  71:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  72:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   @{
+  76:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+  77:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  78:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+  79:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+  83:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+  85:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  86:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+  87:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  88:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  89:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+  90:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  91:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  92:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  93:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+  94:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_irq(void)
+  95:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+  96:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  97:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+  98:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+  99:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 100:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 101:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
+ 102:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+ 103:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
+ 104:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 105:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CONTROL(void)
+ 106:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 107:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 108:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 109:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 110:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 111:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 112:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 113:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 114:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 115:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 116:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register (non-secure)
+ 117:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the non-secure Control Register when in secure mode.
+ 118:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               non-secure Control Register value
+ 119:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 120:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_CONTROL_NS(void)
+ 121:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 122:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 123:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 124:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control_ns" : "=r" (result) );
+ 125:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 126:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 127:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 128:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 129:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 130:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 131:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
+ 132:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+ 133:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+ 134:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 135:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+ 136:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 137:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+ 138:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 139:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 140:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 141:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 142:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 143:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register (non-secure)
+ 144:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the non-secure Control Register when in secure state.
+ 145:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+ 146:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 147:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_CONTROL_NS(uint32_t control)
+ 148:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 149:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR control_ns, %0" : : "r" (control) : "memory");
+ 150:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 151:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 152:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 153:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 154:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 155:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 156:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 157:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
+ 158:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 159:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 160:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 161:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 162:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 163:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 164:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 165:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 166:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 167:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 168:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 169:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get APSR Register
+ 170:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 171:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               APSR Register value
+ 172:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_APSR(void)
+ 174:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 175:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 176:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 177:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 178:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 179:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 180:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 181:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 182:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 183:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 184:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 185:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               xPSR Register value
+ 186:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 187:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 188:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 189:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 190:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 191:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 192:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 193:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 194:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 195:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 196:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 197:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 198:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 199:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 200:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 201:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSP(void)
+ 202:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 203:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 204:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 205:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
+ 206:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 207:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 208:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 209:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 210:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 211:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 212:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer (non-secure)
+ 213:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure s
+ 214:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
+ 215:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 216:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSP_NS(void)
+ 217:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 218:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 219:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 220:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
+ 221:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 222:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 223:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 224:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 225:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 226:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 227:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 228:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 229:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 230:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 231:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 232:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 233:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : );
+ 234:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 235:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 236:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 237:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 238:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 239:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer (non-secure)
+ 240:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure sta
+ 241:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 242:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 243:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
+ 244:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 245:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
+ 246:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 247:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 248:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 249:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 250:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 251:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 252:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 253:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 254:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 255:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSP(void)
+ 256:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 257:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 258:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 259:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp" : "=r" (result) );
+ 260:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 261:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 262:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 263:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 264:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 265:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 266:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer (non-secure)
+ 267:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure stat
+ 268:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               MSP Register value
+ 269:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 270:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSP_NS(void)
+ 271:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 272:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 273:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 274:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
+ 275:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 276:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 277:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 278:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 279:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 280:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 281:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 282:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 283:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 284:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 285:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 286:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 287:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : );
+ 288:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 289:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 290:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 291:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 292:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 293:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer (non-secure)
+ 294:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
+ 295:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 296:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 297:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
+ 298:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 299:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
+ 300:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 301:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 302:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 303:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 304:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 305:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 306:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 307:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 308:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 309:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 100              		.loc 2 309 57 view .LVU14
+ 101              	.LBB36:
+ 310:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 311:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 102              		.loc 2 311 3 view .LVU15
+ 312:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 313:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 103              		.loc 2 313 3 view .LVU16
+ 104              	.LBE36:
+ 105              	.LBE35:
+ 114:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+ 106              		.loc 1 114 51 is_stmt 0 view .LVU17
+ 107 0000 10B5     		push	{r4, lr}
+ 108              		.cfi_def_cfa_offset 8
+ 109              		.cfi_offset 4, -8
+ 110              		.cfi_offset 14, -4
+ 111              	.LBB38:
+ 112              	.LBB37:
+ 113              		.loc 2 313 3 view .LVU18
+ 114              		.syntax unified
+ 115              	@ 313 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 116 0002 EFF31084 		MRS r4, primask
+ 117              	@ 0 "" 2
+ 118              	.LVL2:
+ 314:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 119              		.loc 2 314 3 is_stmt 1 view .LVU19
+ 120              		.loc 2 314 3 is_stmt 0 view .LVU20
+ 121              		.thumb
+ 122              		.syntax unified
+ 123              	.LBE37:
+ 124              	.LBE38:
+ 118:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __disable_irq();
+ 125              		.loc 1 118 5 is_stmt 1 view .LVU21
+ 126              	.LBB39:
+ 127              	.LBI39:
+  94:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 128              		.loc 2 94 53 view .LVU22
+ 129              	.LBB40:
+  96:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 130              		.loc 2 96 3 view .LVU23
+ 131              		.syntax unified
+ 132              	@ 96 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 133 0006 72B6     		cpsid i
+ 134              	@ 0 "" 2
+ 135              		.thumb
+ 136              		.syntax unified
+ 137              	.LBE40:
+ 138              	.LBE39:
+ 119:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __DMB();
+ 139              		.loc 1 119 5 view .LVU24
+ 140              	.LBB41:
+ 141              	.LBI41:
+ 315:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 316:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 317:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 318:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 319:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 320:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Priority Mask (non-secure)
+ 321:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the non-secure priority mask bit from the Priority Mask Reg
+ 322:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
+ 323:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 324:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PRIMASK_NS(void)
+ 325:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 326:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 327:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 328:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
+ 329:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 330:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 331:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 332:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 333:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 334:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 335:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 336:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 337:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 338:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 339:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 340:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 341:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 342:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 343:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 344:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 345:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 346:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 347:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask (non-secure)
+ 348:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Priority Mask Register when in secure state.
+ 349:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 350:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 351:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
+ 352:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 353:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR primask_ns, %0" : : "r" (priMask) : "memory");
+ 354:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 355:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 356:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 357:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 358:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 359:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 360:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 361:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 362:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable FIQ
+ 363:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+ 364:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 365:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 366:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_fault_irq(void)
+ 367:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 368:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie f" : : : "memory");
+ 369:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 370:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 371:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 372:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 373:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable FIQ
+ 374:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+ 375:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 376:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 377:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_fault_irq(void)
+ 378:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 379:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid f" : : : "memory");
+ 380:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 381:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 382:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 383:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 384:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Base Priority
+ 385:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Base Priority register.
+ 386:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Base Priority register value
+ 387:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 388:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_BASEPRI(void)
+ 389:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 390:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 391:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 392:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
+ 393:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 394:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 395:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 396:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 397:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 398:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 399:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Base Priority (non-secure)
+ 400:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the non-secure Base Priority register when in secure state.
+ 401:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Base Priority register value
+ 402:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 403:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_BASEPRI_NS(void)
+ 404:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 405:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 406:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 407:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri_ns" : "=r" (result) );
+ 408:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 409:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 410:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 411:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 412:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 413:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 414:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority
+ 415:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register.
+ 416:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 417:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 418:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
+ 419:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 420:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR basepri, %0" : : "r" (basePri) : "memory");
+ 421:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 422:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 423:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 424:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 425:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 426:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority (non-secure)
+ 427:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Base Priority register when in secure state.
+ 428:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 429:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 430:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_BASEPRI_NS(uint32_t basePri)
+ 431:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 432:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_ns, %0" : : "r" (basePri) : "memory");
+ 433:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 434:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 435:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 436:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 437:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 438:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Base Priority with condition
+ 439:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register only if BASEPRI masking is disable
+ 440:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            or the new value increases the BASEPRI priority level.
+ 441:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 442:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 443:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI_MAX(uint32_t basePri)
+ 444:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 445:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_max, %0" : : "r" (basePri) : "memory");
+ 446:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 447:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 448:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 449:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 450:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Fault Mask
+ 451:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Fault Mask register.
+ 452:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Fault Mask register value
+ 453:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 454:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FAULTMASK(void)
+ 455:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 456:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 457:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 458:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
+ 459:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 460:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 461:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 462:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 463:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 464:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 465:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Fault Mask (non-secure)
+ 466:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the non-secure Fault Mask register when in secure state.
+ 467:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Fault Mask register value
+ 468:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 469:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FAULTMASK_NS(void)
+ 470:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 471:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 472:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 473:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
+ 474:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 475:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 476:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 477:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 478:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 479:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 480:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Fault Mask
+ 481:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Fault Mask register.
+ 482:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 483:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 484:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+ 485:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 486:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
+ 487:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 488:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 489:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 490:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 491:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 492:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Fault Mask (non-secure)
+ 493:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Fault Mask register when in secure state.
+ 494:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 495:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 496:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
+ 497:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 498:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask_ns, %0" : : "r" (faultMask) : "memory");
+ 499:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 500:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 501:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 502:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 503:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 504:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
+ 505:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 506:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 507:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+ 508:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+ 509:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 510:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 511:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer Limit
+ 512:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
+ 513:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               PSPLIM Register value
+ 514:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 515:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSPLIM(void)
+ 516:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 517:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 518:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 519:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psplim"  : "=r" (result) );
+ 520:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 521:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 522:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 523:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 524:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 525:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 526:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 527:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Process Stack Pointer Limit (non-secure)
+ 528:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in
+ 529:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               PSPLIM Register value
+ 530:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 531:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSPLIM_NS(void)
+ 532:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 533:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 534:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 535:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psplim_ns"  : "=r" (result) );
+ 536:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 537:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 538:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 539:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 540:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 541:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 542:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer Limit
+ 543:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
+ 544:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+ 545:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 546:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
+ 547:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 548:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psplim, %0" : : "r" (ProcStackPtrLimit));
+ 549:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 550:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 551:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 552:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 553:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 554:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 555:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer (non-secure)
+ 556:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in s
+ 557:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+ 558:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 559:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
+ 560:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 561:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psplim_ns, %0\n" : : "r" (ProcStackPtrLimit));
+ 562:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 563:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 564:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 565:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 566:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 567:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer Limit
+ 568:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer Limit (MSPLIM).
+ 569:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               MSPLIM Register value
+ 570:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 571:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSPLIM(void)
+ 572:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 573:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 574:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 575:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim" : "=r" (result) );
+ 576:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 577:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 578:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 579:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 580:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 581:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 582:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 583:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 584:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Main Stack Pointer Limit (non-secure)
+ 585:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in sec
+ 586:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               MSPLIM Register value
+ 587:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 588:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSPLIM_NS(void)
+ 589:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 590:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   register uint32_t result;
+ 591:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 592:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim_ns" : "=r" (result) );
+ 593:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 594:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 595:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 596:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 597:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 598:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 599:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit
+ 600:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
+ 601:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
+ 602:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 603:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
+ 604:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 605:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msplim, %0" : : "r" (MainStackPtrLimit));
+ 606:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 607:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 608:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 609:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 610:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 611:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 612:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit (non-secure)
+ 613:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secu
+ 614:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
+ 615:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 616:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
+ 617:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 618:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msplim_ns, %0" : : "r" (MainStackPtrLimit));
+ 619:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 620:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 621:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 622:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+ 623:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    ) */
+ 624:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 625:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 626:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 627:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 628:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 629:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 630:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Get FPSCR
+ 631:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Floating Point Status/Control register.
+ 632:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
+ 633:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 634:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
+ 635:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 636:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+ 637:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+ 638:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
+ 639:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 640:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+ 641:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 642:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #else
+ 643:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****    return(0U);
+ 644:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 645:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 646:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 647:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 648:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 649:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Set FPSCR
+ 650:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Floating Point Status/Control register.
+ 651:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \param [in]    fpscr  Floating Point Status/Control value to set
+ 652:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 653:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+ 654:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 655:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+ 656:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+ 657:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
+ 658:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #else
+ 659:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   (void)fpscr;
+ 660:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 661:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 662:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 663:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 664:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
+ 665:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 666:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 667:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 668:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /*@} end of CMSIS_Core_RegAccFunctions */
+ 669:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 670:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 671:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 672:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ 673:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
+ 674:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   @{
+ 675:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** */
+ 676:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 677:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 678:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 679:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 680:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 681:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 682:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+l" (r)
+ 683:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 684:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #else
+ 685:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 686:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
+ 687:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 688:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #endif
+ 689:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 690:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 691:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
+ 692:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 693:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 694:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+ 695:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //{
+ 696:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //  __ASM volatile ("nop");
+ 697:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //}
+ 698:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __NOP()                             __ASM volatile ("nop")       /* This implementation gen
+ 699:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 700:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 701:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Interrupt
+ 702:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number o
+ 703:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 704:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
+ 705:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //{
+ 706:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //  __ASM volatile ("wfi");
+ 707:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //}
+ 708:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __WFI()                             __ASM volatile ("wfi")       /* This implementation gen
+ 709:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 710:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 711:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 712:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Event
+ 713:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Event is a hint instruction that permits the processor to enter
+ 714:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            a low-power state until one of a number of events occurs.
+ 715:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 716:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
+ 717:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //{
+ 718:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //  __ASM volatile ("wfe");
+ 719:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //}
+ 720:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __WFE()                             __ASM volatile ("wfe")       /* This implementation gen
+ 721:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 722:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 723:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 724:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Send Event
+ 725:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 726:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 727:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
+ 728:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //{
+ 729:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //  __ASM volatile ("sev");
+ 730:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** //}
+ 731:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** #define __SEV()                             __ASM volatile ("sev")       /* This implementation gen
+ 732:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 733:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 734:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 735:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
+ 736:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 737:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
+ 738:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            after the instruction has been completed.
+ 739:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 740:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
+ 741:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 742:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 743:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 744:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 745:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 746:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 747:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
+ 748:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ 749:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
+ 750:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 751:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
+ 752:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 753:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
+ 754:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 755:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 756:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 757:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** /**
+ 758:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Memory Barrier
+ 759:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   \details Ensures the apparent order of the explicit memory operations before
+ 760:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****            and after the instruction, without ensuring their completion.
+ 761:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****  */
+ 762:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
+ 142              		.loc 2 762 53 view .LVU25
+ 143              	.LBB42:
+ 763:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 764:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dmb 0xF":::"memory");
+ 144              		.loc 2 764 3 view .LVU26
+ 145              		.syntax unified
+ 146              	@ 764 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 147 0008 BFF35F8F 		dmb 0xF
+ 148              	@ 0 "" 2
+ 149              		.thumb
+ 150              		.syntax unified
+ 151              	.LBE42:
+ 152              	.LBE41:
+ 120:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 121:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udi_hid_exk_report.desc.report_id   = report_id;
+ 153              		.loc 1 121 5 view .LVU27
+ 154              		.loc 1 121 41 is_stmt 0 view .LVU28
+ 155 000c 064B     		ldr	r3, .L9
+ 156 000e 1870     		strb	r0, [r3]
+ 122:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udi_hid_exk_report.desc.report_data = data;
+ 157              		.loc 1 122 5 is_stmt 1 view .LVU29
+ 158              		.loc 1 122 41 is_stmt 0 view .LVU30
+ 159 0010 A3F80110 		strh	r1, [r3, #1]	@ unaligned
+ 123:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udi_hid_exk_b_report_valid          = 1;
+ 160              		.loc 1 123 5 is_stmt 1 view .LVU31
+ 161              		.loc 1 123 41 is_stmt 0 view .LVU32
+ 162 0014 054B     		ldr	r3, .L9+4
+ 163 0016 0122     		movs	r2, #1
+ 164 0018 1A70     		strb	r2, [r3]
+ 124:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udi_hid_exk_send_report();
+ 165              		.loc 1 124 5 is_stmt 1 view .LVU33
+ 166 001a FFF7FEFF 		bl	udi_hid_exk_send_report
+ 167              	.LVL3:
+ 125:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 126:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __DMB();
+ 168              		.loc 1 126 5 view .LVU34
+ 169              	.LBB43:
+ 170              	.LBI43:
+ 762:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 171              		.loc 2 762 53 view .LVU35
+ 172              	.LBB44:
+ 173              		.loc 2 764 3 view .LVU36
+ 174              		.syntax unified
+ 175              	@ 764 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 176 001e BFF35F8F 		dmb 0xF
+ 177              	@ 0 "" 2
+ 178              		.thumb
+ 179              		.syntax unified
+ 180              	.LBE44:
+ 181              	.LBE43:
+ 127:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     __set_PRIMASK(irqflags);
+ 182              		.loc 1 127 5 view .LVU37
+ 183              	.LVL4:
+ 184              	.LBB45:
+ 185              	.LBI45:
+ 339:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 186              		.loc 2 339 53 view .LVU38
+ 187              	.LBB46:
+ 341:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 188              		.loc 2 341 3 view .LVU39
+ 189              		.syntax unified
+ 190              	@ 341 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 191 0022 84F31088 		MSR primask, r4
+ 192              	@ 0 "" 2
+ 193              	.LVL5:
+ 341:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 194              		.loc 2 341 3 is_stmt 0 view .LVU40
+ 195              		.thumb
+ 196              		.syntax unified
+ 197              	.LBE46:
+ 198              	.LBE45:
+ 128:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 199              		.loc 1 128 1 view .LVU41
+ 200 0026 10BD     		pop	{r4, pc}
+ 201              	.LVL6:
+ 202              	.L10:
+ 203              		.loc 1 128 1 view .LVU42
+ 204              		.align	2
+ 205              	.L9:
+ 206 0028 00000000 		.word	udi_hid_exk_report
+ 207 002c 00000000 		.word	udi_hid_exk_b_report_valid
+ 208              		.cfi_endproc
+ 209              	.LFE148:
+ 211              		.section	.text.send_system,"ax",%progbits
+ 212              		.align	1
+ 213              		.global	send_system
+ 214              		.syntax unified
+ 215              		.thumb
+ 216              		.thumb_func
+ 217              		.fpu fpv4-sp-d16
+ 219              	send_system:
+ 220              	.LVL7:
+ 221              	.LFB149:
+ 129:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // EXTRAKEY_ENABLE
+ 130:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 131:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void send_system(uint16_t data) {
+ 222              		.loc 1 131 33 is_stmt 1 view -0
+ 223              		.cfi_startproc
+ 224              		@ args = 0, pretend = 0, frame = 0
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226              		@ link register save eliminated.
+ 132:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef EXTRAKEY_ENABLE
+ 133:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     send_extra(REPORT_ID_SYSTEM, data);
+ 227              		.loc 1 133 5 view .LVU44
+ 228 0000 0146     		mov	r1, r0
+ 229 0002 0320     		movs	r0, #3
+ 230              	.LVL8:
+ 231              		.loc 1 133 5 is_stmt 0 view .LVU45
+ 232 0004 FFF7FEBF 		b	send_extra
+ 233              	.LVL9:
+ 234              		.cfi_endproc
+ 235              	.LFE149:
+ 237              		.section	.text.send_consumer,"ax",%progbits
+ 238              		.align	1
+ 239              		.global	send_consumer
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 243              		.fpu fpv4-sp-d16
+ 245              	send_consumer:
+ 246              	.LVL10:
+ 247              	.LFB150:
+ 134:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // EXTRAKEY_ENABLE
+ 135:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 136:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 137:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void send_consumer(uint16_t data) {
+ 248              		.loc 1 137 35 is_stmt 1 view -0
+ 249              		.cfi_startproc
+ 250              		@ args = 0, pretend = 0, frame = 0
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252              		@ link register save eliminated.
+ 138:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef EXTRAKEY_ENABLE
+ 139:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     send_extra(REPORT_ID_CONSUMER, data);
+ 253              		.loc 1 139 5 view .LVU47
+ 254 0000 0146     		mov	r1, r0
+ 255 0002 0420     		movs	r0, #4
+ 256              	.LVL11:
+ 257              		.loc 1 139 5 is_stmt 0 view .LVU48
+ 258 0004 FFF7FEBF 		b	send_extra
+ 259              	.LVL12:
+ 260              		.cfi_endproc
+ 261              	.LFE150:
+ 263              		.section	.text.main_subtask_usb_state,"ax",%progbits
+ 264              		.align	1
+ 265              		.global	main_subtask_usb_state
+ 266              		.syntax unified
+ 267              		.thumb
+ 268              		.thumb_func
+ 269              		.fpu fpv4-sp-d16
+ 271              	main_subtask_usb_state:
+ 272              	.LFB151:
+ 140:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // EXTRAKEY_ENABLE
+ 141:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 142:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 143:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void main_subtask_usb_state(void) {
+ 273              		.loc 1 143 35 is_stmt 1 view -0
+ 274              		.cfi_startproc
+ 275              		@ args = 0, pretend = 0, frame = 0
+ 276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     static uint64_t fsmstate_on_delay = 0;                          // Delay timer to be sure USB i
+ 277              		.loc 1 144 5 view .LVU50
+ 145:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint8_t         fsmstate_now      = USB->DEVICE.FSMSTATUS.reg;  // Current state from hardware 
+ 278              		.loc 1 145 5 view .LVU51
+ 143:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     static uint64_t fsmstate_on_delay = 0;                          // Delay timer to be sure USB i
+ 279              		.loc 1 143 35 is_stmt 0 view .LVU52
+ 280 0000 70B5     		push	{r4, r5, r6, lr}
+ 281              		.cfi_def_cfa_offset 16
+ 282              		.cfi_offset 4, -16
+ 283              		.cfi_offset 5, -12
+ 284              		.cfi_offset 6, -8
+ 285              		.cfi_offset 14, -4
+ 286              		.loc 1 145 21 view .LVU53
+ 287 0002 4FF08243 		mov	r3, #1090519040
+ 288 0006 5C7B     		ldrb	r4, [r3, #13]	@ zero_extendqisi2
+ 289 0008 E4B2     		uxtb	r4, r4
+ 290              	.LVL13:
+ 146:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 147:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     if (fsmstate_now == USB_FSMSTATUS_FSMSTATE_SUSPEND_Val)  // If USB SUSPENDED
+ 291              		.loc 1 147 5 is_stmt 1 view .LVU54
+ 292              		.loc 1 147 8 is_stmt 0 view .LVU55
+ 293 000a 042C     		cmp	r4, #4
+ 294 000c 0CD1     		bne	.L14
+ 148:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 149:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         fsmstate_on_delay = 0;  // Clear ON delay timer
+ 295              		.loc 1 149 9 is_stmt 1 view .LVU56
+ 296              		.loc 1 149 27 is_stmt 0 view .LVU57
+ 297 000e 1E4B     		ldr	r3, .L30
+ 150:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 151:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         if (g_usb_state != USB_FSMSTATUS_FSMSTATE_SUSPEND_Val)  // If previously not SUSPENDED
+ 298              		.loc 1 151 25 view .LVU58
+ 299 0010 1E4D     		ldr	r5, .L30+4
+ 149:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 300              		.loc 1 149 27 view .LVU59
+ 301 0012 0020     		movs	r0, #0
+ 302 0014 0021     		movs	r1, #0
+ 303 0016 C3E90001 		strd	r0, [r3]
+ 304              		.loc 1 151 9 is_stmt 1 view .LVU60
+ 305              		.loc 1 151 12 is_stmt 0 view .LVU61
+ 306 001a 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 307 001c 042B     		cmp	r3, #4
+ 308              	.L29:
+ 152:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 153:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             suspend_power_down();        // Run suspend routine
+ 154:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             g_usb_state = fsmstate_now;  // Save current USB state
+ 155:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }
+ 156:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     } else if (fsmstate_now == USB_FSMSTATUS_FSMSTATE_SLEEP_Val)  // Else if USB SLEEPING
+ 157:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 158:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         fsmstate_on_delay = 0;  // Clear ON delay timer
+ 159:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 160:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         if (g_usb_state != USB_FSMSTATUS_FSMSTATE_SLEEP_Val)  // If previously not SLEEPING
+ 309              		.loc 1 160 12 view .LVU62
+ 310 001e 02D0     		beq	.L13
+ 161:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 162:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             suspend_power_down();        // Run suspend routine
+ 311              		.loc 1 162 13 is_stmt 1 view .LVU63
+ 312 0020 FFF7FEFF 		bl	suspend_power_down
+ 313              	.LVL14:
+ 163:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             g_usb_state = fsmstate_now;  // Save current USB state
+ 314              		.loc 1 163 13 view .LVU64
+ 315              		.loc 1 163 25 is_stmt 0 view .LVU65
+ 316 0024 2C70     		strb	r4, [r5]
+ 317              	.L13:
+ 164:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }
+ 165:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     } else if (fsmstate_now == USB_FSMSTATUS_FSMSTATE_ON_Val)  // Else if USB ON
+ 166:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 167:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         if (g_usb_state != USB_FSMSTATUS_FSMSTATE_ON_Val)  // If previously not ON
+ 168:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 169:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             if (fsmstate_on_delay == 0)  // If ON delay timer is cleared
+ 170:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 171:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****                 fsmstate_on_delay = timer_read64() + 250;   // Set ON delay timer
+ 172:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             } else if (timer_read64() > fsmstate_on_delay)  // Else if ON delay timer is active and
+ 173:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 174:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****                 suspend_wakeup_init();       // Run wakeup routine
+ 175:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****                 g_usb_state = fsmstate_now;  // Save current USB state
+ 176:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             }
+ 177:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }
+ 178:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     } else  // Else if USB is in a state not being tracked
+ 179:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 180:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         fsmstate_on_delay = 0;  // Clear ON delay timer
+ 181:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 182:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 318              		.loc 1 182 1 view .LVU66
+ 319 0026 70BD     		pop	{r4, r5, r6, pc}
+ 320              	.LVL15:
+ 321              	.L14:
+ 156:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 322              		.loc 1 156 12 is_stmt 1 view .LVU67
+ 156:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 323              		.loc 1 156 15 is_stmt 0 view .LVU68
+ 324 0028 082C     		cmp	r4, #8
+ 325 002a 08D1     		bne	.L17
+ 158:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 326              		.loc 1 158 9 is_stmt 1 view .LVU69
+ 158:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 327              		.loc 1 158 27 is_stmt 0 view .LVU70
+ 328 002c 164B     		ldr	r3, .L30
+ 160:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 329              		.loc 1 160 25 view .LVU71
+ 330 002e 174D     		ldr	r5, .L30+4
+ 158:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 331              		.loc 1 158 27 view .LVU72
+ 332 0030 0020     		movs	r0, #0
+ 333 0032 0021     		movs	r1, #0
+ 334 0034 C3E90001 		strd	r0, [r3]
+ 160:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 335              		.loc 1 160 9 is_stmt 1 view .LVU73
+ 160:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 336              		.loc 1 160 12 is_stmt 0 view .LVU74
+ 337 0038 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 338 003a 082B     		cmp	r3, #8
+ 339 003c EFE7     		b	.L29
+ 340              	.L17:
+ 165:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 341              		.loc 1 165 12 is_stmt 1 view .LVU75
+ 165:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     {
+ 342              		.loc 1 165 15 is_stmt 0 view .LVU76
+ 343 003e 022C     		cmp	r4, #2
+ 344 0040 1CD1     		bne	.L19
+ 167:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 345              		.loc 1 167 9 is_stmt 1 view .LVU77
+ 167:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 346              		.loc 1 167 25 is_stmt 0 view .LVU78
+ 347 0042 124E     		ldr	r6, .L30+4
+ 167:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         {
+ 348              		.loc 1 167 12 view .LVU79
+ 349 0044 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+ 350 0046 022B     		cmp	r3, #2
+ 351 0048 EDD0     		beq	.L13
+ 169:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 352              		.loc 1 169 13 is_stmt 1 view .LVU80
+ 169:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 353              		.loc 1 169 35 is_stmt 0 view .LVU81
+ 354 004a 0F4D     		ldr	r5, .L30
+ 169:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 355              		.loc 1 169 16 view .LVU82
+ 356 004c D5E90023 		ldrd	r2, [r5]
+ 357 0050 1343     		orrs	r3, r2, r3
+ 358 0052 07D1     		bne	.L20
+ 171:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             } else if (timer_read64() > fsmstate_on_delay)  // Else if ON delay timer is active and
+ 359              		.loc 1 171 17 is_stmt 1 view .LVU83
+ 171:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             } else if (timer_read64() > fsmstate_on_delay)  // Else if ON delay timer is active and
+ 360              		.loc 1 171 37 is_stmt 0 view .LVU84
+ 361 0054 FFF7FEFF 		bl	timer_read64
+ 362              	.LVL16:
+ 171:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             } else if (timer_read64() > fsmstate_on_delay)  // Else if ON delay timer is active and
+ 363              		.loc 1 171 52 view .LVU85
+ 364 0058 FA30     		adds	r0, r0, #250
+ 365 005a 41F10001 		adc	r1, r1, #0
+ 171:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             } else if (timer_read64() > fsmstate_on_delay)  // Else if ON delay timer is active and
+ 366              		.loc 1 171 35 view .LVU86
+ 367 005e C5E90001 		strd	r0, r1, [r5]
+ 368 0062 E0E7     		b	.L13
+ 369              	.L20:
+ 172:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 370              		.loc 1 172 20 is_stmt 1 view .LVU87
+ 172:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 371              		.loc 1 172 24 is_stmt 0 view .LVU88
+ 372 0064 FFF7FEFF 		bl	timer_read64
+ 373              	.LVL17:
+ 172:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             {
+ 374              		.loc 1 172 23 view .LVU89
+ 375 0068 D5E90023 		ldrd	r2, [r5]
+ 376 006c 8B42     		cmp	r3, r1
+ 377 006e 08BF     		it	eq
+ 378 0070 8242     		cmpeq	r2, r0
+ 379 0072 D8D2     		bcs	.L13
+ 174:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****                 g_usb_state = fsmstate_now;  // Save current USB state
+ 380              		.loc 1 174 17 is_stmt 1 view .LVU90
+ 381 0074 FFF7FEFF 		bl	suspend_wakeup_init
+ 382              	.LVL18:
+ 175:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             }
+ 383              		.loc 1 175 17 view .LVU91
+ 175:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             }
+ 384              		.loc 1 175 29 is_stmt 0 view .LVU92
+ 385 0078 3470     		strb	r4, [r6]
+ 386 007a D4E7     		b	.L13
+ 387              	.L19:
+ 180:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 388              		.loc 1 180 9 is_stmt 1 view .LVU93
+ 180:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 389              		.loc 1 180 27 is_stmt 0 view .LVU94
+ 390 007c 024B     		ldr	r3, .L30
+ 391 007e 0020     		movs	r0, #0
+ 392 0080 0021     		movs	r1, #0
+ 393 0082 C3E90001 		strd	r0, [r3]
+ 394              		.loc 1 182 1 view .LVU95
+ 395 0086 CEE7     		b	.L13
+ 396              	.L31:
+ 397              		.align	2
+ 398              	.L30:
+ 399 0088 00000000 		.word	.LANCHOR0
+ 400 008c 00000000 		.word	.LANCHOR1
+ 401              		.cfi_endproc
+ 402              	.LFE151:
+ 404              		.global	__aeabi_i2d
+ 405              		.global	__aeabi_dmul
+ 406              		.global	__aeabi_dadd
+ 407              		.global	__aeabi_d2uiz
+ 408              		.section	.text.main_subtask_power_check,"ax",%progbits
+ 409              		.align	1
+ 410              		.global	main_subtask_power_check
+ 411              		.syntax unified
+ 412              		.thumb
+ 413              		.thumb_func
+ 414              		.fpu fpv4-sp-d16
+ 416              	main_subtask_power_check:
+ 417              	.LFB152:
+ 183:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 184:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void main_subtask_power_check(void) {
+ 418              		.loc 1 184 37 is_stmt 1 view -0
+ 419              		.cfi_startproc
+ 420              		@ args = 0, pretend = 0, frame = 0
+ 421              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     static uint64_t next_5v_checkup = 0;
+ 422              		.loc 1 185 5 view .LVU97
+ 186:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 187:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     if (timer_read64() > next_5v_checkup) {
+ 423              		.loc 1 187 5 view .LVU98
+ 184:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     static uint64_t next_5v_checkup = 0;
+ 424              		.loc 1 184 37 is_stmt 0 view .LVU99
+ 425 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 426              		.cfi_def_cfa_offset 24
+ 427              		.cfi_offset 3, -24
+ 428              		.cfi_offset 4, -20
+ 429              		.cfi_offset 5, -16
+ 430              		.cfi_offset 6, -12
+ 431              		.cfi_offset 7, -8
+ 432              		.cfi_offset 14, -4
+ 433              		.loc 1 187 24 view .LVU100
+ 434 0002 1F4C     		ldr	r4, .L34+16
+ 435              		.loc 1 187 9 view .LVU101
+ 436 0004 FFF7FEFF 		bl	timer_read64
+ 437              	.LVL19:
+ 438              		.loc 1 187 8 view .LVU102
+ 439 0008 D4E90223 		ldrd	r2, [r4, #8]
+ 440 000c 8B42     		cmp	r3, r1
+ 441 000e 08BF     		it	eq
+ 442 0010 8242     		cmpeq	r2, r0
+ 443 0012 2CD2     		bcs	.L32
+ 188:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         next_5v_checkup = timer_read64() + 5;
+ 444              		.loc 1 188 9 is_stmt 1 view .LVU103
+ 445              		.loc 1 188 27 is_stmt 0 view .LVU104
+ 446 0014 FFF7FEFF 		bl	timer_read64
+ 447              	.LVL20:
+ 448              		.loc 1 188 42 view .LVU105
+ 449 0018 0530     		adds	r0, r0, #5
+ 450 001a 41F10001 		adc	r1, r1, #0
+ 451              		.loc 1 188 25 view .LVU106
+ 452 001e C4E90201 		strd	r0, r1, [r4, #8]
+ 189:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 190:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         v_5v     = adc_get(ADC_5V);
+ 453              		.loc 1 190 9 is_stmt 1 view .LVU107
+ 454              		.loc 1 190 20 is_stmt 0 view .LVU108
+ 455 0022 0C20     		movs	r0, #12
+ 456 0024 FFF7FEFF 		bl	adc_get
+ 457              	.LVL21:
+ 191:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         v_5v_avg = 0.9 * v_5v_avg + 0.1 * v_5v;
+ 458              		.loc 1 191 18 view .LVU109
+ 459 0028 164C     		ldr	r4, .L34+20
+ 190:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         v_5v_avg = 0.9 * v_5v_avg + 0.1 * v_5v;
+ 460              		.loc 1 190 18 view .LVU110
+ 461 002a 174B     		ldr	r3, .L34+24
+ 190:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         v_5v_avg = 0.9 * v_5v_avg + 0.1 * v_5v;
+ 462              		.loc 1 190 20 view .LVU111
+ 463 002c 0546     		mov	r5, r0
+ 190:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         v_5v_avg = 0.9 * v_5v_avg + 0.1 * v_5v;
+ 464              		.loc 1 190 18 view .LVU112
+ 465 002e 1880     		strh	r0, [r3]	@ movhi
+ 466              		.loc 1 191 9 is_stmt 1 view .LVU113
+ 467              		.loc 1 191 24 is_stmt 0 view .LVU114
+ 468 0030 2088     		ldrh	r0, [r4]
+ 469 0032 FFF7FEFF 		bl	__aeabi_i2d
+ 470              	.LVL22:
+ 471 0036 0EA3     		adr	r3, .L34
+ 472 0038 D3E90023 		ldrd	r2, [r3]
+ 473 003c FFF7FEFF 		bl	__aeabi_dmul
+ 474              	.LVL23:
+ 475 0040 0646     		mov	r6, r0
+ 476              		.loc 1 191 41 view .LVU115
+ 477 0042 2846     		mov	r0, r5
+ 478              		.loc 1 191 24 view .LVU116
+ 479 0044 0F46     		mov	r7, r1
+ 480              		.loc 1 191 41 view .LVU117
+ 481 0046 FFF7FEFF 		bl	__aeabi_i2d
+ 482              	.LVL24:
+ 483 004a 0BA3     		adr	r3, .L34+8
+ 484 004c D3E90023 		ldrd	r2, [r3]
+ 485 0050 FFF7FEFF 		bl	__aeabi_dmul
+ 486              	.LVL25:
+ 487              		.loc 1 191 35 view .LVU118
+ 488 0054 0B46     		mov	r3, r1
+ 489 0056 0246     		mov	r2, r0
+ 490 0058 3946     		mov	r1, r7
+ 491 005a 3046     		mov	r0, r6
+ 492 005c FFF7FEFF 		bl	__aeabi_dadd
+ 493              	.LVL26:
+ 494              		.loc 1 191 18 view .LVU119
+ 495 0060 FFF7FEFF 		bl	__aeabi_d2uiz
+ 496              	.LVL27:
+ 497 0064 2080     		strh	r0, [r4]	@ movhi
+ 192:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 193:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef RGB_MATRIX_ENABLE
+ 194:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         gcr_compute();
+ 498              		.loc 1 194 9 is_stmt 1 view .LVU120
+ 195:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif
+ 196:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 197:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 499              		.loc 1 197 1 is_stmt 0 view .LVU121
+ 500 0066 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 501              		.cfi_remember_state
+ 502              		.cfi_restore 14
+ 503              		.cfi_restore 7
+ 504              		.cfi_restore 6
+ 505              		.cfi_restore 5
+ 506              		.cfi_restore 4
+ 507              		.cfi_restore 3
+ 508              		.cfi_def_cfa_offset 0
+ 194:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif
+ 509              		.loc 1 194 9 view .LVU122
+ 510 006a FFF7FEBF 		b	gcr_compute
+ 511              	.LVL28:
+ 512              	.L32:
+ 513              		.cfi_restore_state
+ 514              		.loc 1 197 1 view .LVU123
+ 515 006e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 516              	.L35:
+ 517              		.align	3
+ 518              	.L34:
+ 519 0070 CDCCCCCC 		.word	3435973837
+ 520 0074 CCCCEC3F 		.word	1072483532
+ 521 0078 9A999999 		.word	2576980378
+ 522 007c 9999B93F 		.word	1069128089
+ 523 0080 00000000 		.word	.LANCHOR0
+ 524 0084 00000000 		.word	v_5v_avg
+ 525 0088 00000000 		.word	v_5v
+ 526              		.cfi_endproc
+ 527              	.LFE152:
+ 529              		.section	.text.main_subtask_usb_extra_device,"ax",%progbits
+ 530              		.align	1
+ 531              		.global	main_subtask_usb_extra_device
+ 532              		.syntax unified
+ 533              		.thumb
+ 534              		.thumb_func
+ 535              		.fpu fpv4-sp-d16
+ 537              	main_subtask_usb_extra_device:
+ 538              	.LFB153:
+ 198:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 199:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void main_subtask_usb_extra_device(void) {
+ 539              		.loc 1 199 42 is_stmt 1 view -0
+ 540              		.cfi_startproc
+ 541              		@ args = 0, pretend = 0, frame = 0
+ 542              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     static uint64_t next_usb_checkup = 0;
+ 543              		.loc 1 200 5 view .LVU125
+ 201:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 202:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     if (timer_read64() > next_usb_checkup) {
+ 544              		.loc 1 202 5 view .LVU126
+ 199:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     static uint64_t next_usb_checkup = 0;
+ 545              		.loc 1 199 42 is_stmt 0 view .LVU127
+ 546 0000 10B5     		push	{r4, lr}
+ 547              		.cfi_def_cfa_offset 8
+ 548              		.cfi_offset 4, -8
+ 549              		.cfi_offset 14, -4
+ 550              		.loc 1 202 24 view .LVU128
+ 551 0002 0A4C     		ldr	r4, .L38
+ 552              		.loc 1 202 9 view .LVU129
+ 553 0004 FFF7FEFF 		bl	timer_read64
+ 554              	.LVL29:
+ 555              		.loc 1 202 8 view .LVU130
+ 556 0008 D4E90423 		ldrd	r2, [r4, #16]
+ 557 000c 8B42     		cmp	r3, r1
+ 558 000e 08BF     		it	eq
+ 559 0010 8242     		cmpeq	r2, r0
+ 560 0012 0AD2     		bcs	.L36
+ 203:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         next_usb_checkup = timer_read64() + 10;
+ 561              		.loc 1 203 9 is_stmt 1 view .LVU131
+ 562              		.loc 1 203 28 is_stmt 0 view .LVU132
+ 563 0014 FFF7FEFF 		bl	timer_read64
+ 564              	.LVL30:
+ 565              		.loc 1 203 43 view .LVU133
+ 566 0018 0A30     		adds	r0, r0, #10
+ 567 001a 41F10001 		adc	r1, r1, #0
+ 568              		.loc 1 203 26 view .LVU134
+ 569 001e C4E90401 		strd	r0, r1, [r4, #16]
+ 204:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 205:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         USB_HandleExtraDevice();
+ 570              		.loc 1 205 9 is_stmt 1 view .LVU135
+ 206:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 207:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 571              		.loc 1 207 1 is_stmt 0 view .LVU136
+ 572 0022 BDE81040 		pop	{r4, lr}
+ 573              		.cfi_remember_state
+ 574              		.cfi_restore 14
+ 575              		.cfi_restore 4
+ 576              		.cfi_def_cfa_offset 0
+ 205:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 577              		.loc 1 205 9 view .LVU137
+ 578 0026 FFF7FEBF 		b	USB_HandleExtraDevice
+ 579              	.LVL31:
+ 580              	.L36:
+ 581              		.cfi_restore_state
+ 582              		.loc 1 207 1 view .LVU138
+ 583 002a 10BD     		pop	{r4, pc}
+ 584              	.L39:
+ 585              		.align	2
+ 586              	.L38:
+ 587 002c 00000000 		.word	.LANCHOR0
+ 588              		.cfi_endproc
+ 589              	.LFE153:
+ 591              		.section	.text.main_subtasks,"ax",%progbits
+ 592              		.align	1
+ 593              		.global	main_subtasks
+ 594              		.syntax unified
+ 595              		.thumb
+ 596              		.thumb_func
+ 597              		.fpu fpv4-sp-d16
+ 599              	main_subtasks:
+ 600              	.LFB154:
+ 208:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 209:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef RAW_ENABLE
+ 210:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void main_subtask_raw(void) { udi_hid_raw_receive_report(); }
+ 211:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif
+ 212:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 213:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** void main_subtasks(void) {
+ 601              		.loc 1 213 26 is_stmt 1 view -0
+ 602              		.cfi_startproc
+ 603              		@ args = 0, pretend = 0, frame = 0
+ 604              		@ frame_needed = 0, uses_anonymous_args = 0
+ 214:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     main_subtask_usb_state();
+ 605              		.loc 1 214 5 view .LVU140
+ 213:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     main_subtask_usb_state();
+ 606              		.loc 1 213 26 is_stmt 0 view .LVU141
+ 607 0000 08B5     		push	{r3, lr}
+ 608              		.cfi_def_cfa_offset 8
+ 609              		.cfi_offset 3, -8
+ 610              		.cfi_offset 14, -4
+ 611              		.loc 1 214 5 view .LVU142
+ 612 0002 FFF7FEFF 		bl	main_subtask_usb_state
+ 613              	.LVL32:
+ 215:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     main_subtask_power_check();
+ 614              		.loc 1 215 5 is_stmt 1 view .LVU143
+ 615 0006 FFF7FEFF 		bl	main_subtask_power_check
+ 616              	.LVL33:
+ 216:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     main_subtask_usb_extra_device();
+ 617              		.loc 1 216 5 view .LVU144
+ 217:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef RAW_ENABLE
+ 218:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     main_subtask_raw();
+ 219:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif
+ 220:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** }
+ 618              		.loc 1 220 1 is_stmt 0 view .LVU145
+ 619 000a BDE80840 		pop	{r3, lr}
+ 620              		.cfi_restore 14
+ 621              		.cfi_restore 3
+ 622              		.cfi_def_cfa_offset 0
+ 216:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     main_subtask_usb_extra_device();
+ 623              		.loc 1 216 5 view .LVU146
+ 624 000e FFF7FEBF 		b	main_subtask_usb_extra_device
+ 625              	.LVL34:
+ 626              		.cfi_endproc
+ 627              	.LFE154:
+ 629              		.section	.text.send_keyboard,"ax",%progbits
+ 630              		.align	1
+ 631              		.global	send_keyboard
+ 632              		.syntax unified
+ 633              		.thumb
+ 634              		.thumb_func
+ 635              		.fpu fpv4-sp-d16
+ 637              	send_keyboard:
+ 638              	.LVL35:
+ 639              	.LFB146:
+  56:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+ 640              		.loc 1 56 47 is_stmt 1 view -0
+ 641              		.cfi_startproc
+ 642              		@ args = 0, pretend = 0, frame = 0
+ 643              		@ frame_needed = 0, uses_anonymous_args = 0
+  57:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 644              		.loc 1 57 5 view .LVU148
+  60:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+ 645              		.loc 1 60 5 view .LVU149
+  56:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+ 646              		.loc 1 56 47 is_stmt 0 view .LVU150
+ 647 0000 38B5     		push	{r3, r4, r5, lr}
+ 648              		.cfi_def_cfa_offset 16
+ 649              		.cfi_offset 3, -16
+ 650              		.cfi_offset 4, -12
+ 651              		.cfi_offset 5, -8
+ 652              		.cfi_offset 14, -4
+  60:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+ 653              		.loc 1 60 23 view .LVU151
+ 654 0002 1D4B     		ldr	r3, .L52
+ 655 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  60:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+ 656              		.loc 1 60 8 view .LVU152
+ 657 0006 DB09     		lsrs	r3, r3, #7
+  56:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint32_t irqflags;
+ 658              		.loc 1 56 47 view .LVU153
+ 659 0008 0446     		mov	r4, r0
+  60:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // NKRO_ENABLE
+ 660              		.loc 1 60 8 view .LVU154
+ 661 000a 17D0     		beq	.L50
+  78:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+ 662              		.loc 1 78 16 view .LVU155
+ 663 000c 1B4D     		ldr	r5, .L52+4
+ 664              	.LVL36:
+ 665              	.L42:
+  78:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+ 666              		.loc 1 78 16 view .LVU156
+ 667 000e 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+  78:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+ 668              		.loc 1 78 15 view .LVU157
+ 669 0010 73BB     		cbnz	r3, .L46
+  82:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __disable_irq();
+ 670              		.loc 1 82 9 is_stmt 1 view .LVU158
+ 671              	.LBB47:
+ 672              	.LBI47:
+ 309:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 673              		.loc 2 309 57 view .LVU159
+ 674              	.LBB48:
+ 311:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 675              		.loc 2 311 3 view .LVU160
+ 313:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 676              		.loc 2 313 3 view .LVU161
+ 677              		.syntax unified
+ 678              	@ 313 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 679 0012 EFF31085 		MRS r5, primask
+ 680              	@ 0 "" 2
+ 681              	.LVL37:
+ 314:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 682              		.loc 2 314 3 view .LVU162
+ 314:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 683              		.loc 2 314 3 is_stmt 0 view .LVU163
+ 684              		.thumb
+ 685              		.syntax unified
+ 686              	.LBE48:
+ 687              	.LBE47:
+  83:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __DMB();
+ 688              		.loc 1 83 9 is_stmt 1 view .LVU164
+ 689              	.LBB49:
+ 690              	.LBI49:
+  94:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 691              		.loc 2 94 53 view .LVU165
+ 692              	.LBB50:
+  96:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 693              		.loc 2 96 3 view .LVU166
+ 694              		.syntax unified
+ 695              	@ 96 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 696 0016 72B6     		cpsid i
+ 697              	@ 0 "" 2
+ 698              		.thumb
+ 699              		.syntax unified
+ 700              	.LBE50:
+ 701              	.LBE49:
+  84:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 702              		.loc 1 84 9 view .LVU167
+ 703              	.LBB51:
+ 704              	.LBI51:
+ 762:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 705              		.loc 2 762 53 view .LVU168
+ 706              	.LBB52:
+ 707              		.loc 2 764 3 view .LVU169
+ 708              		.syntax unified
+ 709              	@ 764 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 710 0018 BFF35F8F 		dmb 0xF
+ 711              	@ 0 "" 2
+ 712              		.thumb
+ 713              		.syntax unified
+ 714              	.LBE52:
+ 715              	.LBE51:
+  86:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_nkro_b_report_valid = 1;
+ 716              		.loc 1 86 9 view .LVU170
+ 717 001c 184B     		ldr	r3, .L52+8
+ 718 001e 2046     		mov	r0, r4
+ 719 0020 04F12002 		add	r2, r4, #32
+ 720              	.L47:
+ 721 0024 50F8041B 		ldr	r1, [r0], #4	@ unaligned
+ 722 0028 43F8041B 		str	r1, [r3], #4	@ unaligned
+ 723 002c 9042     		cmp	r0, r2
+ 724 002e F9D1     		bne	.L47
+  87:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_nkro_send_report();
+ 725              		.loc 1 87 9 view .LVU171
+  87:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_nkro_send_report();
+ 726              		.loc 1 87 37 is_stmt 0 view .LVU172
+ 727 0030 144B     		ldr	r3, .L52+12
+ 728 0032 0122     		movs	r2, #1
+ 729 0034 1A70     		strb	r2, [r3]
+  88:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 730              		.loc 1 88 9 is_stmt 1 view .LVU173
+ 731 0036 FFF7FEFF 		bl	udi_hid_nkro_send_report
+ 732              	.LVL38:
+ 733 003a 11E0     		b	.L51
+ 734              	.LVL39:
+ 735              	.L50:
+  62:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+ 736              		.loc 1 62 16 is_stmt 0 view .LVU174
+ 737 003c 124D     		ldr	r5, .L52+16
+ 738              	.LVL40:
+ 739              	.L43:
+  62:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+ 740              		.loc 1 62 16 view .LVU175
+ 741 003e 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+  62:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             main_subtasks();
+ 742              		.loc 1 62 15 view .LVU176
+ 743 0040 9BB9     		cbnz	r3, .L44
+  66:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __disable_irq();
+ 744              		.loc 1 66 9 is_stmt 1 view .LVU177
+ 745              	.LBB53:
+ 746              	.LBI53:
+ 309:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 747              		.loc 2 309 57 view .LVU178
+ 748              	.LBB54:
+ 311:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** 
+ 749              		.loc 2 311 3 view .LVU179
+ 313:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h ****   return(result);
+ 750              		.loc 2 313 3 view .LVU180
+ 751              		.syntax unified
+ 752              	@ 313 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 753 0042 EFF31085 		MRS r5, primask
+ 754              	@ 0 "" 2
+ 755              	.LVL41:
+ 314:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 756              		.loc 2 314 3 view .LVU181
+ 314:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 757              		.loc 2 314 3 is_stmt 0 view .LVU182
+ 758              		.thumb
+ 759              		.syntax unified
+ 760              	.LBE54:
+ 761              	.LBE53:
+  67:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __DMB();
+ 762              		.loc 1 67 9 is_stmt 1 view .LVU183
+ 763              	.LBB55:
+ 764              	.LBI55:
+  94:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 765              		.loc 2 94 53 view .LVU184
+ 766              	.LBB56:
+  96:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 767              		.loc 2 96 3 view .LVU185
+ 768              		.syntax unified
+ 769              	@ 96 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 770 0046 72B6     		cpsid i
+ 771              	@ 0 "" 2
+ 772              		.thumb
+ 773              		.syntax unified
+ 774              	.LBE56:
+ 775              	.LBE55:
+  68:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 776              		.loc 1 68 9 view .LVU186
+ 777              	.LBB57:
+ 778              	.LBI57:
+ 762:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 779              		.loc 2 762 53 view .LVU187
+ 780              	.LBB58:
+ 781              		.loc 2 764 3 view .LVU188
+ 782              		.syntax unified
+ 783              	@ 764 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 784 0048 BFF35F8F 		dmb 0xF
+ 785              	@ 0 "" 2
+ 786              		.thumb
+ 787              		.syntax unified
+ 788              	.LBE58:
+ 789              	.LBE57:
+  70:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_kbd_b_report_valid = 1;
+ 790              		.loc 1 70 9 view .LVU189
+ 791 004c 0F4A     		ldr	r2, .L52+20
+ 792 004e 2368     		ldr	r3, [r4]	@ unaligned
+ 793 0050 1360     		str	r3, [r2]	@ unaligned
+ 794 0052 6368     		ldr	r3, [r4, #4]	@ unaligned
+ 795 0054 5360     		str	r3, [r2, #4]	@ unaligned
+  71:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_kbd_send_report();
+ 796              		.loc 1 71 9 view .LVU190
+  71:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         udi_hid_kbd_send_report();
+ 797              		.loc 1 71 36 is_stmt 0 view .LVU191
+ 798 0056 0E4B     		ldr	r3, .L52+24
+ 799 0058 0122     		movs	r2, #1
+ 800 005a 1A70     		strb	r2, [r3]
+  72:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 801              		.loc 1 72 9 is_stmt 1 view .LVU192
+ 802 005c FFF7FEFF 		bl	udi_hid_kbd_send_report
+ 803              	.LVL42:
+  74:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __set_PRIMASK(irqflags);
+ 804              		.loc 1 74 9 view .LVU193
+ 805              	.LBB59:
+ 806              	.LBI59:
+ 762:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 807              		.loc 2 762 53 view .LVU194
+ 808              	.LBB60:
+ 809              		.loc 2 764 3 view .LVU195
+ 810              	.L51:
+ 811              		.loc 2 764 3 is_stmt 0 view .LVU196
+ 812              	.LBE60:
+ 813              	.LBE59:
+  90:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         __set_PRIMASK(irqflags);
+ 814              		.loc 1 90 9 is_stmt 1 view .LVU197
+ 815              	.LBB61:
+ 816              	.LBI61:
+ 762:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 817              		.loc 2 762 53 view .LVU198
+ 818              	.LBB62:
+ 819              		.loc 2 764 3 view .LVU199
+ 820              		.syntax unified
+ 821              	@ 764 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 822 0060 BFF35F8F 		dmb 0xF
+ 823              	@ 0 "" 2
+ 824              		.thumb
+ 825              		.syntax unified
+ 826              	.LBE62:
+ 827              	.LBE61:
+  91:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 828              		.loc 1 91 9 view .LVU200
+ 829              	.LVL43:
+ 830              	.LBB63:
+ 831              	.LBI63:
+ 339:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** {
+ 832              		.loc 2 339 53 view .LVU201
+ 833              	.LBB64:
+ 341:lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h **** }
+ 834              		.loc 2 341 3 view .LVU202
+ 835              		.syntax unified
+ 836              	@ 341 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_gcc.h" 1
+ 837 0064 85F31088 		MSR primask, r5
+ 838              	@ 0 "" 2
+ 839              		.thumb
+ 840              		.syntax unified
+ 841              	.LBE64:
+ 842              	.LBE63:
+  94:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 843              		.loc 1 94 1 is_stmt 0 view .LVU203
+ 844 0068 38BD     		pop	{r3, r4, r5, pc}
+ 845              	.LVL44:
+ 846              	.L44:
+  63:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }  // Run other tasks while waiting for USB to be free
+ 847              		.loc 1 63 13 is_stmt 1 view .LVU204
+ 848 006a FFF7FEFF 		bl	main_subtasks
+ 849              	.LVL45:
+ 850 006e E6E7     		b	.L43
+ 851              	.L46:
+  79:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }  // Run other tasks while waiting for USB to be free
+ 852              		.loc 1 79 13 view .LVU205
+ 853 0070 FFF7FEFF 		bl	main_subtasks
+ 854              	.LVL46:
+ 855 0074 CBE7     		b	.L42
+ 856              	.L53:
+ 857 0076 00BF     		.align	2
+ 858              	.L52:
+ 859 0078 00000000 		.word	keymap_config
+ 860 007c 00000000 		.word	udi_hid_nkro_b_report_trans_ongoing
+ 861 0080 00000000 		.word	udi_hid_nkro_report
+ 862 0084 00000000 		.word	udi_hid_nkro_b_report_valid
+ 863 0088 00000000 		.word	udi_hid_kbd_b_report_trans_ongoing
+ 864 008c 00000000 		.word	udi_hid_kbd_report
+ 865 0090 00000000 		.word	udi_hid_kbd_b_report_valid
+ 866              		.cfi_endproc
+ 867              	.LFE146:
+ 869              		.section	.text.startup.main,"ax",%progbits
+ 870              		.align	1
+ 871              		.global	main
+ 872              		.syntax unified
+ 873              		.thumb
+ 874              		.thumb_func
+ 875              		.fpu fpv4-sp-d16
+ 877              	main:
+ 878              	.LFB155:
+ 221:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 222:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** int main(void) {
+ 879              		.loc 1 222 16 view -0
+ 880              		.cfi_startproc
+ 881              		@ args = 0, pretend = 0, frame = 0
+ 882              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_LED_ENA;
+ 883              		.loc 1 223 5 view .LVU207
+ 222:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_LED_ENA;
+ 884              		.loc 1 222 16 is_stmt 0 view .LVU208
+ 885 0000 38B5     		push	{r3, r4, r5, lr}
+ 886              		.cfi_def_cfa_offset 16
+ 887              		.cfi_offset 3, -16
+ 888              		.cfi_offset 4, -12
+ 889              		.cfi_offset 5, -8
+ 890              		.cfi_offset 14, -4
+ 891              		.loc 1 223 5 view .LVU209
+ 892 0002 414C     		ldr	r4, .L78
+ 224:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_1_ENA;
+ 225:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_1_OFF;
+ 226:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_2_ENA;
+ 227:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_2_OFF;
+ 228:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_3_ENA;
+ 229:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_3_OFF;
+ 230:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 231:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     debug_code_init();
+ 232:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 233:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     CLK_init();
+ 234:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 235:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     ADC0_init();
+ 236:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 237:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     SR_EXP_Init();
+ 238:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 239:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef RGB_MATRIX_ENABLE
+ 240:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     i2c1_init();
+ 241:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // RGB_MATRIX_ENABLE
+ 242:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 243:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     matrix_init();
+ 244:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 245:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     USB2422_init();
+ 246:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 247:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBGC(DC_MAIN_UDC_START_BEGIN);
+ 893              		.loc 1 247 5 view .LVU210
+ 894 0004 414D     		ldr	r5, .L78+4
+ 223:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_1_ENA;
+ 895              		.loc 1 223 5 view .LVU211
+ 896 0006 4FF00063 		mov	r3, #134217728
+ 897 000a A360     		str	r3, [r4, #8]
+ 224:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_1_ENA;
+ 898              		.loc 1 224 5 is_stmt 1 view .LVU212
+ 899 000c 0823     		movs	r3, #8
+ 900 000e C4F88830 		str	r3, [r4, #136]
+ 225:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_2_ENA;
+ 901              		.loc 1 225 5 view .LVU213
+ 902 0012 C4F89430 		str	r3, [r4, #148]
+ 226:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_2_OFF;
+ 903              		.loc 1 226 5 view .LVU214
+ 904 0016 4FF40033 		mov	r3, #131072
+ 905 001a C4F88830 		str	r3, [r4, #136]
+ 227:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_3_ENA;
+ 906              		.loc 1 227 5 view .LVU215
+ 907 001e C4F89430 		str	r3, [r4, #148]
+ 228:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_3_OFF;
+ 908              		.loc 1 228 5 view .LVU216
+ 909 0022 4FF48013 		mov	r3, #1048576
+ 910 0026 A360     		str	r3, [r4, #8]
+ 229:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 911              		.loc 1 229 5 view .LVU217
+ 912 0028 6361     		str	r3, [r4, #20]
+ 231:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 913              		.loc 1 231 5 view .LVU218
+ 914 002a FFF7FEFF 		bl	debug_code_init
+ 915              	.LVL47:
+ 233:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 916              		.loc 1 233 5 view .LVU219
+ 917 002e FFF7FEFF 		bl	CLK_init
+ 918              	.LVL48:
+ 235:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 919              		.loc 1 235 5 view .LVU220
+ 920 0032 FFF7FEFF 		bl	ADC0_init
+ 921              	.LVL49:
+ 237:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 922              		.loc 1 237 5 view .LVU221
+ 923 0036 FFF7FEFF 		bl	SR_EXP_Init
+ 924              	.LVL50:
+ 240:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // RGB_MATRIX_ENABLE
+ 925              		.loc 1 240 5 view .LVU222
+ 926 003a FFF7FEFF 		bl	i2c1_init
+ 927              	.LVL51:
+ 243:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 928              		.loc 1 243 5 view .LVU223
+ 929 003e FFF7FEFF 		bl	matrix_init
+ 930              	.LVL52:
+ 245:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 931              		.loc 1 245 5 view .LVU224
+ 932 0042 FFF7FEFF 		bl	USB2422_init
+ 933              	.LVL53:
+ 934              		.loc 1 247 5 view .LVU225
+ 935 0046 7A23     		movs	r3, #122
+ 936 0048 2B60     		str	r3, [r5]
+ 248:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     udc_start();
+ 937              		.loc 1 248 5 view .LVU226
+ 938 004a FFF7FEFF 		bl	udc_start
+ 939              	.LVL54:
+ 249:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBGC(DC_MAIN_UDC_START_COMPLETE);
+ 940              		.loc 1 249 5 view .LVU227
+ 941 004e 7B23     		movs	r3, #123
+ 942 0050 2B60     		str	r3, [r5]
+ 250:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 251:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBGC(DC_MAIN_CDC_INIT_BEGIN);
+ 943              		.loc 1 251 5 view .LVU228
+ 944 0052 7C23     		movs	r3, #124
+ 945 0054 2B60     		str	r3, [r5]
+ 252:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     CDC_init();
+ 946              		.loc 1 252 5 view .LVU229
+ 947 0056 FFF7FEFF 		bl	CDC_init
+ 948              	.LVL55:
+ 253:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBGC(DC_MAIN_CDC_INIT_COMPLETE);
+ 949              		.loc 1 253 5 view .LVU230
+ 950 005a 7D23     		movs	r3, #125
+ 951 005c 2B60     		str	r3, [r5]
+ 254:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 255:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     while (USB2422_Port_Detect_Init() == 0) {
+ 952              		.loc 1 255 5 view .LVU231
+ 953              	.L55:
+ 256:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 954              		.loc 1 256 5 discriminator 1 view .LVU232
+ 255:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 955              		.loc 1 255 12 is_stmt 0 discriminator 1 view .LVU233
+ 956 005e FFF7FEFF 		bl	USB2422_Port_Detect_Init
+ 957              	.LVL56:
+ 255:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 958              		.loc 1 255 11 discriminator 1 view .LVU234
+ 959 0062 0028     		cmp	r0, #0
+ 960 0064 FBD0     		beq	.L55
+ 257:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 258:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     DBG_LED_OFF;
+ 961              		.loc 1 258 5 is_stmt 1 view .LVU235
+ 962 0066 4FF00063 		mov	r3, #134217728
+ 963 006a 6361     		str	r3, [r4, #20]
+ 259:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 260:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef RGB_MATRIX_ENABLE
+ 261:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     while (I2C3733_Init_Control() != 1) {
+ 964              		.loc 1 261 5 view .LVU236
+ 965              	.L56:
+ 262:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 966              		.loc 1 262 5 discriminator 1 view .LVU237
+ 261:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 967              		.loc 1 261 12 is_stmt 0 discriminator 1 view .LVU238
+ 968 006c FFF7FEFF 		bl	I2C3733_Init_Control
+ 969              	.LVL57:
+ 261:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 970              		.loc 1 261 11 discriminator 1 view .LVU239
+ 971 0070 0128     		cmp	r0, #1
+ 972 0072 FBD1     		bne	.L56
+ 973              	.L57:
+ 263:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     while (I2C3733_Init_Drivers() != 1) {
+ 264:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     }
+ 974              		.loc 1 264 5 is_stmt 1 discriminator 1 view .LVU240
+ 263:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     while (I2C3733_Init_Drivers() != 1) {
+ 975              		.loc 1 263 12 is_stmt 0 discriminator 1 view .LVU241
+ 976 0074 FFF7FEFF 		bl	I2C3733_Init_Drivers
+ 977              	.LVL58:
+ 263:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     while (I2C3733_Init_Drivers() != 1) {
+ 978              		.loc 1 263 11 discriminator 1 view .LVU242
+ 979 0078 0128     		cmp	r0, #1
+ 980 007a FBD1     		bne	.L57
+ 265:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 266:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     I2C_DMAC_LED_Init();
+ 981              		.loc 1 266 5 is_stmt 1 view .LVU243
+ 982 007c FFF7FEFF 		bl	I2C_DMAC_LED_Init
+ 983              	.LVL59:
+ 267:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 268:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     i2c_led_q_init();
+ 984              		.loc 1 268 5 view .LVU244
+ 985 0080 FFF7FEFF 		bl	i2c_led_q_init
+ 986              	.LVL60:
+ 269:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 270:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     for (uint8_t drvid = 0; drvid < ISSI3733_DRIVER_COUNT; drvid++) I2C_LED_Q_ONOFF(drvid);  // Que
+ 987              		.loc 1 270 5 view .LVU245
+ 988              	.LBB65:
+ 989              		.loc 1 270 10 view .LVU246
+ 990              		.loc 1 270 18 is_stmt 0 view .LVU247
+ 991 0084 0024     		movs	r4, #0
+ 992              	.LVL61:
+ 993              	.L59:
+ 994              		.loc 1 270 69 is_stmt 1 discriminator 6 view .LVU248
+ 995 0086 0720     		movs	r0, #7
+ 996 0088 FFF7FEFF 		bl	i2c_led_q_request_room
+ 997              	.LVL62:
+ 998 008c A0B1     		cbz	r0, .L58
+ 999              		.loc 1 270 69 discriminator 2 view .LVU249
+ 1000 008e 6520     		movs	r0, #101
+ 1001 0090 FFF7FEFF 		bl	i2c_led_q_add
+ 1002              	.LVL63:
+ 1003              		.loc 1 270 69 discriminator 2 view .LVU250
+ 1004 0094 2046     		mov	r0, r4
+ 1005 0096 FFF7FEFF 		bl	i2c_led_q_add
+ 1006              	.LVL64:
+ 1007              		.loc 1 270 69 discriminator 2 view .LVU251
+ 1008 009a 6620     		movs	r0, #102
+ 1009 009c FFF7FEFF 		bl	i2c_led_q_add
+ 1010              	.LVL65:
+ 1011              		.loc 1 270 69 discriminator 2 view .LVU252
+ 1012 00a0 2046     		mov	r0, r4
+ 1013 00a2 FFF7FEFF 		bl	i2c_led_q_add
+ 1014              	.LVL66:
+ 1015              		.loc 1 270 69 discriminator 2 view .LVU253
+ 1016 00a6 0020     		movs	r0, #0
+ 1017 00a8 FFF7FEFF 		bl	i2c_led_q_add
+ 1018              	.LVL67:
+ 1019              		.loc 1 270 69 discriminator 2 view .LVU254
+ 1020 00ac 6920     		movs	r0, #105
+ 1021 00ae FFF7FEFF 		bl	i2c_led_q_add
+ 1022              	.LVL68:
+ 1023              		.loc 1 270 69 discriminator 2 view .LVU255
+ 1024 00b2 2046     		mov	r0, r4
+ 1025 00b4 FFF7FEFF 		bl	i2c_led_q_add
+ 1026              	.LVL69:
+ 1027              	.L58:
+ 1028              		.loc 1 270 5 is_stmt 0 discriminator 4 view .LVU256
+ 1029 00b8 04B3     		cbz	r4, .L64
+ 1030              	.LBE65:
+ 1031              		.loc 1 270 91 is_stmt 1 discriminator 7 view .LVU257
+ 271:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif                                                                                       // RGB
+ 272:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 273:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     keyboard_setup();
+ 1032              		.loc 1 273 5 discriminator 7 view .LVU258
+ 1033 00ba FFF7FEFF 		bl	keyboard_setup
+ 1034              	.LVL70:
+ 274:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 275:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     keyboard_init();
+ 1035              		.loc 1 275 5 discriminator 7 view .LVU259
+ 1036 00be FFF7FEFF 		bl	keyboard_init
+ 1037              	.LVL71:
+ 276:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 277:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     host_set_driver(&arm_atsam_driver);
+ 1038              		.loc 1 277 5 discriminator 7 view .LVU260
+ 1039 00c2 1348     		ldr	r0, .L78+8
+ 278:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 279:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #ifdef CONSOLE_ENABLE
+ 280:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     uint64_t next_print = 0;
+ 281:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** #endif  // CONSOLE_ENABLE
+ 282:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 283:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     v_5v_avg = adc_get(ADC_5V);
+ 284:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 285:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     debug_code_disable();
+ 286:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 287:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****     while (1) {
+ 288:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         main_subtasks();  // Note these tasks will also be run while waiting for USB keyboard polli
+ 289:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 290:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         if (g_usb_state == USB_FSMSTATUS_FSMSTATE_SUSPEND_Val || g_usb_state == USB_FSMSTATUS_FSMST
+ 1040              		.loc 1 290 25 is_stmt 0 discriminator 7 view .LVU261
+ 1041 00c4 134C     		ldr	r4, .L78+12
+ 1042              	.LVL72:
+ 277:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 1043              		.loc 1 277 5 discriminator 7 view .LVU262
+ 1044 00c6 FFF7FEFF 		bl	host_set_driver
+ 1045              	.LVL73:
+ 283:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 1046              		.loc 1 283 5 is_stmt 1 discriminator 7 view .LVU263
+ 283:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 1047              		.loc 1 283 16 is_stmt 0 discriminator 7 view .LVU264
+ 1048 00ca 0C20     		movs	r0, #12
+ 1049 00cc FFF7FEFF 		bl	adc_get
+ 1050              	.LVL74:
+ 283:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 1051              		.loc 1 283 14 discriminator 7 view .LVU265
+ 1052 00d0 114B     		ldr	r3, .L78+16
+ 1053 00d2 1880     		strh	r0, [r3]	@ movhi
+ 285:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 1054              		.loc 1 285 5 is_stmt 1 discriminator 7 view .LVU266
+ 1055 00d4 FFF7FEFF 		bl	debug_code_disable
+ 1056              	.LVL75:
+ 1057              	.L60:
+ 287:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         main_subtasks();  // Note these tasks will also be run while waiting for USB keyboard polli
+ 1058              		.loc 1 287 5 view .LVU267
+ 288:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 1059              		.loc 1 288 9 view .LVU268
+ 1060 00d8 FFF7FEFF 		bl	main_subtasks
+ 1061              	.LVL76:
+ 1062              		.loc 1 290 9 view .LVU269
+ 1063              		.loc 1 290 25 is_stmt 0 view .LVU270
+ 1064 00dc 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 1065              		.loc 1 290 12 view .LVU271
+ 1066 00de 042B     		cmp	r3, #4
+ 1067 00e0 01D0     		beq	.L61
+ 1068              		.loc 1 290 63 discriminator 1 view .LVU272
+ 1069 00e2 082B     		cmp	r3, #8
+ 1070 00e4 0CD1     		bne	.L62
+ 1071              	.L61:
+ 291:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             if (suspend_wakeup_condition()) {
+ 1072              		.loc 1 291 13 is_stmt 1 view .LVU273
+ 1073              		.loc 1 291 17 is_stmt 0 view .LVU274
+ 1074 00e6 FFF7FEFF 		bl	suspend_wakeup_condition
+ 1075              	.LVL77:
+ 1076              		.loc 1 291 16 view .LVU275
+ 1077 00ea 0028     		cmp	r0, #0
+ 1078 00ec F4D0     		beq	.L60
+ 292:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****                 udc_remotewakeup();  // Send remote wakeup signal
+ 1079              		.loc 1 292 17 is_stmt 1 view .LVU276
+ 1080              	.LBB66:
+ 1081              	.LBI66:
+ 1082              		.file 3 "tmk_core/protocol/arm_atsam/./usb/udc.h"
+   1:tmk_core/protocol/arm_atsam/./usb/udc.h **** /**
+   2:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \file
+   3:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+   4:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \brief Interface of the USB Device Controller (UDC)
+   5:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+   6:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
+   7:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+   8:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \asf_license_start
+   9:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  10:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \page License
+  11:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  12:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Redistribution and use in source and binary forms, with or without
+  13:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * modification, are permitted provided that the following conditions are met:
+  14:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  15:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * 1. Redistributions of source code must retain the above copyright notice,
+  16:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *    this list of conditions and the following disclaimer.
+  17:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  18:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  19:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *    this list of conditions and the following disclaimer in the documentation
+  20:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *    and/or other materials provided with the distribution.
+  21:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  22:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * 3. The name of Atmel may not be used to endorse or promote products derived
+  23:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *    from this software without specific prior written permission.
+  24:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  25:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * 4. This software may only be redistributed and used in connection with an
+  26:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *    Atmel microcontroller product.
+  27:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  28:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+  29:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+  30:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+  31:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+  32:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  33:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  34:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+  35:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+  36:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * POSSIBILITY OF SUCH DAMAGE.
+  39:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  40:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \asf_license_stop
+  41:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  42:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+  43:tmk_core/protocol/arm_atsam/./usb/udc.h **** /*
+  44:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
+  45:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+  46:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+  47:tmk_core/protocol/arm_atsam/./usb/udc.h **** #ifndef _UDC_H_
+  48:tmk_core/protocol/arm_atsam/./usb/udc.h **** #define _UDC_H_
+  49:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+  50:tmk_core/protocol/arm_atsam/./usb/udc.h **** #include "conf_usb.h"
+  51:tmk_core/protocol/arm_atsam/./usb/udc.h **** #include "usb_protocol.h"
+  52:tmk_core/protocol/arm_atsam/./usb/udc.h **** #include "udc_desc.h"
+  53:tmk_core/protocol/arm_atsam/./usb/udc.h **** #include "udd.h"
+  54:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+  55:tmk_core/protocol/arm_atsam/./usb/udc.h **** #if USB_DEVICE_VENDOR_ID == 0
+  56:tmk_core/protocol/arm_atsam/./usb/udc.h **** #    error USB_DEVICE_VENDOR_ID cannot be equal to 0
+  57:tmk_core/protocol/arm_atsam/./usb/udc.h **** #endif
+  58:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+  59:tmk_core/protocol/arm_atsam/./usb/udc.h **** #if USB_DEVICE_PRODUCT_ID == 0
+  60:tmk_core/protocol/arm_atsam/./usb/udc.h **** #    error USB_DEVICE_PRODUCT_ID cannot be equal to 0
+  61:tmk_core/protocol/arm_atsam/./usb/udc.h **** #endif
+  62:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+  63:tmk_core/protocol/arm_atsam/./usb/udc.h **** #ifdef __cplusplus
+  64:tmk_core/protocol/arm_atsam/./usb/udc.h **** extern "C" {
+  65:tmk_core/protocol/arm_atsam/./usb/udc.h **** #endif
+  66:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+  67:tmk_core/protocol/arm_atsam/./usb/udc.h **** /**
+  68:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \ingroup usb_device_group
+  69:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \defgroup udc_group USB Device Controller (UDC)
+  70:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  71:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * The UDC provides a high-level abstraction of the usb device.
+  72:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * You can use these functions to control the main device state
+  73:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * (start/attach/wakeup).
+  74:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  75:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \section USB_DEVICE_CONF USB Device Custom configuration
+  76:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * The following USB Device configuration must be included in the conf_usb.h
+  77:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * file of the application.
+  78:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  79:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_VENDOR_ID (Word)<br>
+  80:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Vendor ID provided by USB org (ATMEL 0x03EB).
+  81:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  82:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_PRODUCT_ID (Word)<br>
+  83:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Product ID (Referenced in usb_atmel.h).
+  84:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  85:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_MAJOR_VERSION (Byte)<br>
+  86:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Major version of the device
+  87:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  88:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_MINOR_VERSION (Byte)<br>
+  89:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Minor version of the device
+  90:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  91:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_MANUFACTURE_NAME (string)<br>
+  92:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * ASCII name for the manufacture
+  93:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  94:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_PRODUCT_NAME (string)<br>
+  95:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * ASCII name for the product
+  96:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+  97:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_SERIAL_NAME (string)<br>
+  98:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * ASCII name to enable and set a serial number
+  99:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 100:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_POWER (Numeric)<br>
+ 101:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * (unit mA) Maximum device power
+ 102:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 103:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_ATTR (Byte)<br>
+ 104:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB attributes available:
+ 105:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *  - USB_CONFIG_ATTR_SELF_POWERED
+ 106:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *  - USB_CONFIG_ATTR_REMOTE_WAKEUP
+ 107:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *  Note: if remote wake enabled then defines remotewakeup callbacks,
+ 108:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * see Table 5-2. External API from UDC - Callback
+ 109:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 110:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_LOW_SPEED (Only defined)<br>
+ 111:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Force the USB Device to run in low speed
+ 112:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 113:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_HS_SUPPORT (Only defined)<br>
+ 114:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Authorize the USB Device to run in high speed
+ 115:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 116:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_MAX_EP (Byte)<br>
+ 117:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Define the maximum endpoint number used by the USB Device.<br>
+ 118:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * This one is already defined in UDI default configuration.
+ 119:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * Ex:
+ 120:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * - When endpoint control 0x00, endpoint 0x01 and
+ 121:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *   endpoint 0x82 is used then USB_DEVICE_MAX_EP=2
+ 122:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * - When only endpoint control 0x00 is used then USB_DEVICE_MAX_EP=0
+ 123:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * - When endpoint 0x01 and endpoint 0x81 is used then USB_DEVICE_MAX_EP=1<br>
+ 124:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *   (configuration not possible on USBB interface)
+ 125:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * @{
+ 126:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 127:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+ 128:tmk_core/protocol/arm_atsam/./usb/udc.h **** /**
+ 129:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \brief Authorizes the VBUS event
+ 130:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 131:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \return true, if the VBUS monitoring is possible.
+ 132:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 133:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \section udc_vbus_monitoring VBus monitoring used cases
+ 134:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 135:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * The VBus monitoring is used only for USB SELF Power application.
+ 136:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 137:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * - By default the USB device is automatically attached when Vbus is high
+ 138:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * or when USB is start for devices without internal Vbus monitoring.
+ 139:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * conf_usb.h file does not contains define USB_DEVICE_ATTACH_AUTO_DISABLE.
+ 140:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \code //#define USB_DEVICE_ATTACH_AUTO_DISABLE \endcode
+ 141:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 142:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * - Add custom VBUS monitoring. conf_usb.h file contains define
+ 143:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_ATTACH_AUTO_DISABLE:
+ 144:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \code #define USB_DEVICE_ATTACH_AUTO_DISABLE \endcode
+ 145:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * User C file contains:
+ 146:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \code
+ 147:tmk_core/protocol/arm_atsam/./usb/udc.h ****     // Authorize VBUS monitoring
+ 148:tmk_core/protocol/arm_atsam/./usb/udc.h ****     if (!udc_include_vbus_monitoring()) {
+ 149:tmk_core/protocol/arm_atsam/./usb/udc.h ****       // Implement custom VBUS monitoring via GPIO or other
+ 150:tmk_core/protocol/arm_atsam/./usb/udc.h ****     }
+ 151:tmk_core/protocol/arm_atsam/./usb/udc.h ****     Event_VBUS_present() // VBUS interrupt or GPIO interrupt or other
+ 152:tmk_core/protocol/arm_atsam/./usb/udc.h ****     {
+ 153:tmk_core/protocol/arm_atsam/./usb/udc.h ****       // Attach USB Device
+ 154:tmk_core/protocol/arm_atsam/./usb/udc.h ****       udc_attach();
+ 155:tmk_core/protocol/arm_atsam/./usb/udc.h ****     }
+ 156:tmk_core/protocol/arm_atsam/./usb/udc.h **** \endcode
+ 157:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 158:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * - Case of battery charging. conf_usb.h file contains define
+ 159:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * USB_DEVICE_ATTACH_AUTO_DISABLE:
+ 160:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \code #define USB_DEVICE_ATTACH_AUTO_DISABLE \endcode
+ 161:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * User C file contains:
+ 162:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \code
+ 163:tmk_core/protocol/arm_atsam/./usb/udc.h ****     Event VBUS present() // VBUS interrupt or GPIO interrupt or ..
+ 164:tmk_core/protocol/arm_atsam/./usb/udc.h ****     {
+ 165:tmk_core/protocol/arm_atsam/./usb/udc.h ****       // Authorize battery charging, but wait key press to start USB.
+ 166:tmk_core/protocol/arm_atsam/./usb/udc.h ****     }
+ 167:tmk_core/protocol/arm_atsam/./usb/udc.h ****     Event Key press()
+ 168:tmk_core/protocol/arm_atsam/./usb/udc.h ****     {
+ 169:tmk_core/protocol/arm_atsam/./usb/udc.h ****       // Stop batteries charging
+ 170:tmk_core/protocol/arm_atsam/./usb/udc.h ****       // Start USB
+ 171:tmk_core/protocol/arm_atsam/./usb/udc.h ****       udc_attach();
+ 172:tmk_core/protocol/arm_atsam/./usb/udc.h ****     }
+ 173:tmk_core/protocol/arm_atsam/./usb/udc.h **** \endcode
+ 174:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 175:tmk_core/protocol/arm_atsam/./usb/udc.h **** static inline bool udc_include_vbus_monitoring(void) { return udd_include_vbus_monitoring(); }
+ 176:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+ 177:tmk_core/protocol/arm_atsam/./usb/udc.h **** /*! \brief Start the USB Device stack
+ 178:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 179:tmk_core/protocol/arm_atsam/./usb/udc.h **** void udc_start(void);
+ 180:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+ 181:tmk_core/protocol/arm_atsam/./usb/udc.h **** /*! \brief Stop the USB Device stack
+ 182:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 183:tmk_core/protocol/arm_atsam/./usb/udc.h **** void udc_stop(void);
+ 184:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+ 185:tmk_core/protocol/arm_atsam/./usb/udc.h **** /**
+ 186:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \brief Attach device to the bus when possible
+ 187:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 188:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \warning If a VBus control is included in driver,
+ 189:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * then it will attach device when an acceptable Vbus
+ 190:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * level from the host is detected.
+ 191:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 192:tmk_core/protocol/arm_atsam/./usb/udc.h **** static inline void udc_attach(void) { udd_attach(); }
+ 193:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+ 194:tmk_core/protocol/arm_atsam/./usb/udc.h **** /**
+ 195:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * \brief Detaches the device from the bus
+ 196:tmk_core/protocol/arm_atsam/./usb/udc.h ****  *
+ 197:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * The driver must remove pull-up on USB line D- or D+.
+ 198:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 199:tmk_core/protocol/arm_atsam/./usb/udc.h **** static inline void udc_detach(void) { udd_detach(); }
+ 200:tmk_core/protocol/arm_atsam/./usb/udc.h **** 
+ 201:tmk_core/protocol/arm_atsam/./usb/udc.h **** /*! \brief The USB driver sends a resume signal called \e "Upstream Resume"
+ 202:tmk_core/protocol/arm_atsam/./usb/udc.h ****  * This is authorized only when the remote wakeup feature is enabled by host.
+ 203:tmk_core/protocol/arm_atsam/./usb/udc.h ****  */
+ 204:tmk_core/protocol/arm_atsam/./usb/udc.h **** inline void udc_remotewakeup(void) { udd_send_remotewakeup(); }
+ 1083              		.loc 3 204 13 view .LVU277
+ 1084              	.LBB67:
+ 1085              		.loc 3 204 38 view .LVU278
+ 1086 00ee FFF7FEFF 		bl	udd_send_remotewakeup
+ 1087              	.LVL78:
+ 1088              	.LBE67:
+ 1089              	.LBE66:
+ 293:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****                 wait_ms(50);
+ 1090              		.loc 1 293 17 view .LVU279
+ 1091 00f2 3220     		movs	r0, #50
+ 1092 00f4 0021     		movs	r1, #0
+ 1093 00f6 FFF7FEFF 		bl	CLK_delay_ms
+ 1094              	.LVL79:
+ 1095 00fa EDE7     		b	.L60
+ 1096              	.LVL80:
+ 1097              	.L64:
+ 1098              	.LBB68:
+ 1099              		.loc 1 293 17 is_stmt 0 view .LVU280
+ 1100 00fc 0124     		movs	r4, #1
+ 1101              	.LVL81:
+ 1102              		.loc 1 293 17 view .LVU281
+ 1103 00fe C2E7     		b	.L59
+ 1104              	.L62:
+ 1105              	.LBE68:
+ 294:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             }
+ 295:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 296:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****             continue;
+ 297:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         }
+ 298:tmk_core/protocol/arm_atsam/main_arm_atsam.c **** 
+ 299:tmk_core/protocol/arm_atsam/main_arm_atsam.c ****         keyboard_task();
+ 1106              		.loc 1 299 9 is_stmt 1 view .LVU282
+ 1107 0100 FFF7FEFF 		bl	keyboard_task
+ 1108              	.LVL82:
+ 1109 0104 E8E7     		b	.L60
+ 1110              	.L79:
+ 1111 0106 00BF     		.align	2
+ 1112              	.L78:
+ 1113 0108 00800041 		.word	1090551808
+ 1114 010c 00000000 		.word	debug_code
+ 1115 0110 04000000 		.word	.LANCHOR1+4
+ 1116 0114 00000000 		.word	.LANCHOR1
+ 1117 0118 00000000 		.word	v_5v_avg
+ 1118              		.cfi_endproc
+ 1119              	.LFE155:
+ 1121              		.comm	led_states,1,1
+ 1122              		.global	arm_atsam_driver
+ 1123              		.global	g_usb_state
+ 1124              		.comm	dmac_desc_wb,16,16
+ 1125              		.comm	dmac_desc,16,16
+ 1126              		.data
+ 1127              		.align	2
+ 1128              		.set	.LANCHOR1,. + 0
+ 1131              	g_usb_state:
+ 1132 0000 01       		.byte	1
+ 1133 0001 000000   		.space	3
+ 1136              	arm_atsam_driver:
+ 1137 0004 00000000 		.word	keyboard_leds
+ 1138 0008 00000000 		.word	send_keyboard
+ 1139 000c 00000000 		.word	send_mouse
+ 1140 0010 00000000 		.word	send_system
+ 1141 0014 00000000 		.word	send_consumer
+ 1142              		.bss
+ 1143              		.align	3
+ 1144              		.set	.LANCHOR0,. + 0
+ 1147              	fsmstate_on_delay.21120:
+ 1148 0000 00000000 		.space	8
+ 1148      00000000 
+ 1151              	next_5v_checkup.21125:
+ 1152 0008 00000000 		.space	8
+ 1152      00000000 
+ 1155              	next_usb_checkup.21129:
+ 1156 0010 00000000 		.space	8
+ 1156      00000000 
+ 1157              		.text
+ 1158              	.Letext0:
+ 1159              		.file 4 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 1160              		.file 5 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 1161              		.file 6 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/samd51j18a.h"
+ 1162              		.file 7 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 1163              		.file 8 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 1164              		.file 9 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/dmac.h"
+ 1165              		.file 10 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/port.h"
+ 1166              		.file 11 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/usb.h"
+ 1167              		.file 12 "tmk_core/common/report.h"
+ 1168              		.file 13 "tmk_core/common/host_driver.h"
+ 1169              		.file 14 "tmk_core/common/host.h"
+ 1170              		.file 15 "quantum/keycode_config.h"
+ 1171              		.file 16 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 1172              		.file 17 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 1173              		.file 18 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 1174              		.file 19 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 1175              		.file 20 "tmk_core/protocol/arm_atsam/clks.h"
+ 1176              		.file 21 "tmk_core/common/action.h"
+ 1177              		.file 22 "tmk_core/common/debug.h"
+ 1178              		.file 23 "quantum/keymap.h"
+ 1179              		.file 24 "quantum/color.h"
+ 1180              		.file 25 "quantum/rgb_matrix_types.h"
+ 1181              		.file 26 "quantum/rgb_matrix.h"
+ 1182              		.file 27 "tmk_core/common/action_layer.h"
+ 1183              		.file 28 "tmk_core/common/timer.h"
+ 1184              		.file 29 "tmk_core/common/action_util.h"
+ 1185              		.file 30 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 1186              		.file 31 "quantum/quantum.h"
+ 1187              		.file 32 "tmk_core/protocol/arm_atsam/md_bootloader.h"
+ 1188              		.file 33 "tmk_core/protocol/arm_atsam/d51_util.h"
+ 1189              		.file 34 "tmk_core/protocol/arm_atsam/adc.h"
+ 1190              		.file 35 "tmk_core/protocol/arm_atsam/i2c_master.h"
+ 1191              		.file 36 "tmk_core/protocol/arm_atsam/spi.h"
+ 1192              		.file 37 "tmk_core/protocol/arm_atsam/./usb/usb2422.h"
+ 1193              		.file 38 "tmk_core/protocol/arm_atsam/led_matrix.h"
+ 1194              		.file 39 "tmk_core/protocol/arm_atsam/./usb/compiler.h"
+ 1195              		.file 40 "tmk_core/protocol/arm_atsam/./usb/usb_protocol.h"
+ 1196              		.file 41 "tmk_core/protocol/arm_atsam/./usb/udi_device_conf.h"
+ 1197              		.file 42 "tmk_core/protocol/arm_atsam/./usb/udi.h"
+ 1198              		.file 43 "tmk_core/protocol/arm_atsam/./usb/udc_desc.h"
+ 1199              		.file 44 "tmk_core/protocol/arm_atsam/./usb/udi_hid_kbd.h"
+ 1200              		.file 45 "tmk_core/protocol/arm_atsam/./usb/usb_main.h"
+ 1201              		.file 46 "tmk_core/protocol/arm_atsam/./usb/udd.h"
+ 1202              		.file 47 "tmk_core/protocol/arm_atsam/./usb/udi_cdc.h"
+ 1203              		.file 48 "keyboards/massdrop/ctrl/matrix.h"
+ 1204              		.file 49 "./tmk_core/common/keyboard.h"
+ 1205              		.file 50 "tmk_core/common/suspend.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main_arm_atsam.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:18     .text.keyboard_leds:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:26     .text.keyboard_leds:0000000000000000 keyboard_leds
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:53     .text.keyboard_leds:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:60     .text.send_mouse:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:67     .text.send_mouse:0000000000000000 send_mouse
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:81     .text.send_extra:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:88     .text.send_extra:0000000000000000 send_extra
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:206    .text.send_extra:0000000000000028 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:212    .text.send_system:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:219    .text.send_system:0000000000000000 send_system
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:238    .text.send_consumer:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:245    .text.send_consumer:0000000000000000 send_consumer
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:264    .text.main_subtask_usb_state:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:271    .text.main_subtask_usb_state:0000000000000000 main_subtask_usb_state
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:399    .text.main_subtask_usb_state:0000000000000088 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:409    .text.main_subtask_power_check:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:416    .text.main_subtask_power_check:0000000000000000 main_subtask_power_check
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:519    .text.main_subtask_power_check:0000000000000070 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:530    .text.main_subtask_usb_extra_device:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:537    .text.main_subtask_usb_extra_device:0000000000000000 main_subtask_usb_extra_device
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:587    .text.main_subtask_usb_extra_device:000000000000002c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:592    .text.main_subtasks:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:599    .text.main_subtasks:0000000000000000 main_subtasks
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:630    .text.send_keyboard:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:637    .text.send_keyboard:0000000000000000 send_keyboard
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:859    .text.send_keyboard:0000000000000078 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:870    .text.startup.main:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:877    .text.startup.main:0000000000000000 main
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1113   .text.startup.main:0000000000000108 $d
+                            *COM*:0000000000000001 led_states
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1136   .data:0000000000000004 arm_atsam_driver
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1131   .data:0000000000000000 g_usb_state
+                            *COM*:0000000000000010 dmac_desc_wb
+                            *COM*:0000000000000010 dmac_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1127   .data:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1143   .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1147   .bss:0000000000000000 fsmstate_on_delay.21120
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1151   .bss:0000000000000008 next_5v_checkup.21125
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccViTomh.s:1155   .bss:0000000000000010 next_usb_checkup.21129
+
+UNDEFINED SYMBOLS
+keymap_config
+udi_hid_nkro_report_set
+udi_hid_kbd_report_set
+udi_hid_exk_send_report
+udi_hid_exk_report
+udi_hid_exk_b_report_valid
+suspend_power_down
+timer_read64
+suspend_wakeup_init
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_d2uiz
+adc_get
+gcr_compute
+v_5v_avg
+v_5v
+USB_HandleExtraDevice
+udi_hid_nkro_send_report
+udi_hid_kbd_send_report
+udi_hid_nkro_b_report_trans_ongoing
+udi_hid_nkro_report
+udi_hid_nkro_b_report_valid
+udi_hid_kbd_b_report_trans_ongoing
+udi_hid_kbd_report
+udi_hid_kbd_b_report_valid
+debug_code_init
+CLK_init
+ADC0_init
+SR_EXP_Init
+i2c1_init
+matrix_init
+USB2422_init
+udc_start
+CDC_init
+USB2422_Port_Detect_Init
+I2C3733_Init_Control
+I2C3733_Init_Drivers
+I2C_DMAC_LED_Init
+i2c_led_q_init
+i2c_led_q_request_room
+i2c_led_q_add
+keyboard_setup
+keyboard_init
+host_set_driver
+debug_code_disable
+suspend_wakeup_condition
+udd_send_remotewakeup
+CLK_delay_ms
+keyboard_task
+debug_code

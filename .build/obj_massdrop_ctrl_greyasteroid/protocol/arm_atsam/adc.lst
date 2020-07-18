@@ -1,0 +1,625 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"adc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.ADC0_clock_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	ADC0_clock_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	ADC0_clock_init:
+  27              	.LFB145:
+  28              		.file 1 "tmk_core/protocol/arm_atsam/adc.c"
+   1:tmk_core/protocol/arm_atsam/adc.c **** /*
+   2:tmk_core/protocol/arm_atsam/adc.c **** Copyright 2018 Massdrop Inc.
+   3:tmk_core/protocol/arm_atsam/adc.c **** 
+   4:tmk_core/protocol/arm_atsam/adc.c **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/protocol/arm_atsam/adc.c **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/protocol/arm_atsam/adc.c **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/protocol/arm_atsam/adc.c **** (at your option) any later version.
+   8:tmk_core/protocol/arm_atsam/adc.c **** 
+   9:tmk_core/protocol/arm_atsam/adc.c **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/protocol/arm_atsam/adc.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/protocol/arm_atsam/adc.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/protocol/arm_atsam/adc.c **** GNU General Public License for more details.
+  13:tmk_core/protocol/arm_atsam/adc.c **** 
+  14:tmk_core/protocol/arm_atsam/adc.c **** You should have received a copy of the GNU General Public License
+  15:tmk_core/protocol/arm_atsam/adc.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/protocol/arm_atsam/adc.c **** */
+  17:tmk_core/protocol/arm_atsam/adc.c **** 
+  18:tmk_core/protocol/arm_atsam/adc.c **** #include "arm_atsam_protocol.h"
+  19:tmk_core/protocol/arm_atsam/adc.c **** 
+  20:tmk_core/protocol/arm_atsam/adc.c **** uint16_t v_5v;
+  21:tmk_core/protocol/arm_atsam/adc.c **** uint16_t v_5v_avg;
+  22:tmk_core/protocol/arm_atsam/adc.c **** uint16_t v_con_1;
+  23:tmk_core/protocol/arm_atsam/adc.c **** uint16_t v_con_2;
+  24:tmk_core/protocol/arm_atsam/adc.c **** uint16_t v_con_1_boot;
+  25:tmk_core/protocol/arm_atsam/adc.c **** uint16_t v_con_2_boot;
+  26:tmk_core/protocol/arm_atsam/adc.c **** 
+  27:tmk_core/protocol/arm_atsam/adc.c **** void ADC0_clock_init(void) {
+  29              		.loc 1 27 28 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  28:tmk_core/protocol/arm_atsam/adc.c ****     DBGC(DC_ADC0_CLOCK_INIT_BEGIN);
+  34              		.loc 1 28 5 view .LVU1
+  35 0000 0C49     		ldr	r1, .L2
+  29:tmk_core/protocol/arm_atsam/adc.c **** 
+  30:tmk_core/protocol/arm_atsam/adc.c ****     MCLK->APBDMASK.bit.ADC0_ = 1;  // ADC0 Clock Enable
+  36              		.loc 1 30 30 is_stmt 0 view .LVU2
+  37 0002 0D4A     		ldr	r2, .L2+4
+  28:tmk_core/protocol/arm_atsam/adc.c ****     DBGC(DC_ADC0_CLOCK_INIT_BEGIN);
+  38              		.loc 1 28 5 view .LVU3
+  39 0004 4F23     		movs	r3, #79
+  40 0006 0B60     		str	r3, [r1]
+  41              		.loc 1 30 5 is_stmt 1 view .LVU4
+  42              		.loc 1 30 30 is_stmt 0 view .LVU5
+  43 0008 136A     		ldr	r3, [r2, #32]
+  44 000a 43F08003 		orr	r3, r3, #128
+  45 000e 1362     		str	r3, [r2, #32]
+  31:tmk_core/protocol/arm_atsam/adc.c **** 
+  32:tmk_core/protocol/arm_atsam/adc.c ****     GCLK->PCHCTRL[ADC0_GCLK_ID].bit.GEN  = GEN_OSC0;  // Select generator clock
+  46              		.loc 1 32 5 is_stmt 1 view .LVU6
+  47              		.loc 1 32 42 is_stmt 0 view .LVU7
+  48 0010 0A4B     		ldr	r3, .L2+8
+  49 0012 D3F82021 		ldr	r2, [r3, #288]
+  50 0016 0120     		movs	r0, #1
+  51 0018 60F30302 		bfi	r2, r0, #0, #4
+  52 001c C3F82021 		str	r2, [r3, #288]
+  33:tmk_core/protocol/arm_atsam/adc.c ****     GCLK->PCHCTRL[ADC0_GCLK_ID].bit.CHEN = 1;         // Enable peripheral clock
+  53              		.loc 1 33 5 is_stmt 1 view .LVU8
+  54              		.loc 1 33 42 is_stmt 0 view .LVU9
+  55 0020 D3F82021 		ldr	r2, [r3, #288]
+  56 0024 42F04002 		orr	r2, r2, #64
+  57 0028 C3F82021 		str	r2, [r3, #288]
+  34:tmk_core/protocol/arm_atsam/adc.c **** 
+  35:tmk_core/protocol/arm_atsam/adc.c ****     DBGC(DC_ADC0_CLOCK_INIT_COMPLETE);
+  58              		.loc 1 35 5 is_stmt 1 view .LVU10
+  59 002c 5023     		movs	r3, #80
+  60 002e 0B60     		str	r3, [r1]
+  36:tmk_core/protocol/arm_atsam/adc.c **** }
+  61              		.loc 1 36 1 is_stmt 0 view .LVU11
+  62 0030 7047     		bx	lr
+  63              	.L3:
+  64 0032 00BF     		.align	2
+  65              	.L2:
+  66 0034 00000000 		.word	debug_code
+  67 0038 00080040 		.word	1073743872
+  68 003c 001C0040 		.word	1073748992
+  69              		.cfi_endproc
+  70              	.LFE145:
+  72              		.section	.text.ADC0_init,"ax",%progbits
+  73              		.align	1
+  74              		.global	ADC0_init
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  78              		.fpu fpv4-sp-d16
+  80              	ADC0_init:
+  81              	.LFB146:
+  37:tmk_core/protocol/arm_atsam/adc.c **** 
+  38:tmk_core/protocol/arm_atsam/adc.c **** void ADC0_init(void) {
+  82              		.loc 1 38 22 is_stmt 1 view -0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  39:tmk_core/protocol/arm_atsam/adc.c ****     DBGC(DC_ADC0_INIT_BEGIN);
+  86              		.loc 1 39 5 view .LVU13
+  87 0000 534A     		ldr	r2, .L24
+  38:tmk_core/protocol/arm_atsam/adc.c ****     DBGC(DC_ADC0_INIT_BEGIN);
+  88              		.loc 1 38 22 is_stmt 0 view .LVU14
+  89 0002 10B5     		push	{r4, lr}
+  90              		.cfi_def_cfa_offset 8
+  91              		.cfi_offset 4, -8
+  92              		.cfi_offset 14, -4
+  93              		.loc 1 39 5 view .LVU15
+  94 0004 5123     		movs	r3, #81
+  95 0006 1360     		str	r3, [r2]
+  40:tmk_core/protocol/arm_atsam/adc.c **** 
+  41:tmk_core/protocol/arm_atsam/adc.c ****     // MCU
+  42:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].DIRCLR.reg           = 1 << 0;  // PB00 as input 5V
+  96              		.loc 1 42 5 is_stmt 1 view .LVU16
+  97              		.loc 1 42 41 is_stmt 0 view .LVU17
+  98 0008 524B     		ldr	r3, .L24+4
+  99 000a 0120     		movs	r0, #1
+  43:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].DIRCLR.reg           = 1 << 1;  // PB01 as input CON2
+ 100              		.loc 1 43 41 view .LVU18
+ 101 000c 0221     		movs	r1, #2
+  42:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].DIRCLR.reg           = 1 << 1;  // PB01 as input CON2
+ 102              		.loc 1 42 41 view .LVU19
+ 103 000e C3F88400 		str	r0, [r3, #132]
+ 104              		.loc 1 43 5 is_stmt 1 view .LVU20
+ 105              		.loc 1 43 41 is_stmt 0 view .LVU21
+ 106 0012 C3F88410 		str	r1, [r3, #132]
+  44:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].DIRCLR.reg           = 1 << 2;  // PB02 as input CON1
+ 107              		.loc 1 44 5 is_stmt 1 view .LVU22
+ 108              		.loc 1 44 41 is_stmt 0 view .LVU23
+ 109 0016 0421     		movs	r1, #4
+ 110 0018 C3F88410 		str	r1, [r3, #132]
+  45:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].PMUX[0].bit.PMUXE    = 1;       // PB00 mux select B ADC 5V
+ 111              		.loc 1 45 5 is_stmt 1 view .LVU24
+ 112              		.loc 1 45 41 is_stmt 0 view .LVU25
+ 113 001c 93F8B010 		ldrb	r1, [r3, #176]	@ zero_extendqisi2
+ 114 0020 60F30301 		bfi	r1, r0, #0, #4
+ 115 0024 83F8B010 		strb	r1, [r3, #176]
+  46:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].PMUX[0].bit.PMUXO    = 1;       // PB01 mux select B ADC CON2
+ 116              		.loc 1 46 5 is_stmt 1 view .LVU26
+ 117              		.loc 1 46 41 is_stmt 0 view .LVU27
+ 118 0028 93F8B010 		ldrb	r1, [r3, #176]	@ zero_extendqisi2
+ 119 002c 60F30711 		bfi	r1, r0, #4, #4
+ 120 0030 83F8B010 		strb	r1, [r3, #176]
+  47:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].PMUX[1].bit.PMUXE    = 1;       // PB02 mux select B ADC CON1
+ 121              		.loc 1 47 5 is_stmt 1 view .LVU28
+ 122              		.loc 1 47 41 is_stmt 0 view .LVU29
+ 123 0034 93F8B110 		ldrb	r1, [r3, #177]	@ zero_extendqisi2
+ 124 0038 60F30301 		bfi	r1, r0, #0, #4
+ 125 003c 83F8B110 		strb	r1, [r3, #177]
+  48:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].PINCFG[0].bit.PMUXEN = 1;       // PB01 mux ADC Enable 5V
+ 126              		.loc 1 48 5 is_stmt 1 view .LVU30
+ 127              		.loc 1 48 41 is_stmt 0 view .LVU31
+ 128 0040 93F8C010 		ldrb	r1, [r3, #192]	@ zero_extendqisi2
+ 129 0044 0143     		orrs	r1, r1, r0
+ 130 0046 83F8C010 		strb	r1, [r3, #192]
+  49:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].PINCFG[1].bit.PMUXEN = 1;       // PB01 mux ADC Enable CON2
+ 131              		.loc 1 49 5 is_stmt 1 view .LVU32
+ 132              		.loc 1 49 41 is_stmt 0 view .LVU33
+ 133 004a 93F8C110 		ldrb	r1, [r3, #193]	@ zero_extendqisi2
+ 134 004e 0143     		orrs	r1, r1, r0
+ 135 0050 83F8C110 		strb	r1, [r3, #193]
+  50:tmk_core/protocol/arm_atsam/adc.c ****     PORT->Group[1].PINCFG[2].bit.PMUXEN = 1;       // PB02 mux ADC Enable CON1
+ 136              		.loc 1 50 5 is_stmt 1 view .LVU34
+ 137              		.loc 1 50 41 is_stmt 0 view .LVU35
+ 138 0054 93F8C210 		ldrb	r1, [r3, #194]	@ zero_extendqisi2
+ 139 0058 0143     		orrs	r1, r1, r0
+ 140 005a 83F8C210 		strb	r1, [r3, #194]
+  51:tmk_core/protocol/arm_atsam/adc.c **** 
+  52:tmk_core/protocol/arm_atsam/adc.c ****     // ADC
+  53:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->CTRLA.bit.SWRST = 1;
+ 141              		.loc 1 53 5 is_stmt 1 view .LVU36
+ 142              		.loc 1 53 27 is_stmt 0 view .LVU37
+ 143 005e 3E4B     		ldr	r3, .L24+8
+ 144 0060 1988     		ldrh	r1, [r3]
+ 145 0062 0143     		orrs	r1, r1, r0
+ 146 0064 1980     		strh	r1, [r3]	@ movhi
+  54:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SWRST) {
+ 147              		.loc 1 54 5 is_stmt 1 view .LVU38
+  55:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_SWRST_SYNCING_1);
+ 148              		.loc 1 55 9 is_stmt 0 view .LVU39
+ 149 0066 5220     		movs	r0, #82
+ 150              	.L5:
+  54:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SWRST) {
+ 151              		.loc 1 54 30 view .LVU40
+ 152 0068 196B     		ldr	r1, [r3, #48]
+  54:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SWRST) {
+ 153              		.loc 1 54 11 view .LVU41
+ 154 006a CC07     		lsls	r4, r1, #31
+ 155 006c 51D4     		bmi	.L6
+  56:tmk_core/protocol/arm_atsam/adc.c ****     }
+  57:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->CTRLA.bit.SWRST) {
+ 156              		.loc 1 57 27 view .LVU42
+ 157 006e 3A4B     		ldr	r3, .L24+8
+  58:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_SWRST_SYNCING_2);
+ 158              		.loc 1 58 9 view .LVU43
+ 159 0070 5320     		movs	r0, #83
+ 160              	.L7:
+  57:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_SWRST_SYNCING_2);
+ 161              		.loc 1 57 27 view .LVU44
+ 162 0072 1988     		ldrh	r1, [r3]
+  57:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_SWRST_SYNCING_2);
+ 163              		.loc 1 57 11 view .LVU45
+ 164 0074 11F00101 		ands	r1, r1, #1
+ 165 0078 4DD1     		bne	.L8
+  59:tmk_core/protocol/arm_atsam/adc.c ****     }
+  60:tmk_core/protocol/arm_atsam/adc.c **** 
+  61:tmk_core/protocol/arm_atsam/adc.c ****     // Clock divide
+  62:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->CTRLA.bit.PRESCALER = ADC_CTRLA_PRESCALER_DIV2_Val;
+ 166              		.loc 1 62 5 is_stmt 1 view .LVU46
+ 167              		.loc 1 62 31 is_stmt 0 view .LVU47
+ 168 007a 1888     		ldrh	r0, [r3]
+ 169 007c 61F30A20 		bfi	r0, r1, #8, #3
+ 170 0080 1880     		strh	r0, [r3]	@ movhi
+  63:tmk_core/protocol/arm_atsam/adc.c **** 
+  64:tmk_core/protocol/arm_atsam/adc.c ****     // Averaging
+  65:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->AVGCTRL.bit.SAMPLENUM = ADC_AVGCTRL_SAMPLENUM_4_Val;
+ 171              		.loc 1 65 5 is_stmt 1 view .LVU48
+ 172              		.loc 1 65 33 is_stmt 0 view .LVU49
+ 173 0082 997A     		ldrb	r1, [r3, #10]	@ zero_extendqisi2
+ 174 0084 0220     		movs	r0, #2
+ 175 0086 60F30301 		bfi	r1, r0, #0, #4
+ 176 008a 9972     		strb	r1, [r3, #10]
+  66:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.AVGCTRL) {
+ 177              		.loc 1 66 5 is_stmt 1 view .LVU50
+ 178              		.loc 1 66 30 is_stmt 0 view .LVU51
+ 179 008c 324B     		ldr	r3, .L24+8
+  67:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_AVGCTRL_SYNCING_1);
+ 180              		.loc 1 67 9 view .LVU52
+ 181 008e 5420     		movs	r0, #84
+ 182              	.L9:
+  66:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.AVGCTRL) {
+ 183              		.loc 1 66 30 view .LVU53
+ 184 0090 196B     		ldr	r1, [r3, #48]
+  66:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.AVGCTRL) {
+ 185              		.loc 1 66 11 view .LVU54
+ 186 0092 8906     		lsls	r1, r1, #26
+ 187 0094 41D4     		bmi	.L10
+  68:tmk_core/protocol/arm_atsam/adc.c ****     }
+  69:tmk_core/protocol/arm_atsam/adc.c ****     if (ADC0->AVGCTRL.bit.SAMPLENUM == ADC_AVGCTRL_SAMPLENUM_1_Val)
+ 188              		.loc 1 69 5 is_stmt 1 view .LVU55
+ 189              		.loc 1 69 26 is_stmt 0 view .LVU56
+ 190 0096 997A     		ldrb	r1, [r3, #10]	@ zero_extendqisi2
+ 191              		.loc 1 69 8 view .LVU57
+ 192 0098 11F00F00 		ands	r0, r1, #15
+ 193 009c 3FD1     		bne	.L11
+ 194              	.L22:
+  70:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 0;
+  71:tmk_core/protocol/arm_atsam/adc.c ****     else if (ADC0->AVGCTRL.bit.SAMPLENUM == ADC_AVGCTRL_SAMPLENUM_2_Val)
+  72:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 1;
+  73:tmk_core/protocol/arm_atsam/adc.c ****     else if (ADC0->AVGCTRL.bit.SAMPLENUM == ADC_AVGCTRL_SAMPLENUM_4_Val)
+  74:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 2;
+ 195              		.loc 1 74 9 is_stmt 1 view .LVU58
+ 196              		.loc 1 74 34 is_stmt 0 view .LVU59
+ 197 009e 997A     		ldrb	r1, [r3, #10]	@ zero_extendqisi2
+ 198              	.L23:
+ 199 00a0 60F30611 		bfi	r1, r0, #4, #3
+ 200 00a4 9972     		strb	r1, [r3, #10]
+  75:tmk_core/protocol/arm_atsam/adc.c ****     else if (ADC0->AVGCTRL.bit.SAMPLENUM == ADC_AVGCTRL_SAMPLENUM_8_Val)
+  76:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 3;
+  77:tmk_core/protocol/arm_atsam/adc.c ****     else
+  78:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 4;
+  79:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.AVGCTRL) {
+ 201              		.loc 1 79 30 view .LVU60
+ 202 00a6 2C49     		ldr	r1, .L24+8
+  80:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_AVGCTRL_SYNCING_2);
+ 203              		.loc 1 80 9 view .LVU61
+ 204 00a8 5520     		movs	r0, #85
+ 205              	.L15:
+  79:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_AVGCTRL_SYNCING_2);
+ 206              		.loc 1 79 30 view .LVU62
+ 207 00aa 0B6B     		ldr	r3, [r1, #48]
+  79:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_AVGCTRL_SYNCING_2);
+ 208              		.loc 1 79 11 view .LVU63
+ 209 00ac 9C06     		lsls	r4, r3, #26
+ 210 00ae 48D4     		bmi	.L17
+  81:tmk_core/protocol/arm_atsam/adc.c ****     }
+  82:tmk_core/protocol/arm_atsam/adc.c **** 
+  83:tmk_core/protocol/arm_atsam/adc.c ****     // Settling
+  84:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->SAMPCTRL.bit.SAMPLEN = 45;  // Sampling Time Length: 1-63, 1 ADC CLK per
+ 211              		.loc 1 84 5 is_stmt 1 view .LVU64
+ 212              		.loc 1 84 32 is_stmt 0 view .LVU65
+ 213 00b0 CB7A     		ldrb	r3, [r1, #11]	@ zero_extendqisi2
+ 214 00b2 2D20     		movs	r0, #45
+ 215 00b4 60F30503 		bfi	r3, r0, #0, #6
+ 216 00b8 CB72     		strb	r3, [r1, #11]
+  85:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SAMPCTRL) {
+ 217              		.loc 1 85 5 is_stmt 1 view .LVU66
+ 218              		.loc 1 85 30 is_stmt 0 view .LVU67
+ 219 00ba 274B     		ldr	r3, .L24+8
+  86:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_SAMPCTRL_SYNCING_1);
+ 220              		.loc 1 86 9 view .LVU68
+ 221 00bc 5620     		movs	r0, #86
+ 222              	.L18:
+  85:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SAMPCTRL) {
+ 223              		.loc 1 85 30 view .LVU69
+ 224 00be 196B     		ldr	r1, [r3, #48]
+  85:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SAMPCTRL) {
+ 225              		.loc 1 85 11 view .LVU70
+ 226 00c0 4906     		lsls	r1, r1, #25
+ 227 00c2 40D4     		bmi	.L19
+  87:tmk_core/protocol/arm_atsam/adc.c ****     }
+  88:tmk_core/protocol/arm_atsam/adc.c **** 
+  89:tmk_core/protocol/arm_atsam/adc.c ****     // Load factory calibration data
+  90:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->CALIB.bit.BIASCOMP   = ((*(uint32_t *)ADC0_FUSES_BIASCOMP_ADDR) & ADC0_FUSES_BIASCOMP_Msk
+ 228              		.loc 1 90 5 is_stmt 1 view .LVU71
+ 229              		.loc 1 90 36 is_stmt 0 view .LVU72
+ 230 00c4 4FF08011 		mov	r1, #8388736
+ 231              		.loc 1 90 32 view .LVU73
+ 232 00c8 B3F84800 		ldrh	r0, [r3, #72]
+ 233              		.loc 1 90 102 view .LVU74
+ 234 00cc 0968     		ldr	r1, [r1]
+ 235 00ce C1F38204 		ubfx	r4, r1, #2, #3
+ 236              		.loc 1 90 32 view .LVU75
+ 237 00d2 64F30200 		bfi	r0, r4, #0, #3
+ 238 00d6 A3F84800 		strh	r0, [r3, #72]	@ movhi
+  91:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->CALIB.bit.BIASR2R    = ((*(uint32_t *)ADC0_FUSES_BIASR2R_ADDR) & ADC0_FUSES_BIASR2R_Msk) 
+ 239              		.loc 1 91 5 is_stmt 1 view .LVU76
+ 240              		.loc 1 91 32 is_stmt 0 view .LVU77
+ 241 00da B3F84800 		ldrh	r0, [r3, #72]
+ 242              		.loc 1 91 100 view .LVU78
+ 243 00de C1F30224 		ubfx	r4, r1, #8, #3
+ 244              		.loc 1 91 32 view .LVU79
+ 245 00e2 64F30610 		bfi	r0, r4, #4, #3
+ 246 00e6 A3F84800 		strh	r0, [r3, #72]	@ movhi
+  92:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->CALIB.bit.BIASREFBUF = ((*(uint32_t *)ADC0_FUSES_BIASREFBUF_ADDR) & ADC0_FUSES_BIASREFBUF
+ 247              		.loc 1 92 5 is_stmt 1 view .LVU80
+ 248              		.loc 1 92 32 is_stmt 0 view .LVU81
+ 249 00ea B3F84800 		ldrh	r0, [r3, #72]
+ 250              		.loc 1 92 106 view .LVU82
+ 251 00ee C1F34211 		ubfx	r1, r1, #5, #3
+ 252              		.loc 1 92 32 view .LVU83
+ 253 00f2 61F30A20 		bfi	r0, r1, #8, #3
+ 254 00f6 A3F84800 		strh	r0, [r3, #72]	@ movhi
+  93:tmk_core/protocol/arm_atsam/adc.c **** 
+  94:tmk_core/protocol/arm_atsam/adc.c ****     // Enable
+  95:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->CTRLA.bit.ENABLE = 1;
+ 255              		.loc 1 95 5 is_stmt 1 view .LVU84
+ 256              		.loc 1 95 28 is_stmt 0 view .LVU85
+ 257 00fa 1988     		ldrh	r1, [r3]
+ 258 00fc 41F00201 		orr	r1, r1, #2
+ 259 0100 1980     		strh	r1, [r3]	@ movhi
+  96:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.ENABLE) {
+ 260              		.loc 1 96 5 is_stmt 1 view .LVU86
+ 261              		.loc 1 96 30 is_stmt 0 view .LVU87
+ 262 0102 1549     		ldr	r1, .L24+8
+  97:tmk_core/protocol/arm_atsam/adc.c ****         DBGC(DC_ADC0_ENABLE_SYNCING_1);
+ 263              		.loc 1 97 9 view .LVU88
+ 264 0104 5720     		movs	r0, #87
+ 265              	.L20:
+  96:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.ENABLE) {
+ 266              		.loc 1 96 30 view .LVU89
+ 267 0106 0B6B     		ldr	r3, [r1, #48]
+  96:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.ENABLE) {
+ 268              		.loc 1 96 11 view .LVU90
+ 269 0108 9B07     		lsls	r3, r3, #30
+ 270 010a 1ED4     		bmi	.L21
+  98:tmk_core/protocol/arm_atsam/adc.c ****     }
+  99:tmk_core/protocol/arm_atsam/adc.c **** 
+ 100:tmk_core/protocol/arm_atsam/adc.c ****     DBGC(DC_ADC0_INIT_COMPLETE);
+ 271              		.loc 1 100 5 is_stmt 1 view .LVU91
+ 272 010c 5823     		movs	r3, #88
+ 273 010e 1360     		str	r3, [r2]
+ 101:tmk_core/protocol/arm_atsam/adc.c **** }
+ 274              		.loc 1 101 1 is_stmt 0 view .LVU92
+ 275 0110 10BD     		pop	{r4, pc}
+ 276              	.L6:
+  55:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 277              		.loc 1 55 9 is_stmt 1 view .LVU93
+ 278 0112 1060     		str	r0, [r2]
+ 279 0114 A8E7     		b	.L5
+ 280              	.L8:
+  58:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 281              		.loc 1 58 9 view .LVU94
+ 282 0116 1060     		str	r0, [r2]
+ 283 0118 ABE7     		b	.L7
+ 284              	.L10:
+  67:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 285              		.loc 1 67 9 view .LVU95
+ 286 011a 1060     		str	r0, [r2]
+ 287 011c B8E7     		b	.L9
+ 288              	.L11:
+  71:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 1;
+ 289              		.loc 1 71 10 view .LVU96
+  71:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 1;
+ 290              		.loc 1 71 31 is_stmt 0 view .LVU97
+ 291 011e 987A     		ldrb	r0, [r3, #10]	@ zero_extendqisi2
+ 292 0120 00F00F00 		and	r0, r0, #15
+  71:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 1;
+ 293              		.loc 1 71 13 view .LVU98
+ 294 0124 0128     		cmp	r0, #1
+ 295 0126 BAD0     		beq	.L22
+  73:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 2;
+ 296              		.loc 1 73 10 is_stmt 1 view .LVU99
+  73:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 2;
+ 297              		.loc 1 73 31 is_stmt 0 view .LVU100
+ 298 0128 987A     		ldrb	r0, [r3, #10]	@ zero_extendqisi2
+ 299 012a 00F00F00 		and	r0, r0, #15
+  73:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 2;
+ 300              		.loc 1 73 13 view .LVU101
+ 301 012e 0228     		cmp	r0, #2
+ 302 0130 B5D0     		beq	.L22
+  75:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 3;
+ 303              		.loc 1 75 10 is_stmt 1 view .LVU102
+  75:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 3;
+ 304              		.loc 1 75 31 is_stmt 0 view .LVU103
+ 305 0132 987A     		ldrb	r0, [r3, #10]	@ zero_extendqisi2
+ 306 0134 00F00F00 		and	r0, r0, #15
+  75:tmk_core/protocol/arm_atsam/adc.c ****         ADC0->AVGCTRL.bit.ADJRES = 3;
+ 307              		.loc 1 75 13 view .LVU104
+ 308 0138 0328     		cmp	r0, #3
+ 309 013a B0D0     		beq	.L22
+  78:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.AVGCTRL) {
+ 310              		.loc 1 78 9 is_stmt 1 view .LVU105
+  78:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.AVGCTRL) {
+ 311              		.loc 1 78 34 is_stmt 0 view .LVU106
+ 312 013c 997A     		ldrb	r1, [r3, #10]	@ zero_extendqisi2
+ 313 013e 0420     		movs	r0, #4
+ 314 0140 AEE7     		b	.L23
+ 315              	.L17:
+  80:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 316              		.loc 1 80 9 is_stmt 1 view .LVU107
+ 317 0142 1060     		str	r0, [r2]
+ 318 0144 B1E7     		b	.L15
+ 319              	.L19:
+  86:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 320              		.loc 1 86 9 view .LVU108
+ 321 0146 1060     		str	r0, [r2]
+ 322 0148 B9E7     		b	.L18
+ 323              	.L21:
+  97:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 324              		.loc 1 97 9 view .LVU109
+ 325 014a 1060     		str	r0, [r2]
+ 326 014c DBE7     		b	.L20
+ 327              	.L25:
+ 328 014e 00BF     		.align	2
+ 329              	.L24:
+ 330 0150 00000000 		.word	debug_code
+ 331 0154 00800041 		.word	1090551808
+ 332 0158 001C0043 		.word	1124080640
+ 333              		.cfi_endproc
+ 334              	.LFE146:
+ 336              		.section	.text.adc_get,"ax",%progbits
+ 337              		.align	1
+ 338              		.global	adc_get
+ 339              		.syntax unified
+ 340              		.thumb
+ 341              		.thumb_func
+ 342              		.fpu fpv4-sp-d16
+ 344              	adc_get:
+ 345              	.LVL0:
+ 346              	.LFB147:
+ 102:tmk_core/protocol/arm_atsam/adc.c **** 
+ 103:tmk_core/protocol/arm_atsam/adc.c **** uint16_t adc_get(uint8_t muxpos) {
+ 347              		.loc 1 103 34 view -0
+ 348              		.cfi_startproc
+ 349              		@ args = 0, pretend = 0, frame = 0
+ 350              		@ frame_needed = 0, uses_anonymous_args = 0
+ 351              		@ link register save eliminated.
+ 104:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->INPUTCTRL.bit.MUXPOS = muxpos;
+ 352              		.loc 1 104 5 view .LVU111
+ 353              		.loc 1 104 32 is_stmt 0 view .LVU112
+ 354 0000 0B4B     		ldr	r3, .L34
+ 355 0002 9A88     		ldrh	r2, [r3, #4]
+ 356 0004 60F30402 		bfi	r2, r0, #0, #5
+ 357 0008 9A80     		strh	r2, [r3, #4]	@ movhi
+ 105:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.INPUTCTRL) {
+ 358              		.loc 1 105 5 is_stmt 1 view .LVU113
+ 359              	.LVL1:
+ 360              	.L27:
+ 106:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 361              		.loc 1 106 5 discriminator 1 view .LVU114
+ 105:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.INPUTCTRL) {
+ 362              		.loc 1 105 30 is_stmt 0 discriminator 1 view .LVU115
+ 363 000a 1A6B     		ldr	r2, [r3, #48]
+ 105:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.INPUTCTRL) {
+ 364              		.loc 1 105 11 discriminator 1 view .LVU116
+ 365 000c 5007     		lsls	r0, r2, #29
+ 366 000e FCD4     		bmi	.L27
+ 107:tmk_core/protocol/arm_atsam/adc.c **** 
+ 108:tmk_core/protocol/arm_atsam/adc.c ****     ADC0->SWTRIG.bit.START = 1;
+ 367              		.loc 1 108 5 is_stmt 1 view .LVU117
+ 368              		.loc 1 108 28 is_stmt 0 view .LVU118
+ 369 0010 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 370 0012 42F00202 		orr	r2, r2, #2
+ 371 0016 1A75     		strb	r2, [r3, #20]
+ 109:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SWTRIG) {
+ 372              		.loc 1 109 5 is_stmt 1 view .LVU119
+ 373              		.loc 1 109 30 is_stmt 0 view .LVU120
+ 374 0018 054A     		ldr	r2, .L34
+ 375 001a 1346     		mov	r3, r2
+ 376              	.L28:
+ 110:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 377              		.loc 1 110 5 is_stmt 1 discriminator 1 view .LVU121
+ 109:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SWTRIG) {
+ 378              		.loc 1 109 30 is_stmt 0 discriminator 1 view .LVU122
+ 379 001c 116B     		ldr	r1, [r2, #48]
+ 109:tmk_core/protocol/arm_atsam/adc.c ****     while (ADC0->SYNCBUSY.bit.SWTRIG) {
+ 380              		.loc 1 109 11 discriminator 1 view .LVU123
+ 381 001e 0905     		lsls	r1, r1, #20
+ 382 0020 FCD4     		bmi	.L28
+ 383              	.L29:
+ 111:tmk_core/protocol/arm_atsam/adc.c ****     while (!ADC0->INTFLAG.bit.RESRDY) {
+ 112:tmk_core/protocol/arm_atsam/adc.c ****     }
+ 384              		.loc 1 112 5 is_stmt 1 discriminator 1 view .LVU124
+ 111:tmk_core/protocol/arm_atsam/adc.c ****     while (!ADC0->INTFLAG.bit.RESRDY) {
+ 385              		.loc 1 111 30 is_stmt 0 discriminator 1 view .LVU125
+ 386 0022 93F82E20 		ldrb	r2, [r3, #46]	@ zero_extendqisi2
+ 111:tmk_core/protocol/arm_atsam/adc.c ****     while (!ADC0->INTFLAG.bit.RESRDY) {
+ 387              		.loc 1 111 11 discriminator 1 view .LVU126
+ 388 0026 D207     		lsls	r2, r2, #31
+ 389 0028 FBD5     		bpl	.L29
+ 113:tmk_core/protocol/arm_atsam/adc.c **** 
+ 114:tmk_core/protocol/arm_atsam/adc.c ****     return ADC0->RESULT.reg;
+ 390              		.loc 1 114 5 is_stmt 1 view .LVU127
+ 391              		.loc 1 114 24 is_stmt 0 view .LVU128
+ 392 002a B3F84000 		ldrh	r0, [r3, #64]
+ 115:tmk_core/protocol/arm_atsam/adc.c **** }
+ 393              		.loc 1 115 1 view .LVU129
+ 394 002e 7047     		bx	lr
+ 395              	.L35:
+ 396              		.align	2
+ 397              	.L34:
+ 398 0030 001C0043 		.word	1124080640
+ 399              		.cfi_endproc
+ 400              	.LFE147:
+ 402              		.comm	v_con_2_boot,2,2
+ 403              		.comm	v_con_1_boot,2,2
+ 404              		.comm	v_con_2,2,2
+ 405              		.comm	v_con_1,2,2
+ 406              		.comm	v_5v_avg,2,2
+ 407              		.comm	v_5v,2,2
+ 408              		.comm	dmac_desc_wb,16,16
+ 409              		.comm	dmac_desc,16,16
+ 410              		.text
+ 411              	.Letext0:
+ 412              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 413              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 414              		.file 4 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/samd51j18a.h"
+ 415              		.file 5 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 416              		.file 6 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 417              		.file 7 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/adc.h"
+ 418              		.file 8 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/dmac.h"
+ 419              		.file 9 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/gclk.h"
+ 420              		.file 10 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/mclk.h"
+ 421              		.file 11 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/component/port.h"
+ 422              		.file 12 "tmk_core/protocol/arm_atsam/md_bootloader.h"
+ 423              		.file 13 "tmk_core/common/timer.h"
+ 424              		.file 14 "tmk_core/protocol/arm_atsam/d51_util.h"
+ 425              		.file 15 "tmk_core/protocol/arm_atsam/clks.h"
+ 426              		.file 16 "tmk_core/protocol/arm_atsam/adc.h"
+ 427              		.file 17 "tmk_core/protocol/arm_atsam/i2c_master.h"
+ 428              		.file 18 "tmk_core/protocol/arm_atsam/spi.h"
+ 429              		.file 19 "tmk_core/protocol/arm_atsam/./usb/usb2422.h"
+ 430              		.file 20 "tmk_core/common/action.h"
+ 431              		.file 21 "tmk_core/common/report.h"
+ 432              		.file 22 "tmk_core/common/host.h"
+ 433              		.file 23 "tmk_core/common/debug.h"
+ 434              		.file 24 "quantum/keycode_config.h"
+ 435              		.file 25 "quantum/keymap.h"
+ 436              		.file 26 "quantum/color.h"
+ 437              		.file 27 "quantum/rgb_matrix_types.h"
+ 438              		.file 28 "quantum/rgb_matrix.h"
+ 439              		.file 29 "tmk_core/common/action_layer.h"
+ 440              		.file 30 "tmk_core/common/action_util.h"
+ 441              		.file 31 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 442              		.file 32 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 443              		.file 33 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 444              		.file 34 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 445              		.file 35 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 446              		.file 36 "quantum/quantum.h"
+ 447              		.file 37 "tmk_core/protocol/arm_atsam/led_matrix.h"
+ 448              		.file 38 "tmk_core/protocol/arm_atsam/./usb/compiler.h"
+ 449              		.file 39 "tmk_core/protocol/arm_atsam/./usb/usb_protocol.h"
+ 450              		.file 40 "tmk_core/protocol/arm_atsam/./usb/udi_device_conf.h"
+ 451              		.file 41 "tmk_core/protocol/arm_atsam/./usb/udi.h"
+ 452              		.file 42 "tmk_core/protocol/arm_atsam/./usb/udc_desc.h"
+ 453              		.file 43 "tmk_core/protocol/arm_atsam/./usb/udi_hid_kbd.h"
+ 454              		.file 44 "tmk_core/protocol/arm_atsam/./usb/usb_main.h"
+ 455              		.file 45 "tmk_core/protocol/arm_atsam/./usb/udd.h"
+ 456              		.file 46 "tmk_core/protocol/arm_atsam/./usb/udi_cdc.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 adc.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:18     .text.ADC0_clock_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:26     .text.ADC0_clock_init:0000000000000000 ADC0_clock_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:66     .text.ADC0_clock_init:0000000000000034 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:73     .text.ADC0_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:80     .text.ADC0_init:0000000000000000 ADC0_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:330    .text.ADC0_init:0000000000000150 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:337    .text.adc_get:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:344    .text.adc_get:0000000000000000 adc_get
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:398    .text.adc_get:0000000000000030 $d
+                            *COM*:0000000000000002 v_con_2_boot
+                            *COM*:0000000000000002 v_con_1_boot
+                            *COM*:0000000000000002 v_con_2
+                            *COM*:0000000000000002 v_con_1
+                            *COM*:0000000000000002 v_5v_avg
+                            *COM*:0000000000000002 v_5v
+                            *COM*:0000000000000010 dmac_desc_wb
+                            *COM*:0000000000000010 dmac_desc
+
+UNDEFINED SYMBOLS
+debug_code

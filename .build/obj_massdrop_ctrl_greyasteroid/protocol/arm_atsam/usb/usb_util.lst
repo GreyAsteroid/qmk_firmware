@@ -1,0 +1,380 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"usb_util.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.digit,"ax",%progbits
+  18              		.align	1
+  19              		.global	digit
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	digit:
+  27              	.LVL0:
+  28              	.LFB123:
+  29              		.file 1 "tmk_core/protocol/arm_atsam/usb/usb_util.c"
+   1:tmk_core/protocol/arm_atsam/usb/usb_util.c **** #include "samd51j18a.h"
+   2:tmk_core/protocol/arm_atsam/usb/usb_util.c **** #include "string.h"
+   3:tmk_core/protocol/arm_atsam/usb/usb_util.c **** #include "usb_util.h"
+   4:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+   5:tmk_core/protocol/arm_atsam/usb/usb_util.c **** char digit(int d, int radix) {
+  30              		.loc 1 5 30 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   6:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     if (d < 10) {
+  35              		.loc 1 6 5 view .LVU1
+  36 0000 C3B2     		uxtb	r3, r0
+  37              		.loc 1 6 8 is_stmt 0 view .LVU2
+  38 0002 0928     		cmp	r0, #9
+   7:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         return d + '0';
+  39              		.loc 1 7 9 is_stmt 1 view .LVU3
+  40              		.loc 1 7 18 is_stmt 0 view .LVU4
+  41 0004 D4BF     		ite	le
+  42 0006 3033     		addle	r3, r3, #48
+   8:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     } else {
+   9:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         return d - 10 + 'A';
+  43              		.loc 1 9 9 is_stmt 1 view .LVU5
+  44              		.loc 1 9 23 is_stmt 0 view .LVU6
+  45 0008 3733     		addgt	r3, r3, #55
+  46 000a D8B2     		uxtb	r0, r3
+  47              	.LVL1:
+  10:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     }
+  11:tmk_core/protocol/arm_atsam/usb/usb_util.c **** }
+  48              		.loc 1 11 1 view .LVU7
+  49 000c 7047     		bx	lr
+  50              		.cfi_endproc
+  51              	.LFE123:
+  53              		.global	__aeabi_ldivmod
+  54              		.section	.text.UTIL_ltoa_radix,"ax",%progbits
+  55              		.align	1
+  56              		.global	UTIL_ltoa_radix
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  60              		.fpu fpv4-sp-d16
+  62              	UTIL_ltoa_radix:
+  63              	.LVL2:
+  64              	.LFB124:
+  12:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  13:tmk_core/protocol/arm_atsam/usb/usb_util.c **** int UTIL_ltoa_radix(int64_t value, char *dest, int radix) {
+  65              		.loc 1 13 59 is_stmt 1 view -0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 32
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  14:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int64_t original = value;  // save original value
+  69              		.loc 1 14 5 view .LVU9
+  13:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int64_t original = value;  // save original value
+  70              		.loc 1 13 59 is_stmt 0 view .LVU10
+  71 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  72              		.cfi_def_cfa_offset 36
+  73              		.cfi_offset 4, -36
+  74              		.cfi_offset 5, -32
+  75              		.cfi_offset 6, -28
+  76              		.cfi_offset 7, -24
+  77              		.cfi_offset 8, -20
+  78              		.cfi_offset 9, -16
+  79              		.cfi_offset 10, -12
+  80              		.cfi_offset 11, -8
+  81              		.cfi_offset 14, -4
+  82 0004 89B0     		sub	sp, sp, #36
+  83              		.cfi_def_cfa_offset 72
+  13:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int64_t original = value;  // save original value
+  84              		.loc 1 13 59 view .LVU11
+  85 0006 0646     		mov	r6, r0
+  86 0008 0F46     		mov	r7, r1
+  87              	.LVL3:
+  15:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     char    buf[25]  = "";
+  88              		.loc 1 15 5 is_stmt 1 view .LVU12
+  13:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int64_t original = value;  // save original value
+  89              		.loc 1 13 59 is_stmt 0 view .LVU13
+  90 000a 9346     		mov	fp, r2
+  91              		.loc 1 15 13 view .LVU14
+  92 000c 0021     		movs	r1, #0
+  93 000e 1522     		movs	r2, #21
+  94              	.LVL4:
+  95              		.loc 1 15 13 view .LVU15
+  96 0010 02A8     		add	r0, sp, #8
+  97              	.LVL5:
+  13:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int64_t original = value;  // save original value
+  98              		.loc 1 13 59 view .LVU16
+  99 0012 9846     		mov	r8, r3
+ 100              		.loc 1 15 13 view .LVU17
+ 101 0014 0191     		str	r1, [sp, #4]
+ 102 0016 FFF7FEFF 		bl	memset
+ 103              	.LVL6:
+  16:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int     c        = sizeof(buf) - 1;
+ 104              		.loc 1 16 5 is_stmt 1 view .LVU18
+  17:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int     last     = c;
+ 105              		.loc 1 17 5 view .LVU19
+  18:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int     d;
+ 106              		.loc 1 18 5 view .LVU20
+  19:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     int     size;
+ 107              		.loc 1 19 5 view .LVU21
+  20:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  21:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     if (value < 0)  // if it's negative, take the absolute value
+ 108              		.loc 1 21 5 view .LVU22
+ 109 001a 002E     		cmp	r6, #0
+ 110 001c 77F10001 		sbcs	r1, r7, #0
+ 111 0020 3246     		mov	r2, r6
+ 112 0022 3B46     		mov	r3, r7
+ 113 0024 02DA     		bge	.L6
+ 114 0026 7242     		rsbs	r2, r6, #0
+ 115 0028 67EB4703 		sbc	r3, r7, r7, lsl #1
+ 116              	.L6:
+ 117 002c 9646     		mov	lr, r2
+ 118 002e 9C46     		mov	ip, r3
+ 119 0030 1825     		movs	r5, #24
+  22:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         value = -value;
+  23:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  24:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     do  // write least significant digit of value that's left
+  25:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     {
+  26:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         d        = (value % radix);
+ 120              		.loc 1 26 27 is_stmt 0 view .LVU23
+ 121 0032 4FEAE879 		asr	r9, r8, #31
+  27:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         buf[--c] = digit(d, radix);
+ 122              		.loc 1 27 18 view .LVU24
+ 123 0036 0DF1040A 		add	r10, sp, #4
+ 124              	.LVL7:
+ 125              	.L9:
+  24:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     {
+ 126              		.loc 1 24 5 is_stmt 1 discriminator 1 view .LVU25
+  26:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         buf[--c] = digit(d, radix);
+ 127              		.loc 1 26 9 discriminator 1 view .LVU26
+ 128 003a 7046     		mov	r0, lr
+ 129 003c 6146     		mov	r1, ip
+ 130 003e 4246     		mov	r2, r8
+ 131 0040 4B46     		mov	r3, r9
+ 132 0042 FFF7FEFF 		bl	__aeabi_ldivmod
+ 133              	.LVL8:
+ 134              		.loc 1 27 9 discriminator 1 view .LVU27
+ 135 0046 D3B2     		uxtb	r3, r2
+ 136              	.LBB4:
+ 137              	.LBB5:
+   6:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         return d + '0';
+ 138              		.loc 1 6 8 is_stmt 0 discriminator 1 view .LVU28
+ 139 0048 092A     		cmp	r2, #9
+   7:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     } else {
+ 140              		.loc 1 7 18 discriminator 1 view .LVU29
+ 141 004a D4BF     		ite	le
+ 142 004c 3033     		addle	r3, r3, #48
+   9:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     }
+ 143              		.loc 1 9 23 discriminator 1 view .LVU30
+ 144 004e 3733     		addgt	r3, r3, #55
+ 145              	.LBE5:
+ 146              	.LBE4:
+ 147              		.loc 1 27 18 discriminator 1 view .LVU31
+ 148 0050 6C1E     		subs	r4, r5, #1
+ 149              	.LVL9:
+ 150              	.LBB7:
+ 151              	.LBI4:
+   5:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     if (d < 10) {
+ 152              		.loc 1 5 6 is_stmt 1 discriminator 1 view .LVU32
+ 153              	.LBB6:
+   6:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         return d + '0';
+ 154              		.loc 1 6 5 discriminator 1 view .LVU33
+   7:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     } else {
+ 155              		.loc 1 7 9 discriminator 1 view .LVU34
+   9:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     }
+ 156              		.loc 1 9 9 discriminator 1 view .LVU35
+   9:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     }
+ 157              		.loc 1 9 23 is_stmt 0 discriminator 1 view .LVU36
+ 158 0052 DBB2     		uxtb	r3, r3
+ 159              	.LVL10:
+   9:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     }
+ 160              		.loc 1 9 23 discriminator 1 view .LVU37
+ 161              	.LBE6:
+ 162              	.LBE7:
+ 163              		.loc 1 27 18 discriminator 1 view .LVU38
+ 164 0054 04F80A30 		strb	r3, [r4, r10]
+  28:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         value /= radix;
+ 165              		.loc 1 28 9 is_stmt 1 discriminator 1 view .LVU39
+  29:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     } while (value);
+ 166              		.loc 1 29 5 is_stmt 0 discriminator 1 view .LVU40
+ 167 0058 50EA0103 		orrs	r3, r0, r1
+  28:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         value /= radix;
+ 168              		.loc 1 28 15 discriminator 1 view .LVU41
+ 169 005c 8646     		mov	lr, r0
+ 170 005e 8C46     		mov	ip, r1
+ 171              	.LVL11:
+ 172              		.loc 1 29 5 discriminator 1 view .LVU42
+ 173 0060 15D1     		bne	.L11
+  30:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  31:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     if (original < 0) buf[--c] = '-';
+ 174              		.loc 1 31 5 is_stmt 1 view .LVU43
+ 175              		.loc 1 31 8 is_stmt 0 view .LVU44
+ 176 0062 002E     		cmp	r6, #0
+ 177 0064 77F10003 		sbcs	r3, r7, #0
+ 178 0068 05DA     		bge	.L10
+ 179              		.loc 1 31 23 is_stmt 1 discriminator 1 view .LVU45
+ 180              		.loc 1 31 32 is_stmt 0 discriminator 1 view .LVU46
+ 181 006a AC1E     		subs	r4, r5, #2
+ 182              	.LVL12:
+ 183              		.loc 1 31 32 discriminator 1 view .LVU47
+ 184 006c 08AB     		add	r3, sp, #32
+ 185 006e 2344     		add	r3, r3, r4
+ 186 0070 2D22     		movs	r2, #45
+ 187              	.LVL13:
+ 188              		.loc 1 31 32 discriminator 1 view .LVU48
+ 189 0072 03F81C2C 		strb	r2, [r3, #-28]
+ 190              	.L10:
+  32:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  33:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     size = last - c + 1;  // includes null at end
+ 191              		.loc 1 33 5 is_stmt 1 view .LVU49
+ 192              	.LVL14:
+  34:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     memcpy(dest, &buf[c], last - c + 1);
+ 193              		.loc 1 34 5 view .LVU50
+ 194 0076 C4F11902 		rsb	r2, r4, #25
+ 195              	.LVL15:
+ 196              		.loc 1 34 5 is_stmt 0 view .LVU51
+ 197 007a 0AEB0401 		add	r1, r10, r4
+ 198 007e 5846     		mov	r0, fp
+ 199              	.LVL16:
+ 200              		.loc 1 34 5 view .LVU52
+ 201 0080 FFF7FEFF 		bl	memcpy
+ 202              	.LVL17:
+  35:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  36:tmk_core/protocol/arm_atsam/usb/usb_util.c ****     return (size - 1);  // without null termination
+ 203              		.loc 1 36 5 is_stmt 1 view .LVU53
+  37:tmk_core/protocol/arm_atsam/usb/usb_util.c **** }
+ 204              		.loc 1 37 1 is_stmt 0 view .LVU54
+ 205 0084 C4F11800 		rsb	r0, r4, #24
+ 206 0088 09B0     		add	sp, sp, #36
+ 207              		.cfi_remember_state
+ 208              		.cfi_def_cfa_offset 36
+ 209              		@ sp needed
+ 210 008a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 211              	.LVL18:
+ 212              	.L11:
+ 213              		.cfi_restore_state
+  27:tmk_core/protocol/arm_atsam/usb/usb_util.c ****         value /= radix;
+ 214              		.loc 1 27 18 view .LVU55
+ 215 008e 2546     		mov	r5, r4
+ 216 0090 D3E7     		b	.L9
+ 217              		.cfi_endproc
+ 218              	.LFE124:
+ 220              		.section	.text.UTIL_ltoa,"ax",%progbits
+ 221              		.align	1
+ 222              		.global	UTIL_ltoa
+ 223              		.syntax unified
+ 224              		.thumb
+ 225              		.thumb_func
+ 226              		.fpu fpv4-sp-d16
+ 228              	UTIL_ltoa:
+ 229              	.LVL19:
+ 230              	.LFB125:
+  38:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  39:tmk_core/protocol/arm_atsam/usb/usb_util.c **** int UTIL_ltoa(int64_t value, char *dest) { return UTIL_ltoa_radix(value, dest, 10); }
+ 231              		.loc 1 39 42 is_stmt 1 view -0
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 0
+ 234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 235              		@ link register save eliminated.
+ 236              		.loc 1 39 44 view .LVU57
+ 237              		.loc 1 39 51 is_stmt 0 view .LVU58
+ 238 0000 0A23     		movs	r3, #10
+ 239 0002 FFF7FEBF 		b	UTIL_ltoa_radix
+ 240              	.LVL20:
+ 241              		.loc 1 39 51 view .LVU59
+ 242              		.cfi_endproc
+ 243              	.LFE125:
+ 245              		.section	.text.UTIL_itoa,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	UTIL_itoa
+ 248              		.syntax unified
+ 249              		.thumb
+ 250              		.thumb_func
+ 251              		.fpu fpv4-sp-d16
+ 253              	UTIL_itoa:
+ 254              	.LVL21:
+ 255              	.LFB126:
+  40:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  41:tmk_core/protocol/arm_atsam/usb/usb_util.c **** int UTIL_itoa(int value, char *dest) { return UTIL_ltoa_radix((int64_t)value, dest, 10); }
+ 256              		.loc 1 41 38 is_stmt 1 view -0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260              		@ link register save eliminated.
+ 261              		.loc 1 41 40 view .LVU61
+ 262              		.loc 1 41 47 is_stmt 0 view .LVU62
+ 263 0000 0A46     		mov	r2, r1
+ 264 0002 0A23     		movs	r3, #10
+ 265 0004 C117     		asrs	r1, r0, #31
+ 266              	.LVL22:
+ 267              		.loc 1 41 47 view .LVU63
+ 268 0006 FFF7FEBF 		b	UTIL_ltoa_radix
+ 269              	.LVL23:
+ 270              		.loc 1 41 47 view .LVU64
+ 271              		.cfi_endproc
+ 272              	.LFE126:
+ 274              		.section	.text.UTIL_utoa,"ax",%progbits
+ 275              		.align	1
+ 276              		.global	UTIL_utoa
+ 277              		.syntax unified
+ 278              		.thumb
+ 279              		.thumb_func
+ 280              		.fpu fpv4-sp-d16
+ 282              	UTIL_utoa:
+ 283              	.LVL24:
+ 284              	.LFB127:
+  42:tmk_core/protocol/arm_atsam/usb/usb_util.c **** 
+  43:tmk_core/protocol/arm_atsam/usb/usb_util.c **** int UTIL_utoa(uint32_t value, char *dest) { return UTIL_ltoa_radix((int64_t)value, dest, 10); }
+ 285              		.loc 1 43 43 is_stmt 1 view -0
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289              		@ link register save eliminated.
+ 290              		.loc 1 43 45 view .LVU66
+ 291              		.loc 1 43 52 is_stmt 0 view .LVU67
+ 292 0000 0A46     		mov	r2, r1
+ 293 0002 0A23     		movs	r3, #10
+ 294 0004 0021     		movs	r1, #0
+ 295              	.LVL25:
+ 296              		.loc 1 43 52 view .LVU68
+ 297 0006 FFF7FEBF 		b	UTIL_ltoa_radix
+ 298              	.LVL26:
+ 299              		.loc 1 43 52 view .LVU69
+ 300              		.cfi_endproc
+ 301              	.LFE127:
+ 303              		.text
+ 304              	.Letext0:
+ 305              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 306              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 307              		.file 4 "lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h"
+ 308              		.file 5 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
+ 309              		.file 6 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/stdd
+ 310              		.file 7 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 311              		.file 8 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 312              		.file 9 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 313              		.file 10 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 usb_util.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:18     .text.digit:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:26     .text.digit:0000000000000000 digit
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:55     .text.UTIL_ltoa_radix:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:62     .text.UTIL_ltoa_radix:0000000000000000 UTIL_ltoa_radix
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:221    .text.UTIL_ltoa:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:228    .text.UTIL_ltoa:0000000000000000 UTIL_ltoa
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:246    .text.UTIL_itoa:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:253    .text.UTIL_itoa:0000000000000000 UTIL_itoa
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:275    .text.UTIL_utoa:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:282    .text.UTIL_utoa:0000000000000000 UTIL_utoa
+
+UNDEFINED SYMBOLS
+__aeabi_ldivmod
+memset
+memcpy

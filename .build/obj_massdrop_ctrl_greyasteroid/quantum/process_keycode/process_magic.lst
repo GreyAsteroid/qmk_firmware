@@ -1,0 +1,672 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"process_magic.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.process_magic,"ax",%progbits
+  18              		.align	1
+  19              		.global	process_magic
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	process_magic:
+  27              	.LVL0:
+  28              	.LFB8:
+  29              		.file 1 "quantum/process_keycode/process_magic.c"
+   1:quantum/process_keycode/process_magic.c **** /* Copyright 2019 Jack Humbert
+   2:quantum/process_keycode/process_magic.c ****  *
+   3:quantum/process_keycode/process_magic.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/process_keycode/process_magic.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/process_keycode/process_magic.c ****  * the Free Software Foundation, either version 2 of the License, or
+   6:quantum/process_keycode/process_magic.c ****  * (at your option) any later version.
+   7:quantum/process_keycode/process_magic.c ****  *
+   8:quantum/process_keycode/process_magic.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/process_keycode/process_magic.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/process_keycode/process_magic.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/process_keycode/process_magic.c ****  * GNU General Public License for more details.
+  12:quantum/process_keycode/process_magic.c ****  *
+  13:quantum/process_keycode/process_magic.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/process_keycode/process_magic.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/process_keycode/process_magic.c ****  */
+  16:quantum/process_keycode/process_magic.c **** #include "process_magic.h"
+  17:quantum/process_keycode/process_magic.c **** 
+  18:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+  19:quantum/process_keycode/process_magic.c **** #    ifndef AG_NORM_SONG
+  20:quantum/process_keycode/process_magic.c **** #        define AG_NORM_SONG SONG(AG_NORM_SOUND)
+  21:quantum/process_keycode/process_magic.c **** #    endif
+  22:quantum/process_keycode/process_magic.c **** #    ifndef AG_SWAP_SONG
+  23:quantum/process_keycode/process_magic.c **** #        define AG_SWAP_SONG SONG(AG_SWAP_SOUND)
+  24:quantum/process_keycode/process_magic.c **** #    endif
+  25:quantum/process_keycode/process_magic.c **** #    ifndef CG_NORM_SONG
+  26:quantum/process_keycode/process_magic.c **** #        define CG_NORM_SONG SONG(AG_NORM_SOUND)
+  27:quantum/process_keycode/process_magic.c **** #    endif
+  28:quantum/process_keycode/process_magic.c **** #    ifndef CG_SWAP_SONG
+  29:quantum/process_keycode/process_magic.c **** #        define CG_SWAP_SONG SONG(AG_SWAP_SOUND)
+  30:quantum/process_keycode/process_magic.c **** #    endif
+  31:quantum/process_keycode/process_magic.c **** float ag_norm_song[][2] = AG_NORM_SONG;
+  32:quantum/process_keycode/process_magic.c **** float ag_swap_song[][2] = AG_SWAP_SONG;
+  33:quantum/process_keycode/process_magic.c **** float cg_norm_song[][2] = CG_NORM_SONG;
+  34:quantum/process_keycode/process_magic.c **** float cg_swap_song[][2] = CG_SWAP_SONG;
+  35:quantum/process_keycode/process_magic.c **** #endif
+  36:quantum/process_keycode/process_magic.c **** 
+  37:quantum/process_keycode/process_magic.c **** /**
+  38:quantum/process_keycode/process_magic.c ****  * MAGIC actions (BOOTMAGIC without the boot)
+  39:quantum/process_keycode/process_magic.c ****  */
+  40:quantum/process_keycode/process_magic.c **** bool process_magic(uint16_t keycode, keyrecord_t *record) {
+  30              		.loc 1 40 59 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  41:quantum/process_keycode/process_magic.c ****     // skip anything that isn't a keyup
+  42:quantum/process_keycode/process_magic.c ****     if (record->event.pressed) {
+  34              		.loc 1 42 5 view .LVU1
+  40:quantum/process_keycode/process_magic.c ****     // skip anything that isn't a keyup
+  35              		.loc 1 40 59 is_stmt 0 view .LVU2
+  36 0000 38B5     		push	{r3, r4, r5, lr}
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 3, -16
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  40:quantum/process_keycode/process_magic.c ****     // skip anything that isn't a keyup
+  42              		.loc 1 40 59 view .LVU3
+  43 0002 0546     		mov	r5, r0
+  44              		.loc 1 42 22 view .LVU4
+  45 0004 8878     		ldrb	r0, [r1, #2]	@ zero_extendqisi2
+  46              	.LVL1:
+  47              		.loc 1 42 8 view .LVU5
+  48 0006 0028     		cmp	r0, #0
+  49 0008 00F00981 		beq	.L41
+  43:quantum/process_keycode/process_magic.c ****         switch (keycode) {
+  50              		.loc 1 43 9 is_stmt 1 view .LVU6
+  51 000c 45F60243 		movw	r3, #23554
+  52 0010 9D42     		cmp	r5, r3
+  53 0012 2CD3     		bcc	.L2
+  54 0014 45F61543 		movw	r3, #23573
+  55 0018 9D42     		cmp	r5, r3
+  56 001a 04D9     		bls	.L3
+  57 001c A5F5B943 		sub	r3, r5, #23680
+  58 0020 7A3B     		subs	r3, r3, #122
+  59 0022 082B     		cmp	r3, #8
+  60 0024 23D8     		bhi	.L2
+  61              	.L3:
+  44:quantum/process_keycode/process_magic.c ****             case MAGIC_SWAP_CONTROL_CAPSLOCK ... MAGIC_TOGGLE_ALT_GUI:
+  45:quantum/process_keycode/process_magic.c ****             case MAGIC_SWAP_LCTL_LGUI ... MAGIC_EE_HANDS_RIGHT:
+  46:quantum/process_keycode/process_magic.c ****                 /* keymap config */
+  47:quantum/process_keycode/process_magic.c ****                 keymap_config.raw = eeconfig_read_keymap();
+  62              		.loc 1 47 17 view .LVU7
+  63              		.loc 1 47 37 is_stmt 0 view .LVU8
+  64 0026 FFF7FEFF 		bl	eeconfig_read_keymap
+  65              	.LVL2:
+  66              		.loc 1 47 35 view .LVU9
+  67 002a 7E4C     		ldr	r4, .L49
+  68 002c 45F61043 		movw	r3, #23568
+  69 0030 9D42     		cmp	r5, r3
+  70 0032 2080     		strh	r0, [r4]	@ movhi
+  48:quantum/process_keycode/process_magic.c ****                 switch (keycode) {
+  71              		.loc 1 48 17 is_stmt 1 view .LVU10
+  72 0034 00F0C180 		beq	.L4
+  73 0038 3BD8     		bhi	.L5
+  74 003a 45F60843 		movw	r3, #23560
+  75 003e 9D42     		cmp	r5, r3
+  76 0040 00F09780 		beq	.L6
+  77 0044 1DD8     		bhi	.L7
+  78 0046 45F60443 		movw	r3, #23556
+  79 004a 9D42     		cmp	r5, r3
+  80 004c 00F08180 		beq	.L8
+  81 0050 0ED8     		bhi	.L9
+  82 0052 45F60243 		movw	r3, #23554
+  83 0056 9D42     		cmp	r5, r3
+  84 0058 72D0     		beq	.L10
+  85 005a 45F60343 		movw	r3, #23555
+  86 005e 9D42     		cmp	r5, r3
+  87 0060 73D0     		beq	.L11
+  88              	.L12:
+  49:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_CONTROL_CAPSLOCK:
+  50:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_control_capslock = true;
+  51:quantum/process_keycode/process_magic.c ****                         break;
+  52:quantum/process_keycode/process_magic.c ****                     case MAGIC_CAPSLOCK_TO_CONTROL:
+  53:quantum/process_keycode/process_magic.c ****                         keymap_config.capslock_to_control = true;
+  54:quantum/process_keycode/process_magic.c ****                         break;
+  55:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_LALT_LGUI:
+  56:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lalt_lgui = true;
+  57:quantum/process_keycode/process_magic.c ****                         break;
+  58:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_RALT_RGUI:
+  59:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = true;
+  60:quantum/process_keycode/process_magic.c ****                         break;
+  61:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_LCTL_LGUI:
+  62:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lctl_lgui = true;
+  63:quantum/process_keycode/process_magic.c ****                         break;
+  64:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_RCTL_RGUI:
+  65:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = true;
+  66:quantum/process_keycode/process_magic.c ****                         break;
+  67:quantum/process_keycode/process_magic.c ****                     case MAGIC_NO_GUI:
+  68:quantum/process_keycode/process_magic.c ****                         keymap_config.no_gui = true;
+  69:quantum/process_keycode/process_magic.c ****                         break;
+  70:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_GRAVE_ESC:
+  71:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_grave_esc = true;
+  72:quantum/process_keycode/process_magic.c ****                         break;
+  73:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_BACKSLASH_BACKSPACE:
+  74:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_backslash_backspace = true;
+  75:quantum/process_keycode/process_magic.c ****                         break;
+  76:quantum/process_keycode/process_magic.c ****                     case MAGIC_HOST_NKRO:
+  77:quantum/process_keycode/process_magic.c ****                         clear_keyboard();  // clear first buffer to prevent stuck keys
+  78:quantum/process_keycode/process_magic.c ****                         keymap_config.nkro = true;
+  79:quantum/process_keycode/process_magic.c ****                         break;
+  80:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_ALT_GUI:
+  81:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lalt_lgui = keymap_config.swap_ralt_rgui = true;
+  82:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+  83:quantum/process_keycode/process_magic.c ****                         PLAY_SONG(ag_swap_song);
+  84:quantum/process_keycode/process_magic.c **** #endif
+  85:quantum/process_keycode/process_magic.c ****                         break;
+  86:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_CTL_GUI:
+  87:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+  88:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+  89:quantum/process_keycode/process_magic.c ****                         PLAY_SONG(cg_swap_song);
+  90:quantum/process_keycode/process_magic.c **** #endif
+  91:quantum/process_keycode/process_magic.c ****                         break;
+  92:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_CONTROL_CAPSLOCK:
+  93:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_control_capslock = false;
+  94:quantum/process_keycode/process_magic.c ****                         break;
+  95:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNCAPSLOCK_TO_CONTROL:
+  96:quantum/process_keycode/process_magic.c ****                         keymap_config.capslock_to_control = false;
+  97:quantum/process_keycode/process_magic.c ****                         break;
+  98:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_LALT_LGUI:
+  99:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lalt_lgui = false;
+ 100:quantum/process_keycode/process_magic.c ****                         break;
+ 101:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_RALT_RGUI:
+ 102:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = false;
+ 103:quantum/process_keycode/process_magic.c ****                         break;
+ 104:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_LCTL_LGUI:
+ 105:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lctl_lgui = false;
+ 106:quantum/process_keycode/process_magic.c ****                         break;
+ 107:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_RCTL_RGUI:
+ 108:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = false;
+ 109:quantum/process_keycode/process_magic.c ****                         break;
+ 110:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNNO_GUI:
+ 111:quantum/process_keycode/process_magic.c ****                         keymap_config.no_gui = false;
+ 112:quantum/process_keycode/process_magic.c ****                         break;
+ 113:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_GRAVE_ESC:
+ 114:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_grave_esc = false;
+ 115:quantum/process_keycode/process_magic.c ****                         break;
+ 116:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_BACKSLASH_BACKSPACE:
+ 117:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_backslash_backspace = false;
+ 118:quantum/process_keycode/process_magic.c ****                         break;
+ 119:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNHOST_NKRO:
+ 120:quantum/process_keycode/process_magic.c ****                         clear_keyboard();  // clear first buffer to prevent stuck keys
+ 121:quantum/process_keycode/process_magic.c ****                         keymap_config.nkro = false;
+ 122:quantum/process_keycode/process_magic.c ****                         break;
+ 123:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_ALT_GUI:
+ 124:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lalt_lgui = keymap_config.swap_ralt_rgui = false;
+ 125:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 126:quantum/process_keycode/process_magic.c ****                         PLAY_SONG(ag_norm_song);
+ 127:quantum/process_keycode/process_magic.c **** #endif
+ 128:quantum/process_keycode/process_magic.c ****                         break;
+ 129:quantum/process_keycode/process_magic.c ****                     case MAGIC_UNSWAP_CTL_GUI:
+ 130:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+ 131:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 132:quantum/process_keycode/process_magic.c ****                         PLAY_SONG(cg_norm_song);
+ 133:quantum/process_keycode/process_magic.c **** #endif
+ 134:quantum/process_keycode/process_magic.c ****                         break;
+ 135:quantum/process_keycode/process_magic.c ****                     case MAGIC_TOGGLE_ALT_GUI:
+ 136:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lalt_lgui = !keymap_config.swap_lalt_lgui;
+ 137:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = keymap_config.swap_lalt_lgui;
+ 138:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 139:quantum/process_keycode/process_magic.c ****                         if (keymap_config.swap_ralt_rgui) {
+ 140:quantum/process_keycode/process_magic.c ****                             PLAY_SONG(ag_swap_song);
+ 141:quantum/process_keycode/process_magic.c ****                         } else {
+ 142:quantum/process_keycode/process_magic.c ****                             PLAY_SONG(ag_norm_song);
+ 143:quantum/process_keycode/process_magic.c ****                         }
+ 144:quantum/process_keycode/process_magic.c **** #endif
+ 145:quantum/process_keycode/process_magic.c ****                         break;
+ 146:quantum/process_keycode/process_magic.c ****                     case MAGIC_TOGGLE_CTL_GUI:
+ 147:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_lctl_lgui = !keymap_config.swap_lctl_lgui;
+ 148:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = keymap_config.swap_lctl_lgui;
+ 149:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 150:quantum/process_keycode/process_magic.c ****                         if (keymap_config.swap_rctl_rgui) {
+ 151:quantum/process_keycode/process_magic.c ****                             PLAY_SONG(cg_swap_song);
+ 152:quantum/process_keycode/process_magic.c ****                         } else {
+ 153:quantum/process_keycode/process_magic.c ****                             PLAY_SONG(cg_norm_song);
+ 154:quantum/process_keycode/process_magic.c ****                         }
+ 155:quantum/process_keycode/process_magic.c **** #endif
+ 156:quantum/process_keycode/process_magic.c ****                         break;
+ 157:quantum/process_keycode/process_magic.c ****                     case MAGIC_TOGGLE_NKRO:
+ 158:quantum/process_keycode/process_magic.c ****                         clear_keyboard();  // clear first buffer to prevent stuck keys
+ 159:quantum/process_keycode/process_magic.c ****                         keymap_config.nkro = !keymap_config.nkro;
+ 160:quantum/process_keycode/process_magic.c ****                         break;
+ 161:quantum/process_keycode/process_magic.c ****                     case MAGIC_EE_HANDS_LEFT:
+ 162:quantum/process_keycode/process_magic.c ****                         eeconfig_update_handedness(true);
+ 163:quantum/process_keycode/process_magic.c ****                         break;
+ 164:quantum/process_keycode/process_magic.c ****                     case MAGIC_EE_HANDS_RIGHT:
+ 165:quantum/process_keycode/process_magic.c ****                         eeconfig_update_handedness(false);
+ 166:quantum/process_keycode/process_magic.c ****                         break;
+ 167:quantum/process_keycode/process_magic.c ****                 }
+ 168:quantum/process_keycode/process_magic.c **** 
+ 169:quantum/process_keycode/process_magic.c ****                 eeconfig_update_keymap(keymap_config.raw);
+  89              		.loc 1 169 17 view .LVU11
+  90 0062 2088     		ldrh	r0, [r4]
+  91 0064 FFF7FEFF 		bl	eeconfig_update_keymap
+  92              	.LVL3:
+ 170:quantum/process_keycode/process_magic.c ****                 clear_keyboard();  // clear to prevent stuck keys
+  93              		.loc 1 170 17 view .LVU12
+  94 0068 FFF7FEFF 		bl	clear_keyboard
+  95              	.LVL4:
+ 171:quantum/process_keycode/process_magic.c **** 
+ 172:quantum/process_keycode/process_magic.c ****                 return false;
+  96              		.loc 1 172 17 view .LVU13
+  97              		.loc 1 172 24 is_stmt 0 view .LVU14
+  98 006c 0020     		movs	r0, #0
+  99              	.L2:
+ 173:quantum/process_keycode/process_magic.c ****         }
+ 174:quantum/process_keycode/process_magic.c ****     }
+ 175:quantum/process_keycode/process_magic.c **** 
+ 176:quantum/process_keycode/process_magic.c ****     // Not a magic keycode so continue processing
+ 177:quantum/process_keycode/process_magic.c ****     return true;
+ 178:quantum/process_keycode/process_magic.c **** }
+ 100              		.loc 1 178 1 view .LVU15
+ 101 006e 38BD     		pop	{r3, r4, r5, pc}
+ 102              	.L9:
+ 103 0070 45F60643 		movw	r3, #23558
+ 104 0074 9D42     		cmp	r5, r3
+ 105 0076 78D0     		beq	.L13
+ 106 0078 6FD9     		bls	.L42
+  71:quantum/process_keycode/process_magic.c ****                         break;
+ 107              		.loc 1 71 25 is_stmt 1 view .LVU16
+  71:quantum/process_keycode/process_magic.c ****                         break;
+ 108              		.loc 1 71 54 is_stmt 0 view .LVU17
+ 109 007a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 110 007c 43F02003 		orr	r3, r3, #32
+ 111 0080 61E0     		b	.L46
+ 112              	.L7:
+ 113 0082 45F60C43 		movw	r3, #23564
+ 114 0086 9D42     		cmp	r5, r3
+ 115 0088 00F08380 		beq	.L16
+ 116 008c 08D8     		bhi	.L17
+ 117 008e 45F60A43 		movw	r3, #23562
+ 118 0092 9D42     		cmp	r5, r3
+ 119 0094 77D0     		beq	.L18
+ 120 0096 70D9     		bls	.L43
+  93:quantum/process_keycode/process_magic.c ****                         break;
+ 121              		.loc 1 93 25 is_stmt 1 view .LVU18
+  93:quantum/process_keycode/process_magic.c ****                         break;
+ 122              		.loc 1 93 61 is_stmt 0 view .LVU19
+ 123 0098 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 124 009a 6FF30003 		bfc	r3, #0, #1
+ 125 009e 52E0     		b	.L46
+ 126              	.L17:
+ 127 00a0 45F60E43 		movw	r3, #23566
+ 128 00a4 9D42     		cmp	r5, r3
+ 129 00a6 7CD0     		beq	.L21
+ 130 00a8 77D9     		bls	.L44
+ 111:quantum/process_keycode/process_magic.c ****                         break;
+ 131              		.loc 1 111 25 is_stmt 1 view .LVU20
+ 111:quantum/process_keycode/process_magic.c ****                         break;
+ 132              		.loc 1 111 46 is_stmt 0 view .LVU21
+ 133 00aa 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 134 00ac 6FF30413 		bfc	r3, #4, #1
+ 135 00b0 49E0     		b	.L46
+ 136              	.L5:
+ 137 00b2 45F6FB43 		movw	r3, #23803
+ 138 00b6 9D42     		cmp	r5, r3
+ 139 00b8 53D0     		beq	.L24
+ 140 00ba 22D8     		bhi	.L25
+ 141 00bc 45F61343 		movw	r3, #23571
+ 142 00c0 9D42     		cmp	r5, r3
+ 143 00c2 00F08280 		beq	.L26
+ 144 00c6 0DD8     		bhi	.L27
+ 145 00c8 45F61143 		movw	r3, #23569
+ 146 00cc 9D42     		cmp	r5, r3
+ 147 00ce 78D0     		beq	.L28
+ 148 00d0 45F61243 		movw	r3, #23570
+ 149 00d4 9D42     		cmp	r5, r3
+ 150 00d6 C4D1     		bne	.L12
+ 120:quantum/process_keycode/process_magic.c ****                         keymap_config.nkro = false;
+ 151              		.loc 1 120 25 is_stmt 1 view .LVU22
+ 152 00d8 FFF7FEFF 		bl	clear_keyboard
+ 153              	.LVL5:
+ 121:quantum/process_keycode/process_magic.c ****                         break;
+ 154              		.loc 1 121 25 view .LVU23
+ 121:quantum/process_keycode/process_magic.c ****                         break;
+ 155              		.loc 1 121 44 is_stmt 0 view .LVU24
+ 156 00dc 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 157 00de 6FF3C713 		bfc	r3, #7, #1
+ 158 00e2 30E0     		b	.L46
+ 159              	.L27:
+ 160 00e4 45F61543 		movw	r3, #23573
+ 161 00e8 9D42     		cmp	r5, r3
+ 162 00ea 76D0     		beq	.L30
+ 163 00ec C0F08980 		bcc	.L31
+ 164 00f0 45F6FA43 		movw	r3, #23802
+ 165 00f4 9D42     		cmp	r5, r3
+ 166 00f6 B4D1     		bne	.L12
+  62:quantum/process_keycode/process_magic.c ****                         break;
+ 167              		.loc 1 62 25 is_stmt 1 view .LVU25
+  62:quantum/process_keycode/process_magic.c ****                         break;
+ 168              		.loc 1 62 54 is_stmt 0 view .LVU26
+ 169 00f8 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 170 00fa 43F00103 		orr	r3, r3, #1
+ 171              	.L48:
+  65:quantum/process_keycode/process_magic.c ****                         break;
+ 172              		.loc 1 65 54 view .LVU27
+ 173 00fe 6370     		strb	r3, [r4, #1]
+  66:quantum/process_keycode/process_magic.c ****                     case MAGIC_NO_GUI:
+ 174              		.loc 1 66 25 is_stmt 1 view .LVU28
+ 175 0100 AFE7     		b	.L12
+ 176              	.L25:
+ 177 0102 45F6FF43 		movw	r3, #23807
+ 178 0106 9D42     		cmp	r5, r3
+ 179 0108 63D0     		beq	.L33
+ 180 010a B5F5BA4F 		cmp	r5, #23808
+ 181 010e 0AD2     		bcs	.L34
+ 182 0110 45F6FD43 		movw	r3, #23805
+ 183 0114 9D42     		cmp	r5, r3
+ 184 0116 4CD0     		beq	.L35
+ 185 0118 47D9     		bls	.L45
+  87:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 186              		.loc 1 87 25 view .LVU29
+  87:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 187              		.loc 1 87 54 is_stmt 0 view .LVU30
+ 188 011a 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 189 011c 23F00303 		bic	r3, r3, #3
+ 190 0120 43F00303 		orr	r3, r3, #3
+ 191 0124 EBE7     		b	.L48
+ 192              	.L34:
+ 193 0126 45F60153 		movw	r3, #23809
+ 194 012a 9D42     		cmp	r5, r3
+ 195 012c 73D0     		beq	.L38
+ 196 012e B5F5BA4F 		cmp	r5, #23808
+ 197 0132 5DD9     		bls	.L39
+ 198 0134 45F60253 		movw	r3, #23810
+ 199 0138 9D42     		cmp	r5, r3
+ 200 013a 92D1     		bne	.L12
+ 165:quantum/process_keycode/process_magic.c ****                         break;
+ 201              		.loc 1 165 25 is_stmt 1 view .LVU31
+ 202 013c 0020     		movs	r0, #0
+ 203 013e 6BE0     		b	.L47
+ 204              	.L10:
+  50:quantum/process_keycode/process_magic.c ****                         break;
+ 205              		.loc 1 50 25 view .LVU32
+  50:quantum/process_keycode/process_magic.c ****                         break;
+ 206              		.loc 1 50 61 is_stmt 0 view .LVU33
+ 207 0140 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 208 0142 43F00103 		orr	r3, r3, #1
+ 209              	.L46:
+  53:quantum/process_keycode/process_magic.c ****                         break;
+ 210              		.loc 1 53 59 view .LVU34
+ 211 0146 2370     		strb	r3, [r4]
+  54:quantum/process_keycode/process_magic.c ****                     case MAGIC_SWAP_LALT_LGUI:
+ 212              		.loc 1 54 25 is_stmt 1 view .LVU35
+ 213 0148 8BE7     		b	.L12
+ 214              	.L11:
+  53:quantum/process_keycode/process_magic.c ****                         break;
+ 215              		.loc 1 53 25 view .LVU36
+  53:quantum/process_keycode/process_magic.c ****                         break;
+ 216              		.loc 1 53 59 is_stmt 0 view .LVU37
+ 217 014a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 218 014c 43F00203 		orr	r3, r3, #2
+ 219 0150 F9E7     		b	.L46
+ 220              	.L8:
+  56:quantum/process_keycode/process_magic.c ****                         break;
+ 221              		.loc 1 56 25 is_stmt 1 view .LVU38
+  56:quantum/process_keycode/process_magic.c ****                         break;
+ 222              		.loc 1 56 54 is_stmt 0 view .LVU39
+ 223 0152 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 224 0154 43F00403 		orr	r3, r3, #4
+ 225 0158 F5E7     		b	.L46
+ 226              	.L42:
+  59:quantum/process_keycode/process_magic.c ****                         break;
+ 227              		.loc 1 59 25 is_stmt 1 view .LVU40
+  59:quantum/process_keycode/process_magic.c ****                         break;
+ 228              		.loc 1 59 54 is_stmt 0 view .LVU41
+ 229 015a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 230 015c 43F00803 		orr	r3, r3, #8
+ 231 0160 F1E7     		b	.L46
+ 232              	.L24:
+  65:quantum/process_keycode/process_magic.c ****                         break;
+ 233              		.loc 1 65 25 is_stmt 1 view .LVU42
+  65:quantum/process_keycode/process_magic.c ****                         break;
+ 234              		.loc 1 65 54 is_stmt 0 view .LVU43
+ 235 0162 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 236 0164 43F00203 		orr	r3, r3, #2
+ 237 0168 C9E7     		b	.L48
+ 238              	.L13:
+  68:quantum/process_keycode/process_magic.c ****                         break;
+ 239              		.loc 1 68 25 is_stmt 1 view .LVU44
+  68:quantum/process_keycode/process_magic.c ****                         break;
+ 240              		.loc 1 68 46 is_stmt 0 view .LVU45
+ 241 016a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 242 016c 43F01003 		orr	r3, r3, #16
+ 243 0170 E9E7     		b	.L46
+ 244              	.L6:
+  74:quantum/process_keycode/process_magic.c ****                         break;
+ 245              		.loc 1 74 25 is_stmt 1 view .LVU46
+  74:quantum/process_keycode/process_magic.c ****                         break;
+ 246              		.loc 1 74 64 is_stmt 0 view .LVU47
+ 247 0172 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 248 0174 43F04003 		orr	r3, r3, #64
+ 249 0178 E5E7     		b	.L46
+ 250              	.L43:
+  77:quantum/process_keycode/process_magic.c ****                         keymap_config.nkro = true;
+ 251              		.loc 1 77 25 is_stmt 1 view .LVU48
+ 252 017a FFF7FEFF 		bl	clear_keyboard
+ 253              	.LVL6:
+  78:quantum/process_keycode/process_magic.c ****                         break;
+ 254              		.loc 1 78 25 view .LVU49
+  78:quantum/process_keycode/process_magic.c ****                         break;
+ 255              		.loc 1 78 44 is_stmt 0 view .LVU50
+ 256 017e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 257 0180 43F08003 		orr	r3, r3, #128
+ 258 0184 DFE7     		b	.L46
+ 259              	.L18:
+  81:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 260              		.loc 1 81 25 is_stmt 1 view .LVU51
+  81:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 261              		.loc 1 81 54 is_stmt 0 view .LVU52
+ 262 0186 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 263 0188 23F00C03 		bic	r3, r3, #12
+ 264 018c 43F00C03 		orr	r3, r3, #12
+ 265 0190 D9E7     		b	.L46
+ 266              	.L16:
+  96:quantum/process_keycode/process_magic.c ****                         break;
+ 267              		.loc 1 96 25 is_stmt 1 view .LVU53
+  96:quantum/process_keycode/process_magic.c ****                         break;
+ 268              		.loc 1 96 59 is_stmt 0 view .LVU54
+ 269 0192 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 270 0194 6FF34103 		bfc	r3, #1, #1
+ 271 0198 D5E7     		b	.L46
+ 272              	.L44:
+  99:quantum/process_keycode/process_magic.c ****                         break;
+ 273              		.loc 1 99 25 is_stmt 1 view .LVU55
+  99:quantum/process_keycode/process_magic.c ****                         break;
+ 274              		.loc 1 99 54 is_stmt 0 view .LVU56
+ 275 019a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 276 019c 6FF38203 		bfc	r3, #2, #1
+ 277 01a0 D1E7     		b	.L46
+ 278              	.L21:
+ 102:quantum/process_keycode/process_magic.c ****                         break;
+ 279              		.loc 1 102 25 is_stmt 1 view .LVU57
+ 102:quantum/process_keycode/process_magic.c ****                         break;
+ 280              		.loc 1 102 54 is_stmt 0 view .LVU58
+ 281 01a2 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 282 01a4 6FF3C303 		bfc	r3, #3, #1
+ 283 01a8 CDE7     		b	.L46
+ 284              	.L45:
+ 105:quantum/process_keycode/process_magic.c ****                         break;
+ 285              		.loc 1 105 25 is_stmt 1 view .LVU59
+ 105:quantum/process_keycode/process_magic.c ****                         break;
+ 286              		.loc 1 105 54 is_stmt 0 view .LVU60
+ 287 01aa 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 288 01ac 6FF30003 		bfc	r3, #0, #1
+ 289 01b0 A5E7     		b	.L48
+ 290              	.L35:
+ 108:quantum/process_keycode/process_magic.c ****                         break;
+ 291              		.loc 1 108 25 is_stmt 1 view .LVU61
+ 108:quantum/process_keycode/process_magic.c ****                         break;
+ 292              		.loc 1 108 54 is_stmt 0 view .LVU62
+ 293 01b2 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 294 01b4 6FF34103 		bfc	r3, #1, #1
+ 295 01b8 A1E7     		b	.L48
+ 296              	.L4:
+ 114:quantum/process_keycode/process_magic.c ****                         break;
+ 297              		.loc 1 114 25 is_stmt 1 view .LVU63
+ 114:quantum/process_keycode/process_magic.c ****                         break;
+ 298              		.loc 1 114 54 is_stmt 0 view .LVU64
+ 299 01ba 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 300 01bc 6FF34513 		bfc	r3, #5, #1
+ 301 01c0 C1E7     		b	.L46
+ 302              	.L28:
+ 117:quantum/process_keycode/process_magic.c ****                         break;
+ 303              		.loc 1 117 25 is_stmt 1 view .LVU65
+ 117:quantum/process_keycode/process_magic.c ****                         break;
+ 304              		.loc 1 117 64 is_stmt 0 view .LVU66
+ 305 01c2 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 306 01c4 6FF38613 		bfc	r3, #6, #1
+ 307 01c8 BDE7     		b	.L46
+ 308              	.L26:
+ 124:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 309              		.loc 1 124 25 is_stmt 1 view .LVU67
+ 124:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 310              		.loc 1 124 54 is_stmt 0 view .LVU68
+ 311 01ca 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 312 01cc 23F00C03 		bic	r3, r3, #12
+ 313 01d0 B9E7     		b	.L46
+ 314              	.L33:
+ 130:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 315              		.loc 1 130 25 is_stmt 1 view .LVU69
+ 130:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 316              		.loc 1 130 54 is_stmt 0 view .LVU70
+ 317 01d2 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 318 01d4 23F00303 		bic	r3, r3, #3
+ 319 01d8 91E7     		b	.L48
+ 320              	.L30:
+ 136:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = keymap_config.swap_lalt_lgui;
+ 321              		.loc 1 136 25 is_stmt 1 view .LVU71
+ 137:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 322              		.loc 1 137 25 view .LVU72
+ 136:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = keymap_config.swap_lalt_lgui;
+ 323              		.loc 1 136 70 is_stmt 0 view .LVU73
+ 324 01da 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 325 01dc C3F38002 		ubfx	r2, r3, #2, #1
+ 136:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = keymap_config.swap_lalt_lgui;
+ 326              		.loc 1 136 25 view .LVU74
+ 327 01e0 82F00102 		eor	r2, r2, #1
+ 328 01e4 D2B2     		uxtb	r2, r2
+ 136:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_ralt_rgui = keymap_config.swap_lalt_lgui;
+ 329              		.loc 1 136 54 view .LVU75
+ 330 01e6 62F38203 		bfi	r3, r2, #2, #1
+ 137:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 331              		.loc 1 137 54 view .LVU76
+ 332 01ea 62F3C303 		bfi	r3, r2, #3, #1
+ 333 01ee AAE7     		b	.L46
+ 334              	.L39:
+ 147:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = keymap_config.swap_lctl_lgui;
+ 335              		.loc 1 147 25 is_stmt 1 view .LVU77
+ 148:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 336              		.loc 1 148 25 view .LVU78
+ 147:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = keymap_config.swap_lctl_lgui;
+ 337              		.loc 1 147 70 is_stmt 0 view .LVU79
+ 338 01f0 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 147:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = keymap_config.swap_lctl_lgui;
+ 339              		.loc 1 147 25 view .LVU80
+ 340 01f2 DA43     		mvns	r2, r3
+ 341 01f4 02F00102 		and	r2, r2, #1
+ 147:quantum/process_keycode/process_magic.c ****                         keymap_config.swap_rctl_rgui = keymap_config.swap_lctl_lgui;
+ 342              		.loc 1 147 54 view .LVU81
+ 343 01f8 62F30003 		bfi	r3, r2, #0, #1
+ 148:quantum/process_keycode/process_magic.c **** #ifdef AUDIO_ENABLE
+ 344              		.loc 1 148 54 view .LVU82
+ 345 01fc 62F34103 		bfi	r3, r2, #1, #1
+ 346 0200 7DE7     		b	.L48
+ 347              	.L31:
+ 158:quantum/process_keycode/process_magic.c ****                         keymap_config.nkro = !keymap_config.nkro;
+ 348              		.loc 1 158 25 is_stmt 1 view .LVU83
+ 349 0202 FFF7FEFF 		bl	clear_keyboard
+ 350              	.LVL7:
+ 159:quantum/process_keycode/process_magic.c ****                         break;
+ 351              		.loc 1 159 25 view .LVU84
+ 159:quantum/process_keycode/process_magic.c ****                         break;
+ 352              		.loc 1 159 60 is_stmt 0 view .LVU85
+ 353 0206 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 354 0208 C3F3C012 		ubfx	r2, r3, #7, #1
+ 159:quantum/process_keycode/process_magic.c ****                         break;
+ 355              		.loc 1 159 25 view .LVU86
+ 356 020c 82F00102 		eor	r2, r2, #1
+ 159:quantum/process_keycode/process_magic.c ****                         break;
+ 357              		.loc 1 159 44 view .LVU87
+ 358 0210 62F3C713 		bfi	r3, r2, #7, #1
+ 359 0214 97E7     		b	.L46
+ 360              	.L38:
+ 162:quantum/process_keycode/process_magic.c ****                         break;
+ 361              		.loc 1 162 25 is_stmt 1 view .LVU88
+ 362 0216 0120     		movs	r0, #1
+ 363              	.L47:
+ 165:quantum/process_keycode/process_magic.c ****                         break;
+ 364              		.loc 1 165 25 is_stmt 0 view .LVU89
+ 365 0218 FFF7FEFF 		bl	eeconfig_update_handedness
+ 366              	.LVL8:
+ 166:quantum/process_keycode/process_magic.c ****                 }
+ 367              		.loc 1 166 25 is_stmt 1 view .LVU90
+ 368 021c 21E7     		b	.L12
+ 369              	.LVL9:
+ 370              	.L41:
+ 177:quantum/process_keycode/process_magic.c **** }
+ 371              		.loc 1 177 12 is_stmt 0 view .LVU91
+ 372 021e 0120     		movs	r0, #1
+ 373 0220 25E7     		b	.L2
+ 374              	.L50:
+ 375 0222 00BF     		.align	2
+ 376              	.L49:
+ 377 0224 00000000 		.word	keymap_config
+ 378              		.cfi_endproc
+ 379              	.LFE8:
+ 381              		.text
+ 382              	.Letext0:
+ 383              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 384              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 385              		.file 4 "tmk_core/protocol/arm_atsam/clks.h"
+ 386              		.file 5 "tmk_core/common/keyboard.h"
+ 387              		.file 6 "tmk_core/common/action.h"
+ 388              		.file 7 "tmk_core/common/report.h"
+ 389              		.file 8 "tmk_core/common/host.h"
+ 390              		.file 9 "tmk_core/common/debug.h"
+ 391              		.file 10 "quantum/keycode_config.h"
+ 392              		.file 11 "quantum/keymap.h"
+ 393              		.file 12 "quantum/color.h"
+ 394              		.file 13 "quantum/rgb_matrix_types.h"
+ 395              		.file 14 "quantum/rgb_matrix.h"
+ 396              		.file 15 "tmk_core/common/action_layer.h"
+ 397              		.file 16 "tmk_core/common/timer.h"
+ 398              		.file 17 "tmk_core/common/action_util.h"
+ 399              		.file 18 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 400              		.file 19 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 401              		.file 20 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 402              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 403              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 404              		.file 23 "quantum/quantum.h"
+ 405              		.file 24 "tmk_core/common/eeconfig.h"
+ 406              		.file 25 "quantum/quantum_keycodes.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 process_magic.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccgFTKFG.s:18     .text.process_magic:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccgFTKFG.s:26     .text.process_magic:0000000000000000 process_magic
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccgFTKFG.s:377    .text.process_magic:0000000000000224 $d
+
+UNDEFINED SYMBOLS
+eeconfig_read_keymap
+eeconfig_update_keymap
+clear_keyboard
+eeconfig_update_handedness
+keymap_config

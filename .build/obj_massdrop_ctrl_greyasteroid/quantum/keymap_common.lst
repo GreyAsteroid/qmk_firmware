@@ -1,0 +1,1123 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"keymap_common.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.action_get_macro,"ax",%progbits
+  18              		.align	1
+  19              		.weak	action_get_macro
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	action_get_macro:
+  27              	.LVL0:
+  28              	.LFB9:
+  29              		.file 1 "quantum/keymap_common.c"
+   1:quantum/keymap_common.c **** /*
+   2:quantum/keymap_common.c **** Copyright 2012-2017 Jun Wako <wakojun@gmail.com>
+   3:quantum/keymap_common.c **** 
+   4:quantum/keymap_common.c **** This program is free software: you can redistribute it and/or modify
+   5:quantum/keymap_common.c **** it under the terms of the GNU General Public License as published by
+   6:quantum/keymap_common.c **** the Free Software Foundation, either version 2 of the License, or
+   7:quantum/keymap_common.c **** (at your option) any later version.
+   8:quantum/keymap_common.c **** 
+   9:quantum/keymap_common.c **** This program is distributed in the hope that it will be useful,
+  10:quantum/keymap_common.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:quantum/keymap_common.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:quantum/keymap_common.c **** GNU General Public License for more details.
+  13:quantum/keymap_common.c **** 
+  14:quantum/keymap_common.c **** You should have received a copy of the GNU General Public License
+  15:quantum/keymap_common.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:quantum/keymap_common.c **** */
+  17:quantum/keymap_common.c **** 
+  18:quantum/keymap_common.c **** #include "keymap.h"
+  19:quantum/keymap_common.c **** #include "report.h"
+  20:quantum/keymap_common.c **** #include "keycode.h"
+  21:quantum/keymap_common.c **** #include "action_layer.h"
+  22:quantum/keymap_common.c **** #if defined(__AVR__)
+  23:quantum/keymap_common.c **** #    include <util/delay.h>
+  24:quantum/keymap_common.c **** #    include <stdio.h>
+  25:quantum/keymap_common.c **** #endif
+  26:quantum/keymap_common.c **** #include "action.h"
+  27:quantum/keymap_common.c **** #include "action_macro.h"
+  28:quantum/keymap_common.c **** #include "debug.h"
+  29:quantum/keymap_common.c **** #include "quantum.h"
+  30:quantum/keymap_common.c **** 
+  31:quantum/keymap_common.c **** #ifdef BACKLIGHT_ENABLE
+  32:quantum/keymap_common.c **** #    include "backlight.h"
+  33:quantum/keymap_common.c **** #endif
+  34:quantum/keymap_common.c **** 
+  35:quantum/keymap_common.c **** #ifdef MIDI_ENABLE
+  36:quantum/keymap_common.c **** #    include "process_midi.h"
+  37:quantum/keymap_common.c **** #endif
+  38:quantum/keymap_common.c **** 
+  39:quantum/keymap_common.c **** extern keymap_config_t keymap_config;
+  40:quantum/keymap_common.c **** 
+  41:quantum/keymap_common.c **** #include <inttypes.h>
+  42:quantum/keymap_common.c **** 
+  43:quantum/keymap_common.c **** /* converts key to action */
+  44:quantum/keymap_common.c **** action_t action_for_key(uint8_t layer, keypos_t key) {
+  45:quantum/keymap_common.c ****     // 16bit keycodes - important
+  46:quantum/keymap_common.c ****     uint16_t keycode = keymap_key_to_keycode(layer, key);
+  47:quantum/keymap_common.c **** 
+  48:quantum/keymap_common.c ****     // keycode remapping
+  49:quantum/keymap_common.c ****     keycode = keycode_config(keycode);
+  50:quantum/keymap_common.c **** 
+  51:quantum/keymap_common.c ****     action_t action = {};
+  52:quantum/keymap_common.c ****     uint8_t  action_layer, when, mod;
+  53:quantum/keymap_common.c **** 
+  54:quantum/keymap_common.c ****     (void)action_layer;
+  55:quantum/keymap_common.c ****     (void)when;
+  56:quantum/keymap_common.c ****     (void)mod;
+  57:quantum/keymap_common.c **** 
+  58:quantum/keymap_common.c ****     switch (keycode) {
+  59:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+  60:quantum/keymap_common.c ****         case KC_LCTRL ... KC_RGUI:
+  61:quantum/keymap_common.c ****             action.code = ACTION_KEY(keycode);
+  62:quantum/keymap_common.c ****             break;
+  63:quantum/keymap_common.c **** #ifdef EXTRAKEY_ENABLE
+  64:quantum/keymap_common.c ****         case KC_SYSTEM_POWER ... KC_SYSTEM_WAKE:
+  65:quantum/keymap_common.c ****             action.code = ACTION_USAGE_SYSTEM(KEYCODE2SYSTEM(keycode));
+  66:quantum/keymap_common.c ****             break;
+  67:quantum/keymap_common.c ****         case KC_AUDIO_MUTE ... KC_BRIGHTNESS_DOWN:
+  68:quantum/keymap_common.c ****             action.code = ACTION_USAGE_CONSUMER(KEYCODE2CONSUMER(keycode));
+  69:quantum/keymap_common.c ****             break;
+  70:quantum/keymap_common.c **** #endif
+  71:quantum/keymap_common.c **** #ifdef MOUSEKEY_ENABLE
+  72:quantum/keymap_common.c ****         case KC_MS_UP ... KC_MS_ACCEL2:
+  73:quantum/keymap_common.c ****             action.code = ACTION_MOUSEKEY(keycode);
+  74:quantum/keymap_common.c ****             break;
+  75:quantum/keymap_common.c **** #endif
+  76:quantum/keymap_common.c ****         case KC_TRNS:
+  77:quantum/keymap_common.c ****             action.code = ACTION_TRANSPARENT;
+  78:quantum/keymap_common.c ****             break;
+  79:quantum/keymap_common.c ****         case QK_MODS ... QK_MODS_MAX:;
+  80:quantum/keymap_common.c ****             // Has a modifier
+  81:quantum/keymap_common.c ****             // Split it up
+  82:quantum/keymap_common.c ****             action.code = ACTION_MODS_KEY(keycode >> 8, keycode & 0xFF);  // adds modifier to key
+  83:quantum/keymap_common.c ****             break;
+  84:quantum/keymap_common.c **** #ifndef NO_ACTION_FUNCTION
+  85:quantum/keymap_common.c ****         case KC_FN0 ... KC_FN31:
+  86:quantum/keymap_common.c ****             action.code = keymap_function_id_to_action(FN_INDEX(keycode));
+  87:quantum/keymap_common.c ****             break;
+  88:quantum/keymap_common.c ****         case QK_FUNCTION ... QK_FUNCTION_MAX:;
+  89:quantum/keymap_common.c ****             // Is a shortcut for function action_layer, pull last 12bits
+  90:quantum/keymap_common.c ****             // This means we have 4,096 FN macros at our disposal
+  91:quantum/keymap_common.c ****             action.code = keymap_function_id_to_action((int)keycode & 0xFFF);
+  92:quantum/keymap_common.c ****             break;
+  93:quantum/keymap_common.c **** #endif
+  94:quantum/keymap_common.c **** #ifndef NO_ACTION_MACRO
+  95:quantum/keymap_common.c ****         case QK_MACRO ... QK_MACRO_MAX:
+  96:quantum/keymap_common.c ****             if (keycode & 0x800)  // tap macros have upper bit set
+  97:quantum/keymap_common.c ****                 action.code = ACTION_MACRO_TAP(keycode & 0xFF);
+  98:quantum/keymap_common.c ****             else
+  99:quantum/keymap_common.c ****                 action.code = ACTION_MACRO(keycode & 0xFF);
+ 100:quantum/keymap_common.c ****             break;
+ 101:quantum/keymap_common.c **** #endif
+ 102:quantum/keymap_common.c **** #ifndef NO_ACTION_LAYER
+ 103:quantum/keymap_common.c ****         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+ 104:quantum/keymap_common.c ****             action.code = ACTION_LAYER_TAP_KEY((keycode >> 0x8) & 0xF, keycode & 0xFF);
+ 105:quantum/keymap_common.c ****             break;
+ 106:quantum/keymap_common.c ****         case QK_TO ... QK_TO_MAX:;
+ 107:quantum/keymap_common.c ****             // Layer set "GOTO"
+ 108:quantum/keymap_common.c ****             when         = (keycode >> 0x4) & 0x3;
+ 109:quantum/keymap_common.c ****             action_layer = keycode & 0xF;
+ 110:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_SET(action_layer, when);
+ 111:quantum/keymap_common.c ****             break;
+ 112:quantum/keymap_common.c ****         case QK_MOMENTARY ... QK_MOMENTARY_MAX:;
+ 113:quantum/keymap_common.c ****             // Momentary action_layer
+ 114:quantum/keymap_common.c ****             action_layer = keycode & 0xFF;
+ 115:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_MOMENTARY(action_layer);
+ 116:quantum/keymap_common.c ****             break;
+ 117:quantum/keymap_common.c ****         case QK_DEF_LAYER ... QK_DEF_LAYER_MAX:;
+ 118:quantum/keymap_common.c ****             // Set default action_layer
+ 119:quantum/keymap_common.c ****             action_layer = keycode & 0xFF;
+ 120:quantum/keymap_common.c ****             action.code  = ACTION_DEFAULT_LAYER_SET(action_layer);
+ 121:quantum/keymap_common.c ****             break;
+ 122:quantum/keymap_common.c ****         case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:;
+ 123:quantum/keymap_common.c ****             // Set toggle
+ 124:quantum/keymap_common.c ****             action_layer = keycode & 0xFF;
+ 125:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_TOGGLE(action_layer);
+ 126:quantum/keymap_common.c ****             break;
+ 127:quantum/keymap_common.c **** #endif
+ 128:quantum/keymap_common.c **** #ifndef NO_ACTION_ONESHOT
+ 129:quantum/keymap_common.c ****         case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:;
+ 130:quantum/keymap_common.c ****             // OSL(action_layer) - One-shot action_layer
+ 131:quantum/keymap_common.c ****             action_layer = keycode & 0xFF;
+ 132:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_ONESHOT(action_layer);
+ 133:quantum/keymap_common.c ****             break;
+ 134:quantum/keymap_common.c ****         case QK_ONE_SHOT_MOD ... QK_ONE_SHOT_MOD_MAX:;
+ 135:quantum/keymap_common.c ****             // OSM(mod) - One-shot mod
+ 136:quantum/keymap_common.c ****             mod         = mod_config(keycode & 0xFF);
+ 137:quantum/keymap_common.c ****             action.code = ACTION_MODS_ONESHOT(mod);
+ 138:quantum/keymap_common.c ****             break;
+ 139:quantum/keymap_common.c **** #endif
+ 140:quantum/keymap_common.c **** #ifndef NO_ACTION_LAYER
+ 141:quantum/keymap_common.c ****         case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
+ 142:quantum/keymap_common.c ****             action.code = ACTION_LAYER_TAP_TOGGLE(keycode & 0xFF);
+ 143:quantum/keymap_common.c ****             break;
+ 144:quantum/keymap_common.c ****         case QK_LAYER_MOD ... QK_LAYER_MOD_MAX:
+ 145:quantum/keymap_common.c ****             mod          = mod_config(keycode & 0xF);
+ 146:quantum/keymap_common.c ****             action_layer = (keycode >> 4) & 0xF;
+ 147:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_MODS(action_layer, mod);
+ 148:quantum/keymap_common.c ****             break;
+ 149:quantum/keymap_common.c **** #endif
+ 150:quantum/keymap_common.c **** #ifndef NO_ACTION_TAPPING
+ 151:quantum/keymap_common.c ****         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+ 152:quantum/keymap_common.c ****             mod         = mod_config((keycode >> 0x8) & 0x1F);
+ 153:quantum/keymap_common.c ****             action.code = ACTION_MODS_TAP_KEY(mod, keycode & 0xFF);
+ 154:quantum/keymap_common.c ****             break;
+ 155:quantum/keymap_common.c **** #endif
+ 156:quantum/keymap_common.c **** #ifdef SWAP_HANDS_ENABLE
+ 157:quantum/keymap_common.c ****         case QK_SWAP_HANDS ... QK_SWAP_HANDS_MAX:
+ 158:quantum/keymap_common.c ****             action.code = ACTION(ACT_SWAP_HANDS, keycode & 0xff);
+ 159:quantum/keymap_common.c ****             break;
+ 160:quantum/keymap_common.c **** #endif
+ 161:quantum/keymap_common.c **** 
+ 162:quantum/keymap_common.c ****         default:
+ 163:quantum/keymap_common.c ****             action.code = ACTION_NO;
+ 164:quantum/keymap_common.c ****             break;
+ 165:quantum/keymap_common.c ****     }
+ 166:quantum/keymap_common.c ****     return action;
+ 167:quantum/keymap_common.c **** }
+ 168:quantum/keymap_common.c **** 
+ 169:quantum/keymap_common.c **** __attribute__((weak)) const uint16_t PROGMEM fn_actions[] = {
+ 170:quantum/keymap_common.c **** 
+ 171:quantum/keymap_common.c **** };
+ 172:quantum/keymap_common.c **** 
+ 173:quantum/keymap_common.c **** /* Macro */
+ 174:quantum/keymap_common.c **** __attribute__((weak)) const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+  30              		.loc 1 174 101 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 174 103 view .LVU1
+  36              		.loc 1 174 1 is_stmt 0 view .LVU2
+  37 0000 0020     		movs	r0, #0
+  38              	.LVL1:
+  39              		.loc 1 174 1 view .LVU3
+  40 0002 7047     		bx	lr
+  41              		.cfi_endproc
+  42              	.LFE9:
+  44              		.section	.text.action_function,"ax",%progbits
+  45              		.align	1
+  46              		.weak	action_function
+  47              		.syntax unified
+  48              		.thumb
+  49              		.thumb_func
+  50              		.fpu fpv4-sp-d16
+  52              	action_function:
+  53              	.LVL2:
+  54              	.LFB10:
+ 175:quantum/keymap_common.c **** 
+ 176:quantum/keymap_common.c **** /* Function */
+ 177:quantum/keymap_common.c **** __attribute__((weak)) void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {}
+  55              		.loc 1 177 90 is_stmt 1 view -0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  60              		.loc 1 177 91 view .LVU5
+  61              		.loc 1 177 1 is_stmt 0 view .LVU6
+  62 0000 7047     		bx	lr
+  63              		.cfi_endproc
+  64              	.LFE10:
+  66              		.section	.text.keymap_key_to_keycode,"ax",%progbits
+  67              		.align	1
+  68              		.weak	keymap_key_to_keycode
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  72              		.fpu fpv4-sp-d16
+  74              	keymap_key_to_keycode:
+  75              	.LVL3:
+  76              	.LFB11:
+ 178:quantum/keymap_common.c **** 
+ 179:quantum/keymap_common.c **** // translates key to keycode
+ 180:quantum/keymap_common.c **** __attribute__((weak)) uint16_t keymap_key_to_keycode(uint8_t layer, keypos_t key) {
+  77              		.loc 1 180 83 is_stmt 1 view -0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 8
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		@ link register save eliminated.
+ 181:quantum/keymap_common.c ****     // Read entire word (16bits)
+ 182:quantum/keymap_common.c ****     return pgm_read_word(&keymaps[(layer)][(key.row)][(key.col)]);
+  82              		.loc 1 182 5 view .LVU8
+  83              		.loc 1 182 12 is_stmt 0 view .LVU9
+  84 0000 C1F30722 		ubfx	r2, r1, #8, #8
+  85 0004 0B23     		movs	r3, #11
+  86 0006 03FB0020 		mla	r0, r3, r0, r2
+  87              	.LVL4:
+  88              		.loc 1 182 12 view .LVU10
+  89 000a C000     		lsls	r0, r0, #3
+  90 000c 50FA81F0 		uxtab	r0, r0, r1
+ 183:quantum/keymap_common.c **** }
+  91              		.loc 1 183 1 view .LVU11
+  92 0010 024B     		ldr	r3, .L4
+  93 0012 33F81000 		ldrh	r0, [r3, r0, lsl #1]
+ 180:quantum/keymap_common.c ****     // Read entire word (16bits)
+  94              		.loc 1 180 83 view .LVU12
+  95 0016 82B0     		sub	sp, sp, #8
+  96              		.cfi_def_cfa_offset 8
+  97              		.loc 1 183 1 view .LVU13
+  98 0018 02B0     		add	sp, sp, #8
+  99              		.cfi_def_cfa_offset 0
+ 100              		@ sp needed
+ 101 001a 7047     		bx	lr
+ 102              	.L5:
+ 103              		.align	2
+ 104              	.L4:
+ 105 001c 00000000 		.word	keymaps
+ 106              		.cfi_endproc
+ 107              	.LFE11:
+ 109              		.section	.text.keymap_function_id_to_action,"ax",%progbits
+ 110              		.align	1
+ 111              		.weak	keymap_function_id_to_action
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 115              		.fpu fpv4-sp-d16
+ 117              	keymap_function_id_to_action:
+ 118              	.LVL5:
+ 119              	.LFB12:
+ 184:quantum/keymap_common.c **** 
+ 185:quantum/keymap_common.c **** // translates function id to action
+ 186:quantum/keymap_common.c **** __attribute__((weak)) uint16_t keymap_function_id_to_action(uint16_t function_id) {
+ 120              		.loc 1 186 83 is_stmt 1 view -0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124              		@ link register save eliminated.
+ 187:quantum/keymap_common.c **** // The compiler sees the empty (weak) fn_actions and generates a warning
+ 188:quantum/keymap_common.c **** // This function should not be called in that case, so the warning is too strict
+ 189:quantum/keymap_common.c **** // If this function is called however, the keymap should have overridden fn_actions, and then the c
+ 190:quantum/keymap_common.c **** // is comparing against the wrong array
+ 191:quantum/keymap_common.c **** #pragma GCC diagnostic push
+ 192:quantum/keymap_common.c **** #pragma GCC diagnostic ignored "-Warray-bounds"
+ 193:quantum/keymap_common.c ****     return pgm_read_word(&fn_actions[function_id]);
+ 125              		.loc 1 193 5 view .LVU15
+ 194:quantum/keymap_common.c **** #pragma GCC diagnostic pop
+ 195:quantum/keymap_common.c **** }
+ 126              		.loc 1 195 1 is_stmt 0 view .LVU16
+ 127 0000 014B     		ldr	r3, .L7
+ 128 0002 33F81000 		ldrh	r0, [r3, r0, lsl #1]
+ 129              	.LVL6:
+ 130              		.loc 1 195 1 view .LVU17
+ 131 0006 7047     		bx	lr
+ 132              	.L8:
+ 133              		.align	2
+ 134              	.L7:
+ 135 0008 00000000 		.word	fn_actions
+ 136              		.cfi_endproc
+ 137              	.LFE12:
+ 139              		.section	.text.action_for_key,"ax",%progbits
+ 140              		.align	1
+ 141              		.global	action_for_key
+ 142              		.syntax unified
+ 143              		.thumb
+ 144              		.thumb_func
+ 145              		.fpu fpv4-sp-d16
+ 147              	action_for_key:
+ 148              	.LVL7:
+ 149              	.LFB8:
+  44:quantum/keymap_common.c ****     // 16bit keycodes - important
+ 150              		.loc 1 44 54 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 8
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+  46:quantum/keymap_common.c **** 
+ 154              		.loc 1 46 5 view .LVU19
+  44:quantum/keymap_common.c ****     // 16bit keycodes - important
+ 155              		.loc 1 44 54 is_stmt 0 view .LVU20
+ 156 0000 13B5     		push	{r0, r1, r4, lr}
+ 157              		.cfi_def_cfa_offset 16
+ 158              		.cfi_offset 4, -8
+ 159              		.cfi_offset 14, -4
+  44:quantum/keymap_common.c ****     // 16bit keycodes - important
+ 160              		.loc 1 44 54 view .LVU21
+ 161 0002 ADF80410 		strh	r1, [sp, #4]	@ movhi
+  46:quantum/keymap_common.c **** 
+ 162              		.loc 1 46 24 view .LVU22
+ 163 0006 0199     		ldr	r1, [sp, #4]
+ 164 0008 FFF7FEFF 		bl	keymap_key_to_keycode
+ 165              	.LVL8:
+  49:quantum/keymap_common.c **** 
+ 166              		.loc 1 49 5 is_stmt 1 view .LVU23
+  49:quantum/keymap_common.c **** 
+ 167              		.loc 1 49 15 is_stmt 0 view .LVU24
+ 168 000c FFF7FEFF 		bl	keycode_config
+ 169              	.LVL9:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 170              		.loc 1 58 5 view .LVU25
+ 171 0010 B0F5A04F 		cmp	r0, #20480
+  49:quantum/keymap_common.c **** 
+ 172              		.loc 1 49 15 view .LVU26
+ 173 0014 0446     		mov	r4, r0
+ 174              	.LVL10:
+  51:quantum/keymap_common.c ****     uint8_t  action_layer, when, mod;
+ 175              		.loc 1 51 5 is_stmt 1 view .LVU27
+  52:quantum/keymap_common.c **** 
+ 176              		.loc 1 52 5 view .LVU28
+  54:quantum/keymap_common.c ****     (void)when;
+ 177              		.loc 1 54 5 view .LVU29
+  55:quantum/keymap_common.c ****     (void)mod;
+ 178              		.loc 1 55 5 view .LVU30
+  56:quantum/keymap_common.c **** 
+ 179              		.loc 1 56 5 view .LVU31
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 180              		.loc 1 58 5 view .LVU32
+ 181 0016 29D2     		bcs	.L10
+ 182 0018 B0F5804F 		cmp	r0, #16384
+ 183 001c 80F08680 		bcs	.L11
+ 184 0020 DF28     		cmp	r0, #223
+ 185 0022 13D8     		bhi	.L12
+ 186 0024 C028     		cmp	r0, #192
+ 187 0026 73D2     		bcs	.L13
+ 188 0028 A728     		cmp	r0, #167
+ 189 002a 0BD8     		bhi	.L14
+ 190 002c A528     		cmp	r0, #165
+ 191 002e 5FD2     		bcs	.L15
+ 192 0030 0128     		cmp	r0, #1
+ 193 0032 04D0     		beq	.L16
+ 194 0034 03B2     		sxth	r3, r0
+ 195 0036 3BB1     		cbz	r3, .L40
+ 163:quantum/keymap_common.c ****             break;
+ 196              		.loc 1 163 25 is_stmt 0 view .LVU33
+ 197 0038 0328     		cmp	r0, #3
+ 198 003a 98BF     		it	ls
+ 199 003c 0024     		movls	r4, #0
+ 200              	.LVL11:
+ 201              	.L16:
+ 166:quantum/keymap_common.c **** }
+ 202              		.loc 1 166 5 is_stmt 1 view .LVU34
+ 167:quantum/keymap_common.c **** 
+ 203              		.loc 1 167 1 is_stmt 0 view .LVU35
+ 204 003e 2046     		mov	r0, r4	@ movhi
+ 205 0040 02B0     		add	sp, sp, #8
+ 206              		.cfi_remember_state
+ 207              		.cfi_def_cfa_offset 8
+ 208              		@ sp needed
+ 209 0042 10BD     		pop	{r4, pc}
+ 210              	.LVL12:
+ 211              	.L14:
+ 212              		.cfi_restore_state
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 213              		.loc 1 58 5 view .LVU36
+ 214 0044 BE28     		cmp	r0, #190
+ 215 0046 5AD9     		bls	.L44
+ 216              	.L40:
+ 217              	.LVL13:
+ 163:quantum/keymap_common.c ****             break;
+ 218              		.loc 1 163 25 view .LVU37
+ 219 0048 0024     		movs	r4, #0
+ 220 004a F8E7     		b	.L16
+ 221              	.LVL14:
+ 222              	.L12:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 223              		.loc 1 58 5 view .LVU38
+ 224 004c B0F5005F 		cmp	r0, #8192
+ 225 0050 06D2     		bcs	.L18
+ 226 0052 B0F5807F 		cmp	r0, #256
+ 227 0056 7DD2     		bcs	.L50
+ 163:quantum/keymap_common.c ****             break;
+ 228              		.loc 1 163 25 view .LVU39
+ 229 0058 E828     		cmp	r0, #232
+ 230 005a 28BF     		it	cs
+ 231 005c 0024     		movcs	r4, #0
+ 232 005e EEE7     		b	.L16
+ 233              	.L18:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 234              		.loc 1 58 5 view .LVU40
+ 235 0060 B0F5405F 		cmp	r0, #12288
+ 236 0064 5AD2     		bcs	.L45
+  88:quantum/keymap_common.c ****             // Is a shortcut for function action_layer, pull last 12bits
+ 237              		.loc 1 88 46 is_stmt 1 view .LVU41
+  91:quantum/keymap_common.c ****             break;
+ 238              		.loc 1 91 13 view .LVU42
+  91:quantum/keymap_common.c ****             break;
+ 239              		.loc 1 91 27 is_stmt 0 view .LVU43
+ 240 0066 C0F30B00 		ubfx	r0, r0, #0, #12
+ 241              	.LVL15:
+  91:quantum/keymap_common.c ****             break;
+ 242              		.loc 1 91 27 view .LVU44
+ 243 006a 53E0     		b	.L51
+ 244              	.LVL16:
+ 245              	.L10:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 246              		.loc 1 58 5 view .LVU45
+ 247 006c B0F5AA4F 		cmp	r0, #21760
+ 248 0070 19D2     		bcs	.L22
+ 249 0072 B0F5A84F 		cmp	r0, #21504
+ 250 0076 C3B2     		uxtb	r3, r0
+ 251 0078 78D2     		bcs	.L23
+ 252 007a B0F5A44F 		cmp	r0, #20992
+ 253 007e 07D2     		bcs	.L24
+ 254 0080 B0F5A24F 		cmp	r0, #20736
+ 255 0084 57D3     		bcc	.L46
+ 112:quantum/keymap_common.c ****             // Momentary action_layer
+ 256              		.loc 1 112 48 is_stmt 1 view .LVU46
+ 114:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_MOMENTARY(action_layer);
+ 257              		.loc 1 114 13 view .LVU47
+ 258              	.LVL17:
+ 115:quantum/keymap_common.c ****             break;
+ 259              		.loc 1 115 13 view .LVU48
+ 115:quantum/keymap_common.c ****             break;
+ 260              		.loc 1 115 28 is_stmt 0 view .LVU49
+ 261 0086 4AF2F100 		movw	r0, #41201
+ 262 008a 40EA0324 		orr	r4, r0, r3, lsl #8
+ 263              	.LVL18:
+ 116:quantum/keymap_common.c ****         case QK_DEF_LAYER ... QK_DEF_LAYER_MAX:;
+ 264              		.loc 1 116 13 is_stmt 1 view .LVU50
+ 265 008e D6E7     		b	.L16
+ 266              	.LVL19:
+ 267              	.L24:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 268              		.loc 1 58 5 is_stmt 0 view .LVU51
+ 269 0090 B0F5A64F 		cmp	r0, #21248
+ 270 0094 60D2     		bcs	.L47
+ 117:quantum/keymap_common.c ****             // Set default action_layer
+ 271              		.loc 1 117 48 is_stmt 1 view .LVU52
+ 119:quantum/keymap_common.c ****             action.code  = ACTION_DEFAULT_LAYER_SET(action_layer);
+ 272              		.loc 1 119 13 view .LVU53
+ 273              	.LVL20:
+ 120:quantum/keymap_common.c ****             break;
+ 274              		.loc 1 120 13 view .LVU54
+ 120:quantum/keymap_common.c ****             break;
+ 275              		.loc 1 120 28 is_stmt 0 view .LVU55
+ 276 0096 9808     		lsrs	r0, r3, #2
+ 277              	.LVL21:
+ 120:quantum/keymap_common.c ****             break;
+ 278              		.loc 1 120 28 view .LVU56
+ 279 0098 0124     		movs	r4, #1
+ 280              	.LVL22:
+ 120:quantum/keymap_common.c ****             break;
+ 281              		.loc 1 120 28 view .LVU57
+ 282 009a 03F00303 		and	r3, r3, #3
+ 283              	.LVL23:
+ 120:quantum/keymap_common.c ****             break;
+ 284              		.loc 1 120 28 view .LVU58
+ 285 009e 9C40     		lsls	r4, r4, r3
+ 286 00a0 44EA4014 		orr	r4, r4, r0, lsl #5
+ 287 00a4 54E0     		b	.L52
+ 288              	.LVL24:
+ 289              	.L22:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 290              		.loc 1 58 5 view .LVU59
+ 291 00a6 B0F5B24F 		cmp	r0, #22784
+ 292 00aa 0ED2     		bcs	.L29
+ 293 00ac B0F5B04F 		cmp	r0, #22528
+ 294 00b0 61D2     		bcs	.L30
+ 295 00b2 B0F5AC4F 		cmp	r0, #22016
+ 296 00b6 C7D2     		bcs	.L40
+ 134:quantum/keymap_common.c ****             // OSM(mod) - One-shot mod
+ 297              		.loc 1 134 54 is_stmt 1 view .LVU60
+ 136:quantum/keymap_common.c ****             action.code = ACTION_MODS_ONESHOT(mod);
+ 298              		.loc 1 136 13 view .LVU61
+ 136:quantum/keymap_common.c ****             action.code = ACTION_MODS_ONESHOT(mod);
+ 299              		.loc 1 136 27 is_stmt 0 view .LVU62
+ 300 00b8 C0B2     		uxtb	r0, r0
+ 301              	.LVL25:
+ 136:quantum/keymap_common.c ****             action.code = ACTION_MODS_ONESHOT(mod);
+ 302              		.loc 1 136 27 view .LVU63
+ 303 00ba FFF7FEFF 		bl	mod_config
+ 304              	.LVL26:
+ 137:quantum/keymap_common.c ****             break;
+ 305              		.loc 1 137 13 is_stmt 1 view .LVU64
+ 137:quantum/keymap_common.c ****             break;
+ 306              		.loc 1 137 27 is_stmt 0 view .LVU65
+ 307 00be 0402     		lsls	r4, r0, #8
+ 308              	.LVL27:
+ 137:quantum/keymap_common.c ****             break;
+ 309              		.loc 1 137 27 view .LVU66
+ 310 00c0 04F4F854 		and	r4, r4, #7936
+ 311              	.LVL28:
+ 312              	.L53:
+ 153:quantum/keymap_common.c ****             break;
+ 313              		.loc 1 153 27 view .LVU67
+ 314 00c4 44F40054 		orr	r4, r4, #8192
+ 315              	.LVL29:
+ 154:quantum/keymap_common.c **** #endif
+ 316              		.loc 1 154 13 is_stmt 1 view .LVU68
+ 317 00c8 B9E7     		b	.L16
+ 318              	.LVL30:
+ 319              	.L29:
+  58:quantum/keymap_common.c ****         case KC_A ... KC_EXSEL:
+ 320              		.loc 1 58 5 is_stmt 0 view .LVU69
+ 321 00ca B0F5B44F 		cmp	r0, #23040
+ 322 00ce 57D3     		bcc	.L32
+ 323 00d0 A0F5C043 		sub	r3, r0, #24576
+ 324 00d4 9BB2     		uxth	r3, r3
+ 325 00d6 B3F5005F 		cmp	r3, #8192
+ 326 00da B5D2     		bcs	.L40
+ 152:quantum/keymap_common.c ****             action.code = ACTION_MODS_TAP_KEY(mod, keycode & 0xFF);
+ 327              		.loc 1 152 13 is_stmt 1 view .LVU70
+ 152:quantum/keymap_common.c ****             action.code = ACTION_MODS_TAP_KEY(mod, keycode & 0xFF);
+ 328              		.loc 1 152 27 is_stmt 0 view .LVU71
+ 329 00dc C0F30420 		ubfx	r0, r0, #8, #5
+ 330              	.LVL31:
+ 152:quantum/keymap_common.c ****             action.code = ACTION_MODS_TAP_KEY(mod, keycode & 0xFF);
+ 331              		.loc 1 152 27 view .LVU72
+ 332 00e0 FFF7FEFF 		bl	mod_config
+ 333              	.LVL32:
+ 153:quantum/keymap_common.c ****             break;
+ 334              		.loc 1 153 13 is_stmt 1 view .LVU73
+ 153:quantum/keymap_common.c ****             break;
+ 335              		.loc 1 153 27 is_stmt 0 view .LVU74
+ 336 00e4 0002     		lsls	r0, r0, #8
+ 337              	.LVL33:
+ 153:quantum/keymap_common.c ****             break;
+ 338              		.loc 1 153 27 view .LVU75
+ 339 00e6 00F4F850 		and	r0, r0, #7936
+ 340 00ea E4B2     		uxtb	r4, r4
+ 341              	.LVL34:
+ 153:quantum/keymap_common.c ****             break;
+ 342              		.loc 1 153 27 view .LVU76
+ 343 00ec 0443     		orrs	r4, r4, r0
+ 344 00ee E9E7     		b	.L53
+ 345              	.LVL35:
+ 346              	.L15:
+  65:quantum/keymap_common.c ****             break;
+ 347              		.loc 1 65 13 is_stmt 1 view .LVU77
+ 348              	.LBB6:
+ 349              	.LBI6:
+ 350              		.file 2 "tmk_core/common/report.h"
+   1:tmk_core/common/report.h **** /*
+   2:tmk_core/common/report.h **** Copyright 2011,2012 Jun Wako <wakojun@gmail.com>
+   3:tmk_core/common/report.h **** 
+   4:tmk_core/common/report.h **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/common/report.h **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/common/report.h **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/common/report.h **** (at your option) any later version.
+   8:tmk_core/common/report.h **** 
+   9:tmk_core/common/report.h **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/common/report.h **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/common/report.h **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/common/report.h **** GNU General Public License for more details.
+  13:tmk_core/common/report.h **** 
+  14:tmk_core/common/report.h **** You should have received a copy of the GNU General Public License
+  15:tmk_core/common/report.h **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/common/report.h **** */
+  17:tmk_core/common/report.h **** 
+  18:tmk_core/common/report.h **** #pragma once
+  19:tmk_core/common/report.h **** 
+  20:tmk_core/common/report.h **** #include <stdint.h>
+  21:tmk_core/common/report.h **** #include <stdbool.h>
+  22:tmk_core/common/report.h **** #include "keycode.h"
+  23:tmk_core/common/report.h **** 
+  24:tmk_core/common/report.h **** // clang-format off
+  25:tmk_core/common/report.h **** 
+  26:tmk_core/common/report.h **** /* HID report IDs */
+  27:tmk_core/common/report.h **** enum hid_report_ids {
+  28:tmk_core/common/report.h ****     REPORT_ID_KEYBOARD = 1,
+  29:tmk_core/common/report.h ****     REPORT_ID_MOUSE,
+  30:tmk_core/common/report.h ****     REPORT_ID_SYSTEM,
+  31:tmk_core/common/report.h ****     REPORT_ID_CONSUMER,
+  32:tmk_core/common/report.h ****     REPORT_ID_NKRO
+  33:tmk_core/common/report.h **** };
+  34:tmk_core/common/report.h **** 
+  35:tmk_core/common/report.h **** /* Mouse buttons */
+  36:tmk_core/common/report.h **** enum mouse_buttons {
+  37:tmk_core/common/report.h ****     MOUSE_BTN1 = (1 << 0),
+  38:tmk_core/common/report.h ****     MOUSE_BTN2 = (1 << 1),
+  39:tmk_core/common/report.h ****     MOUSE_BTN3 = (1 << 2),
+  40:tmk_core/common/report.h ****     MOUSE_BTN4 = (1 << 3),
+  41:tmk_core/common/report.h ****     MOUSE_BTN5 = (1 << 4)
+  42:tmk_core/common/report.h **** };
+  43:tmk_core/common/report.h **** 
+  44:tmk_core/common/report.h **** /* Consumer Page (0x0C)
+  45:tmk_core/common/report.h ****  *
+  46:tmk_core/common/report.h ****  * See https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf#page=75
+  47:tmk_core/common/report.h ****  */
+  48:tmk_core/common/report.h **** enum consumer_usages {
+  49:tmk_core/common/report.h ****     // 15.5 Display Controls (https://www.usb.org/sites/default/files/hutrr41_0.pdf)
+  50:tmk_core/common/report.h ****     BRIGHTNESS_UP          = 0x06F,
+  51:tmk_core/common/report.h ****     BRIGHTNESS_DOWN        = 0x070,
+  52:tmk_core/common/report.h ****     // 15.7 Transport Controls
+  53:tmk_core/common/report.h ****     TRANSPORT_RECORD       = 0x0B2,
+  54:tmk_core/common/report.h ****     TRANSPORT_FAST_FORWARD = 0x0B3,
+  55:tmk_core/common/report.h ****     TRANSPORT_REWIND       = 0x0B4,
+  56:tmk_core/common/report.h ****     TRANSPORT_NEXT_TRACK   = 0x0B5,
+  57:tmk_core/common/report.h ****     TRANSPORT_PREV_TRACK   = 0x0B6,
+  58:tmk_core/common/report.h ****     TRANSPORT_STOP         = 0x0B7,
+  59:tmk_core/common/report.h ****     TRANSPORT_EJECT        = 0x0B8,
+  60:tmk_core/common/report.h ****     TRANSPORT_STOP_EJECT   = 0x0CC,
+  61:tmk_core/common/report.h ****     TRANSPORT_PLAY_PAUSE   = 0x0CD,
+  62:tmk_core/common/report.h ****     // 15.9.1 Audio Controls - Volume
+  63:tmk_core/common/report.h ****     AUDIO_MUTE             = 0x0E2,
+  64:tmk_core/common/report.h ****     AUDIO_VOL_UP           = 0x0E9,
+  65:tmk_core/common/report.h ****     AUDIO_VOL_DOWN         = 0x0EA,
+  66:tmk_core/common/report.h ****     // 15.15 Application Launch Buttons
+  67:tmk_core/common/report.h ****     AL_CC_CONFIG           = 0x183,
+  68:tmk_core/common/report.h ****     AL_EMAIL               = 0x18A,
+  69:tmk_core/common/report.h ****     AL_CALCULATOR          = 0x192,
+  70:tmk_core/common/report.h ****     AL_LOCAL_BROWSER       = 0x194,
+  71:tmk_core/common/report.h ****     AL_LOCK                = 0x19E,
+  72:tmk_core/common/report.h ****     AL_CONTROL_PANEL       = 0x19F,
+  73:tmk_core/common/report.h ****     AL_ASSISTANT           = 0x1CB,
+  74:tmk_core/common/report.h ****     // 15.16 Generic GUI Application Controls
+  75:tmk_core/common/report.h ****     AC_MINIMIZE            = 0x206,
+  76:tmk_core/common/report.h ****     AC_SEARCH              = 0x221,
+  77:tmk_core/common/report.h ****     AC_HOME                = 0x223,
+  78:tmk_core/common/report.h ****     AC_BACK                = 0x224,
+  79:tmk_core/common/report.h ****     AC_FORWARD             = 0x225,
+  80:tmk_core/common/report.h ****     AC_STOP                = 0x226,
+  81:tmk_core/common/report.h ****     AC_REFRESH             = 0x227,
+  82:tmk_core/common/report.h ****     AC_BOOKMARKS           = 0x22A
+  83:tmk_core/common/report.h **** };
+  84:tmk_core/common/report.h **** 
+  85:tmk_core/common/report.h **** /* Generic Desktop Page (0x01)
+  86:tmk_core/common/report.h ****  *
+  87:tmk_core/common/report.h ****  * See https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf#page=26
+  88:tmk_core/common/report.h ****  */
+  89:tmk_core/common/report.h **** enum desktop_usages {
+  90:tmk_core/common/report.h ****     // 4.5.1 System Controls - Power Controls
+  91:tmk_core/common/report.h ****     SYSTEM_POWER_DOWN = 0x81,
+  92:tmk_core/common/report.h ****     SYSTEM_SLEEP      = 0x82,
+  93:tmk_core/common/report.h ****     SYSTEM_WAKE_UP    = 0x83
+  94:tmk_core/common/report.h **** };
+  95:tmk_core/common/report.h **** 
+  96:tmk_core/common/report.h **** // clang-format on
+  97:tmk_core/common/report.h **** 
+  98:tmk_core/common/report.h **** #define NKRO_SHARED_EP
+  99:tmk_core/common/report.h **** /* key report size(NKRO or boot mode) */
+ 100:tmk_core/common/report.h **** #if defined(NKRO_ENABLE)
+ 101:tmk_core/common/report.h **** #    if defined(PROTOCOL_LUFA) || defined(PROTOCOL_CHIBIOS)
+ 102:tmk_core/common/report.h **** #        include "protocol/usb_descriptor.h"
+ 103:tmk_core/common/report.h **** #        define KEYBOARD_REPORT_BITS (SHARED_EPSIZE - 2)
+ 104:tmk_core/common/report.h **** #    elif defined(PROTOCOL_ARM_ATSAM)
+ 105:tmk_core/common/report.h **** #        include "protocol/arm_atsam/usb/udi_device_epsize.h"
+ 106:tmk_core/common/report.h **** #        define KEYBOARD_REPORT_BITS (NKRO_EPSIZE - 1)
+ 107:tmk_core/common/report.h **** #        undef NKRO_SHARED_EP
+ 108:tmk_core/common/report.h **** #        undef MOUSE_SHARED_EP
+ 109:tmk_core/common/report.h **** #    else
+ 110:tmk_core/common/report.h **** #        error "NKRO not supported with this protocol"
+ 111:tmk_core/common/report.h **** #    endif
+ 112:tmk_core/common/report.h **** #endif
+ 113:tmk_core/common/report.h **** 
+ 114:tmk_core/common/report.h **** #ifdef KEYBOARD_SHARED_EP
+ 115:tmk_core/common/report.h **** #    define KEYBOARD_REPORT_SIZE 9
+ 116:tmk_core/common/report.h **** #else
+ 117:tmk_core/common/report.h **** #    define KEYBOARD_REPORT_SIZE 8
+ 118:tmk_core/common/report.h **** #endif
+ 119:tmk_core/common/report.h **** 
+ 120:tmk_core/common/report.h **** #define KEYBOARD_REPORT_KEYS 6
+ 121:tmk_core/common/report.h **** 
+ 122:tmk_core/common/report.h **** /* VUSB hardcodes keyboard and mouse+extrakey only */
+ 123:tmk_core/common/report.h **** #if defined(PROTOCOL_VUSB)
+ 124:tmk_core/common/report.h **** #    undef KEYBOARD_SHARED_EP
+ 125:tmk_core/common/report.h **** #    undef MOUSE_SHARED_EP
+ 126:tmk_core/common/report.h **** #endif
+ 127:tmk_core/common/report.h **** 
+ 128:tmk_core/common/report.h **** #ifdef __cplusplus
+ 129:tmk_core/common/report.h **** extern "C" {
+ 130:tmk_core/common/report.h **** #endif
+ 131:tmk_core/common/report.h **** 
+ 132:tmk_core/common/report.h **** /*
+ 133:tmk_core/common/report.h ****  * keyboard report is 8-byte array retains state of 8 modifiers and 6 keys.
+ 134:tmk_core/common/report.h ****  *
+ 135:tmk_core/common/report.h ****  * byte |0       |1       |2       |3       |4       |5       |6       |7
+ 136:tmk_core/common/report.h ****  * -----+--------+--------+--------+--------+--------+--------+--------+--------
+ 137:tmk_core/common/report.h ****  * desc |mods    |reserved|keys[0] |keys[1] |keys[2] |keys[3] |keys[4] |keys[5]
+ 138:tmk_core/common/report.h ****  *
+ 139:tmk_core/common/report.h ****  * It is exended to 16 bytes to retain 120keys+8mods when NKRO mode.
+ 140:tmk_core/common/report.h ****  *
+ 141:tmk_core/common/report.h ****  * byte |0       |1       |2       |3       |4       |5       |6       |7        ... |15
+ 142:tmk_core/common/report.h ****  * -----+--------+--------+--------+--------+--------+--------+--------+--------     +--------
+ 143:tmk_core/common/report.h ****  * desc |mods    |bits[0] |bits[1] |bits[2] |bits[3] |bits[4] |bits[5] |bits[6]  ... |bit[14]
+ 144:tmk_core/common/report.h ****  *
+ 145:tmk_core/common/report.h ****  * mods retains state of 8 modifiers.
+ 146:tmk_core/common/report.h ****  *
+ 147:tmk_core/common/report.h ****  *  bit |0       |1       |2       |3       |4       |5       |6       |7
+ 148:tmk_core/common/report.h ****  * -----+--------+--------+--------+--------+--------+--------+--------+--------
+ 149:tmk_core/common/report.h ****  * desc |Lcontrol|Lshift  |Lalt    |Lgui    |Rcontrol|Rshift  |Ralt    |Rgui
+ 150:tmk_core/common/report.h ****  *
+ 151:tmk_core/common/report.h ****  */
+ 152:tmk_core/common/report.h **** typedef union {
+ 153:tmk_core/common/report.h ****     uint8_t raw[KEYBOARD_REPORT_SIZE];
+ 154:tmk_core/common/report.h ****     struct {
+ 155:tmk_core/common/report.h **** #ifdef KEYBOARD_SHARED_EP
+ 156:tmk_core/common/report.h ****         uint8_t report_id;
+ 157:tmk_core/common/report.h **** #endif
+ 158:tmk_core/common/report.h ****         uint8_t mods;
+ 159:tmk_core/common/report.h ****         uint8_t reserved;
+ 160:tmk_core/common/report.h ****         uint8_t keys[KEYBOARD_REPORT_KEYS];
+ 161:tmk_core/common/report.h ****     };
+ 162:tmk_core/common/report.h **** #ifdef NKRO_ENABLE
+ 163:tmk_core/common/report.h ****     struct nkro_report {
+ 164:tmk_core/common/report.h **** #    ifdef NKRO_SHARED_EP
+ 165:tmk_core/common/report.h ****         uint8_t report_id;
+ 166:tmk_core/common/report.h **** #    endif
+ 167:tmk_core/common/report.h ****         uint8_t mods;
+ 168:tmk_core/common/report.h ****         uint8_t bits[KEYBOARD_REPORT_BITS];
+ 169:tmk_core/common/report.h ****     } nkro;
+ 170:tmk_core/common/report.h **** #endif
+ 171:tmk_core/common/report.h **** } __attribute__((packed)) report_keyboard_t;
+ 172:tmk_core/common/report.h **** 
+ 173:tmk_core/common/report.h **** typedef struct {
+ 174:tmk_core/common/report.h ****     uint8_t  report_id;
+ 175:tmk_core/common/report.h ****     uint16_t usage;
+ 176:tmk_core/common/report.h **** } __attribute__((packed)) report_extra_t;
+ 177:tmk_core/common/report.h **** 
+ 178:tmk_core/common/report.h **** typedef struct {
+ 179:tmk_core/common/report.h **** #ifdef MOUSE_SHARED_EP
+ 180:tmk_core/common/report.h ****     uint8_t report_id;
+ 181:tmk_core/common/report.h **** #endif
+ 182:tmk_core/common/report.h ****     uint8_t buttons;
+ 183:tmk_core/common/report.h ****     int8_t  x;
+ 184:tmk_core/common/report.h ****     int8_t  y;
+ 185:tmk_core/common/report.h ****     int8_t  v;
+ 186:tmk_core/common/report.h ****     int8_t  h;
+ 187:tmk_core/common/report.h **** } __attribute__((packed)) report_mouse_t;
+ 188:tmk_core/common/report.h **** 
+ 189:tmk_core/common/report.h **** /* keycode to system usage */
+ 190:tmk_core/common/report.h **** static inline uint16_t KEYCODE2SYSTEM(uint8_t key) {
+ 351              		.loc 2 190 24 view .LVU78
+ 352              	.LBE6:
+ 191:tmk_core/common/report.h ****     switch (key) {
+ 353              		.loc 2 191 5 view .LVU79
+  65:quantum/keymap_common.c ****             break;
+ 354              		.loc 1 65 25 is_stmt 0 view .LVU80
+ 355 00f0 5B34     		adds	r4, r4, #91
+ 356 00f2 E4B2     		uxtb	r4, r4
+ 357 00f4 284B     		ldr	r3, .L54
+ 358 00f6 1C5D     		ldrb	r4, [r3, r4]	@ zero_extendqisi2
+ 359              	.LVL36:
+  65:quantum/keymap_common.c ****             break;
+ 360              		.loc 1 65 25 view .LVU81
+ 361 00f8 44F48044 		orr	r4, r4, #16384
+ 362              	.LVL37:
+  66:quantum/keymap_common.c ****         case KC_AUDIO_MUTE ... KC_BRIGHTNESS_DOWN:
+ 363              		.loc 1 66 13 is_stmt 1 view .LVU82
+ 364 00fc 9FE7     		b	.L16
+ 365              	.LVL38:
+ 366              	.L44:
+  68:quantum/keymap_common.c ****             break;
+ 367              		.loc 1 68 13 view .LVU83
+ 368              	.LBB7:
+ 369              	.LBI7:
+ 192:tmk_core/common/report.h ****         case KC_SYSTEM_POWER:
+ 193:tmk_core/common/report.h ****             return SYSTEM_POWER_DOWN;
+ 194:tmk_core/common/report.h ****         case KC_SYSTEM_SLEEP:
+ 195:tmk_core/common/report.h ****             return SYSTEM_SLEEP;
+ 196:tmk_core/common/report.h ****         case KC_SYSTEM_WAKE:
+ 197:tmk_core/common/report.h ****             return SYSTEM_WAKE_UP;
+ 198:tmk_core/common/report.h ****         default:
+ 199:tmk_core/common/report.h ****             return 0;
+ 200:tmk_core/common/report.h ****     }
+ 201:tmk_core/common/report.h **** }
+ 202:tmk_core/common/report.h **** 
+ 203:tmk_core/common/report.h **** /* keycode to consumer usage */
+ 204:tmk_core/common/report.h **** static inline uint16_t KEYCODE2CONSUMER(uint8_t key) {
+ 370              		.loc 2 204 24 view .LVU84
+ 371              	.LBE7:
+ 205:tmk_core/common/report.h ****     switch (key) {
+ 372              		.loc 2 205 5 view .LVU85
+  68:quantum/keymap_common.c ****             break;
+ 373              		.loc 1 68 25 is_stmt 0 view .LVU86
+ 374 00fe 5834     		adds	r4, r4, #88
+ 375 0100 254B     		ldr	r3, .L54
+ 376 0102 E4B2     		uxtb	r4, r4
+ 377 0104 03EB4404 		add	r4, r3, r4, lsl #1
+ 378 0108 A488     		ldrh	r4, [r4, #4]
+ 379              	.LVL39:
+  68:quantum/keymap_common.c ****             break;
+ 380              		.loc 1 68 25 view .LVU87
+ 381 010a 44F48844 		orr	r4, r4, #17408
+ 382              	.LVL40:
+  69:quantum/keymap_common.c **** #endif
+ 383              		.loc 1 69 13 is_stmt 1 view .LVU88
+ 384 010e 96E7     		b	.L16
+ 385              	.LVL41:
+ 386              	.L13:
+  86:quantum/keymap_common.c ****             break;
+ 387              		.loc 1 86 13 view .LVU89
+  86:quantum/keymap_common.c ****             break;
+ 388              		.loc 1 86 27 is_stmt 0 view .LVU90
+ 389 0110 C038     		subs	r0, r0, #192
+ 390              	.LVL42:
+  86:quantum/keymap_common.c ****             break;
+ 391              		.loc 1 86 27 view .LVU91
+ 392 0112 80B2     		uxth	r0, r0
+ 393              	.L51:
+  91:quantum/keymap_common.c ****             break;
+ 394              		.loc 1 91 27 view .LVU92
+ 395 0114 FFF7FEFF 		bl	keymap_function_id_to_action
+ 396              	.LVL43:
+  91:quantum/keymap_common.c ****             break;
+ 397              		.loc 1 91 27 view .LVU93
+ 398 0118 0446     		mov	r4, r0
+ 399              	.LVL44:
+  92:quantum/keymap_common.c **** #endif
+ 400              		.loc 1 92 13 is_stmt 1 view .LVU94
+ 401 011a 90E7     		b	.L16
+ 402              	.LVL45:
+ 403              	.L45:
+  96:quantum/keymap_common.c ****                 action.code = ACTION_MACRO_TAP(keycode & 0xFF);
+ 404              		.loc 1 96 13 view .LVU95
+ 405 011c C3B2     		uxtb	r3, r0
+  96:quantum/keymap_common.c ****                 action.code = ACTION_MACRO_TAP(keycode & 0xFF);
+ 406              		.loc 1 96 16 is_stmt 0 view .LVU96
+ 407 011e 0205     		lsls	r2, r0, #20
+  97:quantum/keymap_common.c ****             else
+ 408              		.loc 1 97 17 is_stmt 1 view .LVU97
+ 409              	.LVL46:
+  97:quantum/keymap_common.c ****             else
+ 410              		.loc 1 97 31 is_stmt 0 view .LVU98
+ 411 0120 4CBF     		ite	mi
+ 412 0122 43F44844 		orrmi	r4, r3, #51200
+ 413              	.LVL47:
+  99:quantum/keymap_common.c ****             break;
+ 414              		.loc 1 99 17 is_stmt 1 view .LVU99
+  99:quantum/keymap_common.c ****             break;
+ 415              		.loc 1 99 31 is_stmt 0 view .LVU100
+ 416 0126 43F44044 		orrpl	r4, r3, #49152
+  99:quantum/keymap_common.c ****             break;
+ 417              		.loc 1 99 31 view .LVU101
+ 418 012a 88E7     		b	.L16
+ 419              	.LVL48:
+ 420              	.L11:
+ 104:quantum/keymap_common.c ****             break;
+ 421              		.loc 1 104 13 is_stmt 1 view .LVU102
+ 104:quantum/keymap_common.c ****             break;
+ 422              		.loc 1 104 27 is_stmt 0 view .LVU103
+ 423 012c C0F30B04 		ubfx	r4, r0, #0, #12
+ 424              	.LVL49:
+ 104:quantum/keymap_common.c ****             break;
+ 425              		.loc 1 104 27 view .LVU104
+ 426 0130 44F42044 		orr	r4, r4, #40960
+ 427              	.LVL50:
+ 105:quantum/keymap_common.c ****         case QK_TO ... QK_TO_MAX:;
+ 428              		.loc 1 105 13 is_stmt 1 view .LVU105
+ 429 0134 83E7     		b	.L16
+ 430              	.LVL51:
+ 431              	.L46:
+ 106:quantum/keymap_common.c ****             // Layer set "GOTO"
+ 432              		.loc 1 106 34 view .LVU106
+ 108:quantum/keymap_common.c ****             action_layer = keycode & 0xF;
+ 433              		.loc 1 108 13 view .LVU107
+ 109:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_SET(action_layer, when);
+ 434              		.loc 1 109 13 view .LVU108
+ 110:quantum/keymap_common.c ****             break;
+ 435              		.loc 1 110 13 view .LVU109
+ 110:quantum/keymap_common.c ****             break;
+ 436              		.loc 1 110 28 is_stmt 0 view .LVU110
+ 437 0136 C3F38104 		ubfx	r4, r3, #2, #2
+ 438 013a C0F30110 		ubfx	r0, r0, #4, #2
+ 439              	.LVL52:
+ 110:quantum/keymap_common.c ****             break;
+ 440              		.loc 1 110 28 view .LVU111
+ 441 013e 6401     		lsls	r4, r4, #5
+ 442 0140 44EA0024 		orr	r4, r4, r0, lsl #8
+ 443 0144 03F00303 		and	r3, r3, #3
+ 444              	.LVL53:
+ 110:quantum/keymap_common.c ****             break;
+ 445              		.loc 1 110 28 view .LVU112
+ 446 0148 0120     		movs	r0, #1
+ 447 014a 00FA03F3 		lsl	r3, r0, r3
+ 448 014e 1C43     		orrs	r4, r4, r3
+ 449              	.L52:
+ 110:quantum/keymap_common.c ****             break;
+ 450              		.loc 1 110 28 view .LVU113
+ 451 0150 44F40C44 		orr	r4, r4, #35840
+ 452              	.L50:
+ 453              	.LVL54:
+ 110:quantum/keymap_common.c ****             break;
+ 454              		.loc 1 110 28 view .LVU114
+ 455 0154 A4B2     		uxth	r4, r4
+ 456              	.LVL55:
+ 111:quantum/keymap_common.c ****         case QK_MOMENTARY ... QK_MOMENTARY_MAX:;
+ 457              		.loc 1 111 13 is_stmt 1 view .LVU115
+ 458 0156 72E7     		b	.L16
+ 459              	.LVL56:
+ 460              	.L47:
+ 122:quantum/keymap_common.c ****             // Set toggle
+ 461              		.loc 1 122 54 view .LVU116
+ 124:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_TOGGLE(action_layer);
+ 462              		.loc 1 124 13 view .LVU117
+ 125:quantum/keymap_common.c ****             break;
+ 463              		.loc 1 125 13 view .LVU118
+ 125:quantum/keymap_common.c ****             break;
+ 464              		.loc 1 125 28 is_stmt 0 view .LVU119
+ 465 0158 9808     		lsrs	r0, r3, #2
+ 466              	.LVL57:
+ 125:quantum/keymap_common.c ****             break;
+ 467              		.loc 1 125 28 view .LVU120
+ 468 015a 0124     		movs	r4, #1
+ 469              	.LVL58:
+ 125:quantum/keymap_common.c ****             break;
+ 470              		.loc 1 125 28 view .LVU121
+ 471 015c 03F00303 		and	r3, r3, #3
+ 472              	.LVL59:
+ 125:quantum/keymap_common.c ****             break;
+ 473              		.loc 1 125 28 view .LVU122
+ 474 0160 9C40     		lsls	r4, r4, r3
+ 475 0162 44EA4014 		orr	r4, r4, r0, lsl #5
+ 476 0166 44F40A44 		orr	r4, r4, #35328
+ 477              	.LVL60:
+ 125:quantum/keymap_common.c ****             break;
+ 478              		.loc 1 125 28 view .LVU123
+ 479 016a F3E7     		b	.L50
+ 480              	.LVL61:
+ 481              	.L23:
+ 129:quantum/keymap_common.c ****             // OSL(action_layer) - One-shot action_layer
+ 482              		.loc 1 129 58 is_stmt 1 view .LVU124
+ 131:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_ONESHOT(action_layer);
+ 483              		.loc 1 131 13 view .LVU125
+ 132:quantum/keymap_common.c ****             break;
+ 484              		.loc 1 132 13 view .LVU126
+ 132:quantum/keymap_common.c ****             break;
+ 485              		.loc 1 132 28 is_stmt 0 view .LVU127
+ 486 016c 4AF2F404 		movw	r4, #41204
+ 487 0170 44EA0324 		orr	r4, r4, r3, lsl #8
+ 488              	.LVL62:
+ 133:quantum/keymap_common.c ****         case QK_ONE_SHOT_MOD ... QK_ONE_SHOT_MOD_MAX:;
+ 489              		.loc 1 133 13 is_stmt 1 view .LVU128
+ 490 0174 63E7     		b	.L16
+ 491              	.LVL63:
+ 492              	.L30:
+ 142:quantum/keymap_common.c ****             break;
+ 493              		.loc 1 142 13 view .LVU129
+ 142:quantum/keymap_common.c ****             break;
+ 494              		.loc 1 142 27 is_stmt 0 view .LVU130
+ 495 0176 4AF2F000 		movw	r0, #41200
+ 496              	.LVL64:
+ 142:quantum/keymap_common.c ****             break;
+ 497              		.loc 1 142 27 view .LVU131
+ 498 017a 40EA0424 		orr	r4, r0, r4, lsl #8
+ 499              	.LVL65:
+ 142:quantum/keymap_common.c ****             break;
+ 500              		.loc 1 142 27 view .LVU132
+ 501 017e E9E7     		b	.L50
+ 502              	.LVL66:
+ 503              	.L32:
+ 145:quantum/keymap_common.c ****             action_layer = (keycode >> 4) & 0xF;
+ 504              		.loc 1 145 13 is_stmt 1 view .LVU133
+ 145:quantum/keymap_common.c ****             action_layer = (keycode >> 4) & 0xF;
+ 505              		.loc 1 145 28 is_stmt 0 view .LVU134
+ 506 0180 00F00F00 		and	r0, r0, #15
+ 507              	.LVL67:
+ 145:quantum/keymap_common.c ****             action_layer = (keycode >> 4) & 0xF;
+ 508              		.loc 1 145 28 view .LVU135
+ 509 0184 FFF7FEFF 		bl	mod_config
+ 510              	.LVL68:
+ 146:quantum/keymap_common.c ****             action.code  = ACTION_LAYER_MODS(action_layer, mod);
+ 511              		.loc 1 146 13 is_stmt 1 view .LVU136
+ 147:quantum/keymap_common.c ****             break;
+ 512              		.loc 1 147 13 view .LVU137
+ 147:quantum/keymap_common.c ****             break;
+ 513              		.loc 1 147 28 is_stmt 0 view .LVU138
+ 514 0188 C4F30314 		ubfx	r4, r4, #4, #4
+ 515              	.LVL69:
+ 147:quantum/keymap_common.c ****             break;
+ 516              		.loc 1 147 28 view .LVU139
+ 517 018c 40EA0424 		orr	r4, r0, r4, lsl #8
+ 518 0190 44F41044 		orr	r4, r4, #36864
+ 519              	.LVL70:
+ 147:quantum/keymap_common.c ****             break;
+ 520              		.loc 1 147 28 view .LVU140
+ 521 0194 DEE7     		b	.L50
+ 522              	.L55:
+ 523 0196 00BF     		.align	2
+ 524              	.L54:
+ 525 0198 00000000 		.word	.LANCHOR0
+ 526              		.cfi_endproc
+ 527              	.LFE8:
+ 529              		.weak	fn_actions
+ 530              		.section	.rodata
+ 531              		.align	1
+ 532              		.set	.LANCHOR0,. + 0
+ 535              	CSWTCH.5:
+ 536 0000 81       		.byte	-127
+ 537 0001 82       		.byte	-126
+ 538 0002 83       		.byte	-125
+ 539 0003 00       		.space	1
+ 542              	CSWTCH.6:
+ 543 0004 E200     		.short	226
+ 544 0006 E900     		.short	233
+ 545 0008 EA00     		.short	234
+ 546 000a B500     		.short	181
+ 547 000c B600     		.short	182
+ 548 000e B700     		.short	183
+ 549 0010 CD00     		.short	205
+ 550 0012 8301     		.short	387
+ 551 0014 CC00     		.short	204
+ 552 0016 8A01     		.short	394
+ 553 0018 9201     		.short	402
+ 554 001a 9401     		.short	404
+ 555 001c 2102     		.short	545
+ 556 001e 2302     		.short	547
+ 557 0020 2402     		.short	548
+ 558 0022 2502     		.short	549
+ 559 0024 2602     		.short	550
+ 560 0026 2702     		.short	551
+ 561 0028 2A02     		.short	554
+ 562 002a B300     		.short	179
+ 563 002c B400     		.short	180
+ 564 002e 6F00     		.short	111
+ 565 0030 7000     		.short	112
+ 568              	fn_actions:
+ 569              		.text
+ 570              	.Letext0:
+ 571              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 572              		.file 4 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 573              		.file 5 "tmk_core/common/keyboard.h"
+ 574              		.file 6 "tmk_core/common/keycode.h"
+ 575              		.file 7 "tmk_core/common/action_code.h"
+ 576              		.file 8 "tmk_core/common/action_macro.h"
+ 577              		.file 9 "tmk_core/common/action.h"
+ 578              		.file 10 "tmk_core/common/host.h"
+ 579              		.file 11 "tmk_core/common/debug.h"
+ 580              		.file 12 "quantum/keycode_config.h"
+ 581              		.file 13 "quantum/quantum_keycodes.h"
+ 582              		.file 14 "quantum/keymap.h"
+ 583              		.file 15 "tmk_core/common/action_layer.h"
+ 584              		.file 16 "tmk_core/protocol/arm_atsam/clks.h"
+ 585              		.file 17 "quantum/color.h"
+ 586              		.file 18 "quantum/rgb_matrix_types.h"
+ 587              		.file 19 "quantum/rgb_matrix.h"
+ 588              		.file 20 "tmk_core/common/timer.h"
+ 589              		.file 21 "tmk_core/common/action_util.h"
+ 590              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 591              		.file 23 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 592              		.file 24 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 593              		.file 25 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 594              		.file 26 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 595              		.file 27 "quantum/quantum.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 keymap_common.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:18     .text.action_get_macro:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:26     .text.action_get_macro:0000000000000000 action_get_macro
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:45     .text.action_function:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:52     .text.action_function:0000000000000000 action_function
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:67     .text.keymap_key_to_keycode:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:74     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:105    .text.keymap_key_to_keycode:000000000000001c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:568    .rodata:0000000000000032 fn_actions
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:140    .text.action_for_key:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:147    .text.action_for_key:0000000000000000 action_for_key
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:525    .text.action_for_key:0000000000000198 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:531    .rodata:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:535    .rodata:0000000000000000 CSWTCH.5
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:542    .rodata:0000000000000004 CSWTCH.6
+
+UNDEFINED SYMBOLS
+keymaps
+keycode_config
+mod_config

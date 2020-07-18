@@ -1,0 +1,688 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"util.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.bitpop,"ax",%progbits
+  18              		.align	1
+  19              		.global	bitpop
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	bitpop:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "tmk_core/common/util.c"
+   1:tmk_core/common/util.c **** /*
+   2:tmk_core/common/util.c **** Copyright 2011 Jun Wako <wakojun@gmail.com>
+   3:tmk_core/common/util.c **** 
+   4:tmk_core/common/util.c **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/common/util.c **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/common/util.c **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/common/util.c **** (at your option) any later version.
+   8:tmk_core/common/util.c **** 
+   9:tmk_core/common/util.c **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/common/util.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/common/util.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/common/util.c **** GNU General Public License for more details.
+  13:tmk_core/common/util.c **** 
+  14:tmk_core/common/util.c **** You should have received a copy of the GNU General Public License
+  15:tmk_core/common/util.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/common/util.c **** */
+  17:tmk_core/common/util.c **** 
+  18:tmk_core/common/util.c **** #include "util.h"
+  19:tmk_core/common/util.c **** 
+  20:tmk_core/common/util.c **** // bit population - return number of on-bit
+  21:tmk_core/common/util.c **** __attribute__((noinline)) uint8_t bitpop(uint8_t bits) {
+  30              		.loc 1 21 56 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  22:tmk_core/common/util.c ****     uint8_t c;
+  35              		.loc 1 22 5 view .LVU1
+  23:tmk_core/common/util.c ****     for (c = 0; bits; c++) bits &= bits - 1;
+  36              		.loc 1 23 5 view .LVU2
+  21:tmk_core/common/util.c ****     uint8_t c;
+  37              		.loc 1 21 56 is_stmt 0 view .LVU3
+  38 0000 0346     		mov	r3, r0
+  39              		.loc 1 23 5 view .LVU4
+  40 0002 0022     		movs	r2, #0
+  41              	.LVL1:
+  42              	.L2:
+  43              		.loc 1 23 5 view .LVU5
+  44 0004 D0B2     		uxtb	r0, r2
+  45              	.LVL2:
+  46              		.loc 1 23 5 view .LVU6
+  47 0006 0132     		adds	r2, r2, #1
+  48              		.loc 1 23 5 discriminator 1 view .LVU7
+  49 0008 03B9     		cbnz	r3, .L3
+  24:tmk_core/common/util.c ****     return c;
+  25:tmk_core/common/util.c ****     /*
+  26:tmk_core/common/util.c ****         const uint8_t bit_count[] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 };
+  27:tmk_core/common/util.c ****         return bit_count[bits>>4] + bit_count[bits&0x0F]
+  28:tmk_core/common/util.c ****     */
+  29:tmk_core/common/util.c **** }
+  50              		.loc 1 29 1 view .LVU8
+  51 000a 7047     		bx	lr
+  52              	.L3:
+  23:tmk_core/common/util.c ****     return c;
+  53              		.loc 1 23 28 is_stmt 1 discriminator 3 view .LVU9
+  23:tmk_core/common/util.c ****     return c;
+  54              		.loc 1 23 41 is_stmt 0 discriminator 3 view .LVU10
+  55 000c 591E     		subs	r1, r3, #1
+  23:tmk_core/common/util.c ****     return c;
+  56              		.loc 1 23 33 discriminator 3 view .LVU11
+  57 000e 0B40     		ands	r3, r3, r1
+  58              	.LVL3:
+  23:tmk_core/common/util.c ****     return c;
+  59              		.loc 1 23 33 discriminator 3 view .LVU12
+  60 0010 F8E7     		b	.L2
+  61              		.cfi_endproc
+  62              	.LFE0:
+  64              		.section	.text.bitpop16,"ax",%progbits
+  65              		.align	1
+  66              		.global	bitpop16
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  70              		.fpu fpv4-sp-d16
+  72              	bitpop16:
+  73              	.LVL4:
+  74              	.LFB1:
+  30:tmk_core/common/util.c **** 
+  31:tmk_core/common/util.c **** uint8_t bitpop16(uint16_t bits) {
+  75              		.loc 1 31 33 is_stmt 1 view -0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  32:tmk_core/common/util.c ****     uint8_t c;
+  80              		.loc 1 32 5 view .LVU14
+  33:tmk_core/common/util.c ****     for (c = 0; bits; c++) bits &= bits - 1;
+  81              		.loc 1 33 5 view .LVU15
+  31:tmk_core/common/util.c ****     uint8_t c;
+  82              		.loc 1 31 33 is_stmt 0 view .LVU16
+  83 0000 0346     		mov	r3, r0
+  84              		.loc 1 33 5 view .LVU17
+  85 0002 0022     		movs	r2, #0
+  86              	.LVL5:
+  87              	.L5:
+  88              		.loc 1 33 5 view .LVU18
+  89 0004 D0B2     		uxtb	r0, r2
+  90              	.LVL6:
+  91              		.loc 1 33 5 view .LVU19
+  92 0006 0132     		adds	r2, r2, #1
+  93              		.loc 1 33 5 discriminator 1 view .LVU20
+  94 0008 03B9     		cbnz	r3, .L6
+  34:tmk_core/common/util.c ****     return c;
+  35:tmk_core/common/util.c **** }
+  95              		.loc 1 35 1 view .LVU21
+  96 000a 7047     		bx	lr
+  97              	.L6:
+  33:tmk_core/common/util.c ****     return c;
+  98              		.loc 1 33 28 is_stmt 1 discriminator 3 view .LVU22
+  33:tmk_core/common/util.c ****     return c;
+  99              		.loc 1 33 41 is_stmt 0 discriminator 3 view .LVU23
+ 100 000c 591E     		subs	r1, r3, #1
+  33:tmk_core/common/util.c ****     return c;
+ 101              		.loc 1 33 33 discriminator 3 view .LVU24
+ 102 000e 0B40     		ands	r3, r3, r1
+ 103              	.LVL7:
+  33:tmk_core/common/util.c ****     return c;
+ 104              		.loc 1 33 33 discriminator 3 view .LVU25
+ 105 0010 F8E7     		b	.L5
+ 106              		.cfi_endproc
+ 107              	.LFE1:
+ 109              		.section	.text.bitpop32,"ax",%progbits
+ 110              		.align	1
+ 111              		.global	bitpop32
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 115              		.fpu fpv4-sp-d16
+ 117              	bitpop32:
+ 118              	.LVL8:
+ 119              	.LFB2:
+  36:tmk_core/common/util.c **** 
+  37:tmk_core/common/util.c **** uint8_t bitpop32(uint32_t bits) {
+ 120              		.loc 1 37 33 is_stmt 1 view -0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124              		@ link register save eliminated.
+  38:tmk_core/common/util.c ****     uint8_t c;
+ 125              		.loc 1 38 5 view .LVU27
+  39:tmk_core/common/util.c ****     for (c = 0; bits; c++) bits &= bits - 1;
+ 126              		.loc 1 39 5 view .LVU28
+  37:tmk_core/common/util.c ****     uint8_t c;
+ 127              		.loc 1 37 33 is_stmt 0 view .LVU29
+ 128 0000 0346     		mov	r3, r0
+ 129              		.loc 1 39 5 view .LVU30
+ 130 0002 0022     		movs	r2, #0
+ 131              	.LVL9:
+ 132              	.L8:
+ 133              		.loc 1 39 5 view .LVU31
+ 134 0004 D0B2     		uxtb	r0, r2
+ 135              	.LVL10:
+ 136              		.loc 1 39 5 view .LVU32
+ 137 0006 0132     		adds	r2, r2, #1
+ 138              		.loc 1 39 5 discriminator 1 view .LVU33
+ 139 0008 03B9     		cbnz	r3, .L9
+  40:tmk_core/common/util.c ****     return c;
+  41:tmk_core/common/util.c **** }
+ 140              		.loc 1 41 1 view .LVU34
+ 141 000a 7047     		bx	lr
+ 142              	.L9:
+  39:tmk_core/common/util.c ****     return c;
+ 143              		.loc 1 39 28 is_stmt 1 discriminator 3 view .LVU35
+  39:tmk_core/common/util.c ****     return c;
+ 144              		.loc 1 39 41 is_stmt 0 discriminator 3 view .LVU36
+ 145 000c 591E     		subs	r1, r3, #1
+  39:tmk_core/common/util.c ****     return c;
+ 146              		.loc 1 39 33 discriminator 3 view .LVU37
+ 147 000e 0B40     		ands	r3, r3, r1
+ 148              	.LVL11:
+  39:tmk_core/common/util.c ****     return c;
+ 149              		.loc 1 39 33 discriminator 3 view .LVU38
+ 150 0010 F8E7     		b	.L8
+ 151              		.cfi_endproc
+ 152              	.LFE2:
+ 154              		.section	.text.biton,"ax",%progbits
+ 155              		.align	1
+ 156              		.global	biton
+ 157              		.syntax unified
+ 158              		.thumb
+ 159              		.thumb_func
+ 160              		.fpu fpv4-sp-d16
+ 162              	biton:
+ 163              	.LVL12:
+ 164              	.LFB3:
+  42:tmk_core/common/util.c **** 
+  43:tmk_core/common/util.c **** // most significant on-bit - return highest location of on-bit
+  44:tmk_core/common/util.c **** // NOTE: return 0 when bit0 is on or all bits are off
+  45:tmk_core/common/util.c **** __attribute__((noinline)) uint8_t biton(uint8_t bits) {
+ 165              		.loc 1 45 55 is_stmt 1 view -0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		@ link register save eliminated.
+  46:tmk_core/common/util.c ****     uint8_t n = 0;
+ 170              		.loc 1 46 5 view .LVU40
+  47:tmk_core/common/util.c ****     if (bits >> 4) {
+ 171              		.loc 1 47 5 view .LVU41
+ 172              		.loc 1 47 8 is_stmt 0 view .LVU42
+ 173 0000 0309     		lsrs	r3, r0, #4
+ 174 0002 1CBF     		itt	ne
+ 175 0004 1846     		movne	r0, r3
+ 176              	.LVL13:
+  48:tmk_core/common/util.c ****         bits >>= 4;
+  49:tmk_core/common/util.c ****         n += 4;
+ 177              		.loc 1 49 11 view .LVU43
+ 178 0006 0423     		movne	r3, #4
+ 179              	.LVL14:
+  50:tmk_core/common/util.c ****     }
+  51:tmk_core/common/util.c ****     if (bits >> 2) {
+ 180              		.loc 1 51 5 is_stmt 1 view .LVU44
+ 181              		.loc 1 51 8 is_stmt 0 view .LVU45
+ 182 0008 8208     		lsrs	r2, r0, #2
+  52:tmk_core/common/util.c ****         bits >>= 2;
+ 183              		.loc 1 52 9 is_stmt 1 view .LVU46
+ 184              	.LVL15:
+  53:tmk_core/common/util.c ****         n += 2;
+ 185              		.loc 1 53 9 view .LVU47
+ 186              		.loc 1 53 11 is_stmt 0 view .LVU48
+ 187 000a 1EBF     		ittt	ne
+ 188 000c 0233     		addne	r3, r3, #2
+ 189              	.LVL16:
+ 190              		.loc 1 53 11 view .LVU49
+ 191 000e 1046     		movne	r0, r2
+ 192 0010 DBB2     		uxtbne	r3, r3
+ 193              	.LVL17:
+  54:tmk_core/common/util.c ****     }
+  55:tmk_core/common/util.c ****     if (bits >> 1) {
+ 194              		.loc 1 55 5 is_stmt 1 view .LVU50
+ 195              		.loc 1 55 8 is_stmt 0 view .LVU51
+ 196 0012 4208     		lsrs	r2, r0, #1
+  56:tmk_core/common/util.c ****         bits >>= 1;
+ 197              		.loc 1 56 9 is_stmt 1 view .LVU52
+ 198              	.LVL18:
+  57:tmk_core/common/util.c ****         n += 1;
+ 199              		.loc 1 57 9 view .LVU53
+ 200              		.loc 1 57 11 is_stmt 0 view .LVU54
+ 201 0014 1CBF     		itt	ne
+ 202 0016 0133     		addne	r3, r3, #1
+ 203              	.LVL19:
+ 204              		.loc 1 57 11 view .LVU55
+ 205 0018 DBB2     		uxtbne	r3, r3
+ 206              	.LVL20:
+  58:tmk_core/common/util.c ****     }
+  59:tmk_core/common/util.c ****     return n;
+ 207              		.loc 1 59 5 is_stmt 1 view .LVU56
+  60:tmk_core/common/util.c **** }
+ 208              		.loc 1 60 1 is_stmt 0 view .LVU57
+ 209 001a 1846     		mov	r0, r3
+ 210 001c 7047     		bx	lr
+ 211              		.cfi_endproc
+ 212              	.LFE3:
+ 214              		.section	.text.biton16,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	biton16
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 220              		.fpu fpv4-sp-d16
+ 222              	biton16:
+ 223              	.LVL21:
+ 224              	.LFB4:
+  61:tmk_core/common/util.c **** 
+  62:tmk_core/common/util.c **** uint8_t biton16(uint16_t bits) {
+ 225              		.loc 1 62 32 is_stmt 1 view -0
+ 226              		.cfi_startproc
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 229              		@ link register save eliminated.
+  63:tmk_core/common/util.c ****     uint8_t n = 0;
+ 230              		.loc 1 63 5 view .LVU59
+  64:tmk_core/common/util.c ****     if (bits >> 8) {
+ 231              		.loc 1 64 5 view .LVU60
+ 232              		.loc 1 64 9 is_stmt 0 view .LVU61
+ 233 0000 030A     		lsrs	r3, r0, #8
+ 234              		.loc 1 64 8 view .LVU62
+ 235 0002 002B     		cmp	r3, #0
+ 236 0004 16BF     		itet	ne
+ 237 0006 1846     		movne	r0, r3
+ 238              	.LVL22:
+ 239              		.loc 1 64 8 view .LVU63
+ 240 0008 0023     		moveq	r3, #0
+ 241 000a 0823     		movne	r3, #8
+ 242              	.LVL23:
+  65:tmk_core/common/util.c ****         bits >>= 8;
+  66:tmk_core/common/util.c ****         n += 8;
+  67:tmk_core/common/util.c ****     }
+  68:tmk_core/common/util.c ****     if (bits >> 4) {
+ 243              		.loc 1 68 5 is_stmt 1 view .LVU64
+ 244              		.loc 1 68 8 is_stmt 0 view .LVU65
+ 245 000c 0209     		lsrs	r2, r0, #4
+  69:tmk_core/common/util.c ****         bits >>= 4;
+ 246              		.loc 1 69 9 is_stmt 1 view .LVU66
+ 247              	.LVL24:
+  70:tmk_core/common/util.c ****         n += 4;
+ 248              		.loc 1 70 9 view .LVU67
+ 249              		.loc 1 70 11 is_stmt 0 view .LVU68
+ 250 000e 18BF     		it	ne
+ 251 0010 1046     		movne	r0, r2
+  71:tmk_core/common/util.c ****     }
+  72:tmk_core/common/util.c ****     if (bits >> 2) {
+ 252              		.loc 1 72 9 view .LVU69
+ 253 0012 C0F38F02 		ubfx	r2, r0, #2, #16
+ 254              	.LVL25:
+  70:tmk_core/common/util.c ****         n += 4;
+ 255              		.loc 1 70 11 view .LVU70
+ 256 0016 18BF     		it	ne
+ 257 0018 0433     		addne	r3, r3, #4
+ 258              	.LVL26:
+ 259              		.loc 1 72 5 is_stmt 1 view .LVU71
+ 260              		.loc 1 72 8 is_stmt 0 view .LVU72
+ 261 001a 12B1     		cbz	r2, .L26
+  73:tmk_core/common/util.c ****         bits >>= 2;
+ 262              		.loc 1 73 9 is_stmt 1 view .LVU73
+ 263              	.LVL27:
+  74:tmk_core/common/util.c ****         n += 2;
+ 264              		.loc 1 74 9 view .LVU74
+ 265              		.loc 1 74 11 is_stmt 0 view .LVU75
+ 266 001c 0233     		adds	r3, r3, #2
+ 267              	.LVL28:
+ 268              		.loc 1 74 11 view .LVU76
+ 269 001e DBB2     		uxtb	r3, r3
+ 270              	.LVL29:
+ 271              		.loc 1 74 11 view .LVU77
+ 272 0020 1046     		mov	r0, r2
+ 273              	.LVL30:
+ 274              	.L26:
+  75:tmk_core/common/util.c ****     }
+  76:tmk_core/common/util.c ****     if (bits >> 1) {
+ 275              		.loc 1 76 5 is_stmt 1 view .LVU78
+ 276              		.loc 1 76 8 is_stmt 0 view .LVU79
+ 277 0022 C0F34F00 		ubfx	r0, r0, #1, #16
+ 278              	.LVL31:
+ 279              		.loc 1 76 8 view .LVU80
+ 280 0026 08B1     		cbz	r0, .L27
+  77:tmk_core/common/util.c ****         bits >>= 1;
+ 281              		.loc 1 77 9 is_stmt 1 view .LVU81
+ 282              	.LVL32:
+  78:tmk_core/common/util.c ****         n += 1;
+ 283              		.loc 1 78 9 view .LVU82
+ 284              		.loc 1 78 11 is_stmt 0 view .LVU83
+ 285 0028 0133     		adds	r3, r3, #1
+ 286              	.LVL33:
+ 287              		.loc 1 78 11 view .LVU84
+ 288 002a DBB2     		uxtb	r3, r3
+ 289              	.LVL34:
+ 290              	.L27:
+  79:tmk_core/common/util.c ****     }
+  80:tmk_core/common/util.c ****     return n;
+ 291              		.loc 1 80 5 is_stmt 1 view .LVU85
+  81:tmk_core/common/util.c **** }
+ 292              		.loc 1 81 1 is_stmt 0 view .LVU86
+ 293 002c 1846     		mov	r0, r3
+ 294 002e 7047     		bx	lr
+ 295              		.cfi_endproc
+ 296              	.LFE4:
+ 298              		.section	.text.biton32,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	biton32
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 304              		.fpu fpv4-sp-d16
+ 306              	biton32:
+ 307              	.LVL35:
+ 308              	.LFB5:
+  82:tmk_core/common/util.c **** 
+  83:tmk_core/common/util.c **** uint8_t biton32(uint32_t bits) {
+ 309              		.loc 1 83 32 is_stmt 1 view -0
+ 310              		.cfi_startproc
+ 311              		@ args = 0, pretend = 0, frame = 0
+ 312              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313              		@ link register save eliminated.
+  84:tmk_core/common/util.c ****     uint8_t n = 0;
+ 314              		.loc 1 84 5 view .LVU88
+  85:tmk_core/common/util.c ****     if (bits >> 16) {
+ 315              		.loc 1 85 5 view .LVU89
+ 316              		.loc 1 85 14 is_stmt 0 view .LVU90
+ 317 0000 030C     		lsrs	r3, r0, #16
+ 318              		.loc 1 85 8 view .LVU91
+ 319 0002 002B     		cmp	r3, #0
+ 320 0004 16BF     		itet	ne
+ 321 0006 1846     		movne	r0, r3
+ 322              	.LVL36:
+ 323              		.loc 1 85 8 view .LVU92
+ 324 0008 0023     		moveq	r3, #0
+ 325 000a 1023     		movne	r3, #16
+ 326              	.LVL37:
+  86:tmk_core/common/util.c ****         bits >>= 16;
+  87:tmk_core/common/util.c ****         n += 16;
+  88:tmk_core/common/util.c ****     }
+  89:tmk_core/common/util.c ****     if (bits >> 8) {
+ 327              		.loc 1 89 5 is_stmt 1 view .LVU93
+ 328              		.loc 1 89 8 is_stmt 0 view .LVU94
+ 329 000c 020A     		lsrs	r2, r0, #8
+  90:tmk_core/common/util.c ****         bits >>= 8;
+ 330              		.loc 1 90 9 is_stmt 1 view .LVU95
+ 331              	.LVL38:
+  91:tmk_core/common/util.c ****         n += 8;
+ 332              		.loc 1 91 9 view .LVU96
+ 333              		.loc 1 91 11 is_stmt 0 view .LVU97
+ 334 000e 1CBF     		itt	ne
+ 335 0010 1046     		movne	r0, r2
+ 336 0012 0833     		addne	r3, r3, #8
+ 337              	.LVL39:
+  92:tmk_core/common/util.c ****     }
+  93:tmk_core/common/util.c ****     if (bits >> 4) {
+ 338              		.loc 1 93 5 is_stmt 1 view .LVU98
+ 339              		.loc 1 93 8 is_stmt 0 view .LVU99
+ 340 0014 0209     		lsrs	r2, r0, #4
+  94:tmk_core/common/util.c ****         bits >>= 4;
+ 341              		.loc 1 94 9 is_stmt 1 view .LVU100
+ 342              	.LVL40:
+  95:tmk_core/common/util.c ****         n += 4;
+ 343              		.loc 1 95 9 view .LVU101
+ 344              		.loc 1 95 11 is_stmt 0 view .LVU102
+ 345 0016 1EBF     		ittt	ne
+ 346 0018 0433     		addne	r3, r3, #4
+ 347              	.LVL41:
+ 348              		.loc 1 95 11 view .LVU103
+ 349 001a 1046     		movne	r0, r2
+ 350 001c DBB2     		uxtbne	r3, r3
+ 351              	.LVL42:
+  96:tmk_core/common/util.c ****     }
+  97:tmk_core/common/util.c ****     if (bits >> 2) {
+ 352              		.loc 1 97 5 is_stmt 1 view .LVU104
+ 353              		.loc 1 97 8 is_stmt 0 view .LVU105
+ 354 001e 8208     		lsrs	r2, r0, #2
+  98:tmk_core/common/util.c ****         bits >>= 2;
+ 355              		.loc 1 98 9 is_stmt 1 view .LVU106
+ 356              	.LVL43:
+  99:tmk_core/common/util.c ****         n += 2;
+ 357              		.loc 1 99 9 view .LVU107
+ 358              		.loc 1 99 11 is_stmt 0 view .LVU108
+ 359 0020 1EBF     		ittt	ne
+ 360 0022 0233     		addne	r3, r3, #2
+ 361              	.LVL44:
+ 362              		.loc 1 99 11 view .LVU109
+ 363 0024 1046     		movne	r0, r2
+ 364 0026 DBB2     		uxtbne	r3, r3
+ 365              	.LVL45:
+ 100:tmk_core/common/util.c ****     }
+ 101:tmk_core/common/util.c ****     if (bits >> 1) {
+ 366              		.loc 1 101 5 is_stmt 1 view .LVU110
+ 367              		.loc 1 101 8 is_stmt 0 view .LVU111
+ 368 0028 4208     		lsrs	r2, r0, #1
+ 102:tmk_core/common/util.c ****         bits >>= 1;
+ 369              		.loc 1 102 9 is_stmt 1 view .LVU112
+ 370              	.LVL46:
+ 103:tmk_core/common/util.c ****         n += 1;
+ 371              		.loc 1 103 9 view .LVU113
+ 372              		.loc 1 103 11 is_stmt 0 view .LVU114
+ 373 002a 1CBF     		itt	ne
+ 374 002c 0133     		addne	r3, r3, #1
+ 375              	.LVL47:
+ 376              		.loc 1 103 11 view .LVU115
+ 377 002e DBB2     		uxtbne	r3, r3
+ 378              	.LVL48:
+ 104:tmk_core/common/util.c ****     }
+ 105:tmk_core/common/util.c ****     return n;
+ 379              		.loc 1 105 5 is_stmt 1 view .LVU116
+ 106:tmk_core/common/util.c **** }
+ 380              		.loc 1 106 1 is_stmt 0 view .LVU117
+ 381 0030 1846     		mov	r0, r3
+ 382 0032 7047     		bx	lr
+ 383              		.cfi_endproc
+ 384              	.LFE5:
+ 386              		.section	.text.bitrev,"ax",%progbits
+ 387              		.align	1
+ 388              		.global	bitrev
+ 389              		.syntax unified
+ 390              		.thumb
+ 391              		.thumb_func
+ 392              		.fpu fpv4-sp-d16
+ 394              	bitrev:
+ 395              	.LVL49:
+ 396              	.LFB6:
+ 107:tmk_core/common/util.c **** 
+ 108:tmk_core/common/util.c **** __attribute__((noinline)) uint8_t bitrev(uint8_t bits) {
+ 397              		.loc 1 108 56 is_stmt 1 view -0
+ 398              		.cfi_startproc
+ 399              		@ args = 0, pretend = 0, frame = 0
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401              		@ link register save eliminated.
+ 109:tmk_core/common/util.c ****     bits = (bits & 0x0f) << 4 | (bits & 0xf0) >> 4;
+ 402              		.loc 1 109 5 view .LVU119
+ 403              		.loc 1 109 47 is_stmt 0 view .LVU120
+ 404 0000 0309     		lsrs	r3, r0, #4
+ 405              		.loc 1 109 31 view .LVU121
+ 406 0002 43EA0010 		orr	r0, r3, r0, lsl #4
+ 407              	.LVL50:
+ 110:tmk_core/common/util.c ****     bits = (bits & 0b00110011) << 2 | (bits & 0b11001100) >> 2;
+ 408              		.loc 1 110 5 is_stmt 1 view .LVU122
+ 409              		.loc 1 110 32 is_stmt 0 view .LVU123
+ 410 0006 C0B2     		uxtb	r0, r0
+ 411              	.LVL51:
+ 111:tmk_core/common/util.c ****     bits = (bits & 0b01010101) << 1 | (bits & 0b10101010) >> 1;
+ 412              		.loc 1 111 5 is_stmt 1 view .LVU124
+ 110:tmk_core/common/util.c ****     bits = (bits & 0b00110011) << 2 | (bits & 0b11001100) >> 2;
+ 413              		.loc 1 110 32 is_stmt 0 view .LVU125
+ 414 0008 8300     		lsls	r3, r0, #2
+ 110:tmk_core/common/util.c ****     bits = (bits & 0b00110011) << 2 | (bits & 0b11001100) >> 2;
+ 415              		.loc 1 110 59 view .LVU126
+ 416 000a 8010     		asrs	r0, r0, #2
+ 417              	.LVL52:
+ 110:tmk_core/common/util.c ****     bits = (bits & 0b00110011) << 2 | (bits & 0b11001100) >> 2;
+ 418              		.loc 1 110 59 view .LVU127
+ 419 000c 00F03300 		and	r0, r0, #51
+ 110:tmk_core/common/util.c ****     bits = (bits & 0b00110011) << 2 | (bits & 0b11001100) >> 2;
+ 420              		.loc 1 110 37 view .LVU128
+ 421 0010 03F0CC03 		and	r3, r3, #204
+ 422              		.loc 1 111 32 view .LVU129
+ 423 0014 0343     		orrs	r3, r3, r0
+ 424              	.LVL53:
+ 112:tmk_core/common/util.c ****     return bits;
+ 425              		.loc 1 112 5 is_stmt 1 view .LVU130
+ 111:tmk_core/common/util.c ****     bits = (bits & 0b01010101) << 1 | (bits & 0b10101010) >> 1;
+ 426              		.loc 1 111 32 is_stmt 0 view .LVU131
+ 427 0016 5800     		lsls	r0, r3, #1
+ 111:tmk_core/common/util.c ****     bits = (bits & 0b01010101) << 1 | (bits & 0b10101010) >> 1;
+ 428              		.loc 1 111 59 view .LVU132
+ 429 0018 5B10     		asrs	r3, r3, #1
+ 430              	.LVL54:
+ 111:tmk_core/common/util.c ****     bits = (bits & 0b01010101) << 1 | (bits & 0b10101010) >> 1;
+ 431              		.loc 1 111 59 view .LVU133
+ 432 001a 03F05503 		and	r3, r3, #85
+ 111:tmk_core/common/util.c ****     bits = (bits & 0b01010101) << 1 | (bits & 0b10101010) >> 1;
+ 433              		.loc 1 111 37 view .LVU134
+ 434 001e 00F0AA00 		and	r0, r0, #170
+ 113:tmk_core/common/util.c **** }
+ 435              		.loc 1 113 1 view .LVU135
+ 436 0022 1843     		orrs	r0, r0, r3
+ 437 0024 7047     		bx	lr
+ 438              		.cfi_endproc
+ 439              	.LFE6:
+ 441              		.section	.text.bitrev16,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	bitrev16
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 447              		.fpu fpv4-sp-d16
+ 449              	bitrev16:
+ 450              	.LVL55:
+ 451              	.LFB7:
+ 114:tmk_core/common/util.c **** 
+ 115:tmk_core/common/util.c **** uint16_t bitrev16(uint16_t bits) {
+ 452              		.loc 1 115 34 is_stmt 1 view -0
+ 453              		.cfi_startproc
+ 454              		@ args = 0, pretend = 0, frame = 0
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116:tmk_core/common/util.c ****     bits = bitrev(bits & 0x00ff) << 8 | bitrev((bits & 0xff00) >> 8);
+ 456              		.loc 1 116 5 view .LVU137
+ 115:tmk_core/common/util.c ****     bits = bitrev(bits & 0x00ff) << 8 | bitrev((bits & 0xff00) >> 8);
+ 457              		.loc 1 115 34 is_stmt 0 view .LVU138
+ 458 0000 0146     		mov	r1, r0
+ 459 0002 08B5     		push	{r3, lr}
+ 460              		.cfi_def_cfa_offset 8
+ 461              		.cfi_offset 3, -8
+ 462              		.cfi_offset 14, -4
+ 463              		.loc 1 116 12 view .LVU139
+ 464 0004 C0B2     		uxtb	r0, r0
+ 465              	.LVL56:
+ 466              		.loc 1 116 12 view .LVU140
+ 467 0006 FFF7FEFF 		bl	bitrev
+ 468              	.LVL57:
+ 469 000a 0246     		mov	r2, r0
+ 470              		.loc 1 116 41 view .LVU141
+ 471 000c 080A     		lsrs	r0, r1, #8
+ 472 000e FFF7FEFF 		bl	bitrev
+ 473              	.LVL58:
+ 117:tmk_core/common/util.c ****     return bits;
+ 474              		.loc 1 117 5 is_stmt 1 view .LVU142
+ 116:tmk_core/common/util.c ****     bits = bitrev(bits & 0x00ff) << 8 | bitrev((bits & 0xff00) >> 8);
+ 475              		.loc 1 116 39 is_stmt 0 view .LVU143
+ 476 0012 40EA0220 		orr	r0, r0, r2, lsl #8
+ 477              	.LVL59:
+ 118:tmk_core/common/util.c **** }
+ 478              		.loc 1 118 1 view .LVU144
+ 479 0016 80B2     		uxth	r0, r0
+ 480 0018 08BD     		pop	{r3, pc}
+ 481              		.cfi_endproc
+ 482              	.LFE7:
+ 484              		.section	.text.bitrev32,"ax",%progbits
+ 485              		.align	1
+ 486              		.global	bitrev32
+ 487              		.syntax unified
+ 488              		.thumb
+ 489              		.thumb_func
+ 490              		.fpu fpv4-sp-d16
+ 492              	bitrev32:
+ 493              	.LVL60:
+ 494              	.LFB8:
+ 119:tmk_core/common/util.c **** 
+ 120:tmk_core/common/util.c **** uint32_t bitrev32(uint32_t bits) {
+ 495              		.loc 1 120 34 is_stmt 1 view -0
+ 496              		.cfi_startproc
+ 497              		@ args = 0, pretend = 0, frame = 0
+ 498              		@ frame_needed = 0, uses_anonymous_args = 0
+ 121:tmk_core/common/util.c ****     bits = (uint32_t)bitrev16(bits & 0x0000ffff) << 16 | bitrev16((bits & 0xffff0000) >> 16);
+ 499              		.loc 1 121 5 view .LVU146
+ 120:tmk_core/common/util.c ****     bits = (uint32_t)bitrev16(bits & 0x0000ffff) << 16 | bitrev16((bits & 0xffff0000) >> 16);
+ 500              		.loc 1 120 34 is_stmt 0 view .LVU147
+ 501 0000 38B5     		push	{r3, r4, r5, lr}
+ 502              		.cfi_def_cfa_offset 16
+ 503              		.cfi_offset 3, -16
+ 504              		.cfi_offset 4, -12
+ 505              		.cfi_offset 5, -8
+ 506              		.cfi_offset 14, -4
+ 120:tmk_core/common/util.c ****     bits = (uint32_t)bitrev16(bits & 0x0000ffff) << 16 | bitrev16((bits & 0xffff0000) >> 16);
+ 507              		.loc 1 120 34 view .LVU148
+ 508 0002 0446     		mov	r4, r0
+ 509              		.loc 1 121 22 view .LVU149
+ 510 0004 80B2     		uxth	r0, r0
+ 511              	.LVL61:
+ 512              		.loc 1 121 22 view .LVU150
+ 513 0006 FFF7FEFF 		bl	bitrev16
+ 514              	.LVL62:
+ 515 000a 0546     		mov	r5, r0
+ 516              		.loc 1 121 58 view .LVU151
+ 517 000c 200C     		lsrs	r0, r4, #16
+ 518 000e FFF7FEFF 		bl	bitrev16
+ 519              	.LVL63:
+ 122:tmk_core/common/util.c ****     return bits;
+ 520              		.loc 1 122 5 is_stmt 1 view .LVU152
+ 123:tmk_core/common/util.c **** }
+ 521              		.loc 1 123 1 is_stmt 0 view .LVU153
+ 522 0012 40EA0540 		orr	r0, r0, r5, lsl #16
+ 523              	.LVL64:
+ 524              		.loc 1 123 1 view .LVU154
+ 525 0016 38BD     		pop	{r3, r4, r5, pc}
+ 526              		.loc 1 123 1 view .LVU155
+ 527              		.cfi_endproc
+ 528              	.LFE8:
+ 530              		.text
+ 531              	.Letext0:
+ 532              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 533              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 util.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:18     .text.bitpop:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:26     .text.bitpop:0000000000000000 bitpop
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:65     .text.bitpop16:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:72     .text.bitpop16:0000000000000000 bitpop16
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:110    .text.bitpop32:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:117    .text.bitpop32:0000000000000000 bitpop32
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:155    .text.biton:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:162    .text.biton:0000000000000000 biton
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:215    .text.biton16:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:222    .text.biton16:0000000000000000 biton16
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:299    .text.biton32:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:306    .text.biton32:0000000000000000 biton32
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:387    .text.bitrev:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:394    .text.bitrev:0000000000000000 bitrev
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:442    .text.bitrev16:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:449    .text.bitrev16:0000000000000000 bitrev16
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:485    .text.bitrev32:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8FjsRm.s:492    .text.bitrev32:0000000000000000 bitrev32
+
+NO UNDEFINED SYMBOLS

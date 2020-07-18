@@ -1,0 +1,418 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"action_macro.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.action_macro_play,"ax",%progbits
+  18              		.align	1
+  19              		.global	action_macro_play
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	action_macro_play:
+  27              	.LVL0:
+  28              	.LFB8:
+  29              		.file 1 "tmk_core/common/action_macro.c"
+   1:tmk_core/common/action_macro.c **** /*
+   2:tmk_core/common/action_macro.c **** Copyright 2013 Jun Wako <wakojun@gmail.com>
+   3:tmk_core/common/action_macro.c **** 
+   4:tmk_core/common/action_macro.c **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/common/action_macro.c **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/common/action_macro.c **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/common/action_macro.c **** (at your option) any later version.
+   8:tmk_core/common/action_macro.c **** 
+   9:tmk_core/common/action_macro.c **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/common/action_macro.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/common/action_macro.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/common/action_macro.c **** GNU General Public License for more details.
+  13:tmk_core/common/action_macro.c **** 
+  14:tmk_core/common/action_macro.c **** You should have received a copy of the GNU General Public License
+  15:tmk_core/common/action_macro.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/common/action_macro.c **** */
+  17:tmk_core/common/action_macro.c **** #include "action.h"
+  18:tmk_core/common/action_macro.c **** #include "action_util.h"
+  19:tmk_core/common/action_macro.c **** #include "action_macro.h"
+  20:tmk_core/common/action_macro.c **** #include "wait.h"
+  21:tmk_core/common/action_macro.c **** 
+  22:tmk_core/common/action_macro.c **** #ifdef DEBUG_ACTION
+  23:tmk_core/common/action_macro.c **** #    include "debug.h"
+  24:tmk_core/common/action_macro.c **** #else
+  25:tmk_core/common/action_macro.c **** #    include "nodebug.h"
+  26:tmk_core/common/action_macro.c **** #endif
+  27:tmk_core/common/action_macro.c **** 
+  28:tmk_core/common/action_macro.c **** #ifndef NO_ACTION_MACRO
+  29:tmk_core/common/action_macro.c **** 
+  30:tmk_core/common/action_macro.c **** #    define MACRO_READ() (macro = MACRO_GET(macro_p++))
+  31:tmk_core/common/action_macro.c **** /** \brief Action Macro Play
+  32:tmk_core/common/action_macro.c ****  *
+  33:tmk_core/common/action_macro.c ****  * FIXME: Needs doc
+  34:tmk_core/common/action_macro.c ****  */
+  35:tmk_core/common/action_macro.c **** void action_macro_play(const macro_t *macro_p) {
+  30              		.loc 1 35 48 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  36:tmk_core/common/action_macro.c ****     macro_t macro    = END;
+  34              		.loc 1 36 5 view .LVU1
+  37:tmk_core/common/action_macro.c ****     uint8_t interval = 0;
+  35              		.loc 1 37 5 view .LVU2
+  38:tmk_core/common/action_macro.c **** 
+  39:tmk_core/common/action_macro.c ****     if (!macro_p) return;
+  36              		.loc 1 39 5 view .LVU3
+  35:tmk_core/common/action_macro.c ****     macro_t macro    = END;
+  37              		.loc 1 35 48 is_stmt 0 view .LVU4
+  38 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  39              		.cfi_def_cfa_offset 24
+  40              		.cfi_offset 3, -24
+  41              		.cfi_offset 4, -20
+  42              		.cfi_offset 5, -16
+  43              		.cfi_offset 6, -12
+  44              		.cfi_offset 7, -8
+  45              		.cfi_offset 14, -4
+  46              		.loc 1 39 8 view .LVU5
+  47 0002 0346     		mov	r3, r0
+  48 0004 60B1     		cbz	r0, .L1
+  37:tmk_core/common/action_macro.c ****     uint8_t interval = 0;
+  49              		.loc 1 37 13 view .LVU6
+  50 0006 0025     		movs	r5, #0
+  40:tmk_core/common/action_macro.c ****     while (true) {
+  41:tmk_core/common/action_macro.c ****         switch (MACRO_READ()) {
+  42:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  43:tmk_core/common/action_macro.c ****                 MACRO_READ();
+  44:tmk_core/common/action_macro.c ****                 dprintf("KEY_DOWN(%02X)\n", macro);
+  45:tmk_core/common/action_macro.c ****                 if (IS_MOD(macro)) {
+  46:tmk_core/common/action_macro.c ****                     add_macro_mods(MOD_BIT(macro));
+  47:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+  48:tmk_core/common/action_macro.c ****                 } else {
+  49:tmk_core/common/action_macro.c ****                     register_code(macro);
+  50:tmk_core/common/action_macro.c ****                 }
+  51:tmk_core/common/action_macro.c ****                 break;
+  52:tmk_core/common/action_macro.c ****             case KEY_UP:
+  53:tmk_core/common/action_macro.c ****                 MACRO_READ();
+  54:tmk_core/common/action_macro.c ****                 dprintf("KEY_UP(%02X)\n", macro);
+  55:tmk_core/common/action_macro.c ****                 if (IS_MOD(macro)) {
+  56:tmk_core/common/action_macro.c ****                     del_macro_mods(MOD_BIT(macro));
+  51              		.loc 1 56 36 view .LVU7
+  52 0008 0126     		movs	r6, #1
+  53              	.LVL1:
+  54              	.L17:
+  40:tmk_core/common/action_macro.c ****     while (true) {
+  55              		.loc 1 40 5 is_stmt 1 view .LVU8
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  56              		.loc 1 41 9 view .LVU9
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  57              		.loc 1 41 17 is_stmt 0 view .LVU10
+  58 000a 1C46     		mov	r4, r3
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  59              		.loc 1 41 17 view .LVU11
+  60 000c 14F8010B 		ldrb	r0, [r4], #1	@ zero_extendqisi2
+  61              	.LVL2:
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  62              		.loc 1 41 9 view .LVU12
+  63 0010 7328     		cmp	r0, #115
+  64 0012 06D8     		bhi	.L3
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  65              		.loc 1 41 9 view .LVU13
+  66 0014 0428     		cmp	r0, #4
+  67 0016 28D2     		bcs	.L4
+  68 0018 0128     		cmp	r0, #1
+  69 001a 0FD0     		beq	.L5
+  70 001c 0228     		cmp	r0, #2
+  71 001e 27D0     		beq	.L6
+  72              	.LVL3:
+  73              	.L1:
+  57:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+  58:tmk_core/common/action_macro.c ****                 } else {
+  59:tmk_core/common/action_macro.c ****                     unregister_code(macro);
+  60:tmk_core/common/action_macro.c ****                 }
+  61:tmk_core/common/action_macro.c ****                 break;
+  62:tmk_core/common/action_macro.c ****             case WAIT:
+  63:tmk_core/common/action_macro.c ****                 MACRO_READ();
+  64:tmk_core/common/action_macro.c ****                 dprintf("WAIT(%u)\n", macro);
+  65:tmk_core/common/action_macro.c ****                 {
+  66:tmk_core/common/action_macro.c ****                     uint8_t ms = macro;
+  67:tmk_core/common/action_macro.c ****                     while (ms--) wait_ms(1);
+  68:tmk_core/common/action_macro.c ****                 }
+  69:tmk_core/common/action_macro.c ****                 break;
+  70:tmk_core/common/action_macro.c ****             case INTERVAL:
+  71:tmk_core/common/action_macro.c ****                 interval = MACRO_READ();
+  72:tmk_core/common/action_macro.c ****                 dprintf("INTERVAL(%u)\n", interval);
+  73:tmk_core/common/action_macro.c ****                 break;
+  74:tmk_core/common/action_macro.c ****             case 0x04 ... 0x73:
+  75:tmk_core/common/action_macro.c ****                 dprintf("DOWN(%02X)\n", macro);
+  76:tmk_core/common/action_macro.c ****                 register_code(macro);
+  77:tmk_core/common/action_macro.c ****                 break;
+  78:tmk_core/common/action_macro.c ****             case 0x84 ... 0xF3:
+  79:tmk_core/common/action_macro.c ****                 dprintf("UP(%02X)\n", macro);
+  80:tmk_core/common/action_macro.c ****                 unregister_code(macro & 0x7F);
+  81:tmk_core/common/action_macro.c ****                 break;
+  82:tmk_core/common/action_macro.c ****             case END:
+  83:tmk_core/common/action_macro.c ****             default:
+  84:tmk_core/common/action_macro.c ****                 return;
+  85:tmk_core/common/action_macro.c ****         }
+  86:tmk_core/common/action_macro.c ****         // interval
+  87:tmk_core/common/action_macro.c ****         {
+  88:tmk_core/common/action_macro.c ****             uint8_t ms = interval;
+  89:tmk_core/common/action_macro.c ****             while (ms--) wait_ms(1);
+  90:tmk_core/common/action_macro.c ****         }
+  91:tmk_core/common/action_macro.c ****     }
+  92:tmk_core/common/action_macro.c **** }
+  74              		.loc 1 92 1 view .LVU14
+  75 0020 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  76              	.LVL4:
+  77              	.L3:
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  78              		.loc 1 41 9 view .LVU15
+  79 0022 7528     		cmp	r0, #117
+  80 0024 3ED0     		beq	.L7
+  81 0026 32D3     		bcc	.L8
+  82 0028 00F17C03 		add	r3, r0, #124
+  83              	.LVL5:
+  41:tmk_core/common/action_macro.c ****             case KEY_DOWN:
+  84              		.loc 1 41 9 view .LVU16
+  85 002c DBB2     		uxtb	r3, r3
+  86 002e 6F2B     		cmp	r3, #111
+  87 0030 F6D8     		bhi	.L1
+  79:tmk_core/common/action_macro.c ****                 unregister_code(macro & 0x7F);
+  88              		.loc 1 79 45 is_stmt 1 view .LVU17
+  80:tmk_core/common/action_macro.c ****                 break;
+  89              		.loc 1 80 17 view .LVU18
+  90 0032 00F07F00 		and	r0, r0, #127
+  91              	.LVL6:
+  92              	.L23:
+  80:tmk_core/common/action_macro.c ****                 break;
+  93              		.loc 1 80 17 is_stmt 0 view .LVU19
+  94 0036 FFF7FEFF 		bl	unregister_code
+  95              	.LVL7:
+  81:tmk_core/common/action_macro.c ****             case END:
+  96              		.loc 1 81 17 is_stmt 1 view .LVU20
+  97 003a 0EE0     		b	.L11
+  98              	.LVL8:
+  99              	.L5:
+  43:tmk_core/common/action_macro.c ****                 dprintf("KEY_DOWN(%02X)\n", macro);
+ 100              		.loc 1 43 17 view .LVU21
+ 101 003c 9C1C     		adds	r4, r3, #2
+ 102              	.LVL9:
+  43:tmk_core/common/action_macro.c ****                 dprintf("KEY_DOWN(%02X)\n", macro);
+ 103              		.loc 1 43 17 is_stmt 0 view .LVU22
+ 104 003e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 105              	.LVL10:
+  44:tmk_core/common/action_macro.c ****                 if (IS_MOD(macro)) {
+ 106              		.loc 1 44 51 is_stmt 1 view .LVU23
+  45:tmk_core/common/action_macro.c ****                     add_macro_mods(MOD_BIT(macro));
+ 107              		.loc 1 45 17 view .LVU24
+  45:tmk_core/common/action_macro.c ****                     add_macro_mods(MOD_BIT(macro));
+ 108              		.loc 1 45 21 is_stmt 0 view .LVU25
+ 109 0040 03F12002 		add	r2, r3, #32
+  45:tmk_core/common/action_macro.c ****                     add_macro_mods(MOD_BIT(macro));
+ 110              		.loc 1 45 20 view .LVU26
+ 111 0044 D2B2     		uxtb	r2, r2
+ 112 0046 072A     		cmp	r2, #7
+ 113 0048 0ED8     		bhi	.L10
+  46:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 114              		.loc 1 46 21 is_stmt 1 view .LVU27
+  46:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 115              		.loc 1 46 36 is_stmt 0 view .LVU28
+ 116 004a 03F00703 		and	r3, r3, #7
+ 117              	.LVL11:
+  46:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 118              		.loc 1 46 36 view .LVU29
+ 119 004e 9840     		lsls	r0, r0, r3
+  46:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 120              		.loc 1 46 21 view .LVU30
+ 121 0050 C0B2     		uxtb	r0, r0
+ 122 0052 FFF7FEFF 		bl	add_macro_mods
+ 123              	.LVL12:
+  47:tmk_core/common/action_macro.c ****                 } else {
+ 124              		.loc 1 47 21 is_stmt 1 view .LVU31
+ 125              	.L22:
+  57:tmk_core/common/action_macro.c ****                 } else {
+ 126              		.loc 1 57 21 view .LVU32
+ 127 0056 FFF7FEFF 		bl	send_keyboard_report
+ 128              	.LVL13:
+ 129              	.L11:
+ 130              	.LBB2:
+  88:tmk_core/common/action_macro.c ****             while (ms--) wait_ms(1);
+ 131              		.loc 1 88 13 view .LVU33
+  89:tmk_core/common/action_macro.c ****         }
+ 132              		.loc 1 89 13 view .LVU34
+  88:tmk_core/common/action_macro.c ****             while (ms--) wait_ms(1);
+ 133              		.loc 1 88 21 is_stmt 0 view .LVU35
+ 134 005a 2F46     		mov	r7, r5
+ 135              	.LVL14:
+ 136              	.L15:
+  89:tmk_core/common/action_macro.c ****         }
+ 137              		.loc 1 89 22 discriminator 1 view .LVU36
+ 138 005c 013F     		subs	r7, r7, #1
+ 139              	.LVL15:
+  89:tmk_core/common/action_macro.c ****         }
+ 140              		.loc 1 89 22 discriminator 1 view .LVU37
+ 141 005e FFB2     		uxtb	r7, r7
+ 142              	.LVL16:
+  89:tmk_core/common/action_macro.c ****         }
+ 143              		.loc 1 89 19 discriminator 1 view .LVU38
+ 144 0060 FF2F     		cmp	r7, #255
+ 145 0062 22D1     		bne	.L16
+ 146 0064 2346     		mov	r3, r4
+ 147 0066 D0E7     		b	.L17
+ 148              	.LVL17:
+ 149              	.L10:
+  89:tmk_core/common/action_macro.c ****         }
+ 150              		.loc 1 89 19 discriminator 1 view .LVU39
+ 151              	.LBE2:
+  49:tmk_core/common/action_macro.c ****                 }
+ 152              		.loc 1 49 21 is_stmt 1 view .LVU40
+ 153 0068 1846     		mov	r0, r3
+ 154              	.LVL18:
+ 155              	.L4:
+  75:tmk_core/common/action_macro.c ****                 register_code(macro);
+ 156              		.loc 1 75 47 view .LVU41
+  76:tmk_core/common/action_macro.c ****                 break;
+ 157              		.loc 1 76 17 view .LVU42
+ 158 006a FFF7FEFF 		bl	register_code
+ 159              	.LVL19:
+  77:tmk_core/common/action_macro.c ****             case 0x84 ... 0xF3:
+ 160              		.loc 1 77 17 view .LVU43
+ 161 006e F4E7     		b	.L11
+ 162              	.LVL20:
+ 163              	.L6:
+  53:tmk_core/common/action_macro.c ****                 dprintf("KEY_UP(%02X)\n", macro);
+ 164              		.loc 1 53 17 view .LVU44
+ 165 0070 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 166              	.LVL21:
+  53:tmk_core/common/action_macro.c ****                 dprintf("KEY_UP(%02X)\n", macro);
+ 167              		.loc 1 53 17 is_stmt 0 view .LVU45
+ 168 0072 9C1C     		adds	r4, r3, #2
+ 169              	.LVL22:
+  54:tmk_core/common/action_macro.c ****                 if (IS_MOD(macro)) {
+ 170              		.loc 1 54 49 is_stmt 1 view .LVU46
+  55:tmk_core/common/action_macro.c ****                     del_macro_mods(MOD_BIT(macro));
+ 171              		.loc 1 55 17 view .LVU47
+  55:tmk_core/common/action_macro.c ****                     del_macro_mods(MOD_BIT(macro));
+ 172              		.loc 1 55 21 is_stmt 0 view .LVU48
+ 173 0074 00F12003 		add	r3, r0, #32
+  55:tmk_core/common/action_macro.c ****                     del_macro_mods(MOD_BIT(macro));
+ 174              		.loc 1 55 20 view .LVU49
+ 175 0078 DBB2     		uxtb	r3, r3
+ 176 007a 072B     		cmp	r3, #7
+ 177 007c DBD8     		bhi	.L23
+  56:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 178              		.loc 1 56 21 is_stmt 1 view .LVU50
+  56:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 179              		.loc 1 56 36 is_stmt 0 view .LVU51
+ 180 007e 00F00700 		and	r0, r0, #7
+ 181              	.LVL23:
+  56:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 182              		.loc 1 56 36 view .LVU52
+ 183 0082 06FA00F0 		lsl	r0, r6, r0
+  56:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 184              		.loc 1 56 21 view .LVU53
+ 185 0086 C0B2     		uxtb	r0, r0
+ 186 0088 FFF7FEFF 		bl	del_macro_mods
+ 187              	.LVL24:
+  56:tmk_core/common/action_macro.c ****                     send_keyboard_report();
+ 188              		.loc 1 56 21 view .LVU54
+ 189 008c E3E7     		b	.L22
+ 190              	.LVL25:
+ 191              	.L8:
+  63:tmk_core/common/action_macro.c ****                 dprintf("WAIT(%u)\n", macro);
+ 192              		.loc 1 63 17 is_stmt 1 view .LVU55
+ 193 008e 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
+ 194 0090 9C1C     		adds	r4, r3, #2
+ 195              	.LVL26:
+  64:tmk_core/common/action_macro.c ****                 {
+ 196              		.loc 1 64 45 view .LVU56
+ 197              	.LBB3:
+  66:tmk_core/common/action_macro.c ****                     while (ms--) wait_ms(1);
+ 198              		.loc 1 66 21 view .LVU57
+  67:tmk_core/common/action_macro.c ****                 }
+ 199              		.loc 1 67 21 view .LVU58
+ 200              	.L13:
+  67:tmk_core/common/action_macro.c ****                 }
+ 201              		.loc 1 67 30 is_stmt 0 discriminator 1 view .LVU59
+ 202 0092 013F     		subs	r7, r7, #1
+ 203              	.LVL27:
+  67:tmk_core/common/action_macro.c ****                 }
+ 204              		.loc 1 67 30 discriminator 1 view .LVU60
+ 205 0094 FFB2     		uxtb	r7, r7
+ 206              	.LVL28:
+  67:tmk_core/common/action_macro.c ****                 }
+ 207              		.loc 1 67 27 discriminator 1 view .LVU61
+ 208 0096 FF2F     		cmp	r7, #255
+ 209 0098 DFD0     		beq	.L11
+  67:tmk_core/common/action_macro.c ****                 }
+ 210              		.loc 1 67 34 is_stmt 1 discriminator 2 view .LVU62
+ 211 009a 0120     		movs	r0, #1
+ 212 009c 0021     		movs	r1, #0
+ 213 009e FFF7FEFF 		bl	CLK_delay_ms
+ 214              	.LVL29:
+ 215 00a2 F6E7     		b	.L13
+ 216              	.LVL30:
+ 217              	.L7:
+  67:tmk_core/common/action_macro.c ****                 }
+ 218              		.loc 1 67 34 is_stmt 0 discriminator 2 view .LVU63
+ 219              	.LBE3:
+  71:tmk_core/common/action_macro.c ****                 dprintf("INTERVAL(%u)\n", interval);
+ 220              		.loc 1 71 17 is_stmt 1 view .LVU64
+  71:tmk_core/common/action_macro.c ****                 dprintf("INTERVAL(%u)\n", interval);
+ 221              		.loc 1 71 28 is_stmt 0 view .LVU65
+ 222 00a4 9C1C     		adds	r4, r3, #2
+ 223              	.LVL31:
+  71:tmk_core/common/action_macro.c ****                 dprintf("INTERVAL(%u)\n", interval);
+ 224              		.loc 1 71 28 view .LVU66
+ 225 00a6 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
+ 226              	.LVL32:
+  72:tmk_core/common/action_macro.c ****                 break;
+ 227              		.loc 1 72 52 is_stmt 1 view .LVU67
+  73:tmk_core/common/action_macro.c ****             case 0x04 ... 0x73:
+ 228              		.loc 1 73 17 view .LVU68
+ 229 00a8 D7E7     		b	.L11
+ 230              	.LVL33:
+ 231              	.L16:
+ 232              	.LBB4:
+  89:tmk_core/common/action_macro.c ****         }
+ 233              		.loc 1 89 26 discriminator 2 view .LVU69
+ 234 00aa 0120     		movs	r0, #1
+ 235 00ac 0021     		movs	r1, #0
+ 236 00ae FFF7FEFF 		bl	CLK_delay_ms
+ 237              	.LVL34:
+ 238 00b2 D3E7     		b	.L15
+ 239              	.LBE4:
+ 240              		.cfi_endproc
+ 241              	.LFE8:
+ 243              		.text
+ 244              	.Letext0:
+ 245              		.file 2 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 246              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 247              		.file 4 "tmk_core/common/action_macro.h"
+ 248              		.file 5 "tmk_core/common/keycode.h"
+ 249              		.file 6 "tmk_core/common/report.h"
+ 250              		.file 7 "tmk_core/common/action.h"
+ 251              		.file 8 "tmk_core/common/action_util.h"
+ 252              		.file 9 "tmk_core/protocol/arm_atsam/clks.h"
+ 253              		.file 10 "tmk_core/common/debug.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 action_macro.c
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwyAOaQ.s:18     .text.action_macro_play:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwyAOaQ.s:26     .text.action_macro_play:0000000000000000 action_macro_play
+
+UNDEFINED SYMBOLS
+unregister_code
+add_macro_mods
+send_keyboard_report
+register_code
+del_macro_mods
+CLK_delay_ms
