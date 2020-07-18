@@ -1,8 +1,9 @@
 .build/obj_massdrop_ctrl_greyasteroid/config_led.o: \
- keyboards/massdrop/ctrl/config_led.c keyboards/massdrop/ctrl/config.h \
- quantum/config_common.h quantum/audio/song_list.h \
- quantum/audio/musical_notes.h keyboards/massdrop/ctrl/config_led.h \
- keyboards/massdrop/ctrl/ctrl.h quantum/quantum.h tmk_core/common/wait.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/config_led.c \
+ keyboards/massdrop/ctrl/config.h quantum/config_common.h \
+ quantum/audio/song_list.h quantum/audio/musical_notes.h \
+ keyboards/massdrop/ctrl/config_led.h keyboards/massdrop/ctrl/ctrl.h \
+ quantum/quantum.h tmk_core/common/wait.h \
  tmk_core/protocol/arm_atsam/clks.h keyboards/massdrop/ctrl/matrix.h \
  tmk_core/common/keyboard.h quantum/keymap.h tmk_core/common/action.h \
  tmk_core/common/keyboard.h tmk_core/common/keycode.h \
