@@ -109,13 +109,13 @@
  111 00ac 4F00     		.short	79
  112 00ae 0000     		.space	2
  113 00b0 A500     		.short	165
- 114 00b2 6800     		.short	104
- 115 00b4 6900     		.short	105
- 116 00b6 6A00     		.short	106
- 117 00b8 6B00     		.short	107
- 118 00ba 6C00     		.short	108
- 119 00bc 6D00     		.short	109
- 120 00be 6E00     		.short	110
+ 114 00b2 6B00     		.short	107
+ 115 00b4 6C00     		.short	108
+ 116 00b6 6D00     		.short	109
+ 117 00b8 6E00     		.short	110
+ 118 00ba 6F00     		.short	111
+ 119 00bc 7000     		.short	112
+ 120 00be 7100     		.short	113
  121 00c0 0100     		.short	1
  122 00c2 0100     		.short	1
  123 00c4 0100     		.short	1
@@ -156,11 +156,11 @@
  158 010a 0100     		.short	1
  159 010c 0100     		.short	1
  160 010e 0100     		.short	1
- 161 0110 6F00     		.short	111
- 162 0112 7000     		.short	112
- 163 0114 7100     		.short	113
- 164 0116 7200     		.short	114
- 165 0118 7300     		.short	115
+ 161 0110 7200     		.short	114
+ 162 0112 AE00     		.short	174
+ 163 0114 BC00     		.short	188
+ 164 0116 BB00     		.short	187
+ 165 0118 A800     		.short	168
  166 011a 0100     		.short	1
  167 011c 0100     		.short	1
  168 011e 0100     		.short	1
@@ -231,9 +231,9 @@
  233              		.file 31 "keyboards/massdrop/ctrl/keymaps/greyasteroid/keymap.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccdfgmDG.s:24     .rodata:0000000000000000 keymaps
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUT1b1o.s:24     .rodata:0000000000000000 keymaps
                             *COM*:0000000000000010 dmac_desc_wb
                             *COM*:0000000000000010 dmac_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccdfgmDG.s:21     .rodata:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUT1b1o.s:21     .rodata:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

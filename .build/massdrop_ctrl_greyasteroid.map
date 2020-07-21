@@ -3300,98 +3300,98 @@ OUTPUT(.build/massdrop_ctrl_greyasteroid.elf elf32-littlearm)
  .debug_line    0x000000000001069e     0x114a .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb.o
  .debug_line    0x00000000000117e8     0x1172 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb_device_udd.o
 
-.debug_str      0x0000000000000000     0xc73a
+.debug_str      0x0000000000000000     0xc76a
  .debug_str     0x0000000000000000      0xd4f .build/obj_massdrop_ctrl_greyasteroid/matrix.o
                                         0xede (size before relaxing)
  .debug_str     0x0000000000000d4f       0x69 .build/obj_massdrop_ctrl_greyasteroid/config_led.o
                                         0xbe0 (size before relaxing)
- .debug_str     0x0000000000000db8     0x16dd .build/obj_massdrop_ctrl_greyasteroid/keyboards/massdrop/ctrl/keymaps/greyasteroid/keymap.o
-                                       0x2264 (size before relaxing)
- .debug_str     0x0000000000002495      0x48a .build/obj_massdrop_ctrl_greyasteroid/quantum/quantum.o
+ .debug_str     0x0000000000000db8     0x170d .build/obj_massdrop_ctrl_greyasteroid/keyboards/massdrop/ctrl/keymaps/greyasteroid/keymap.o
+                                       0x226e (size before relaxing)
+ .debug_str     0x00000000000024c5      0x48a .build/obj_massdrop_ctrl_greyasteroid/quantum/quantum.o
                                        0x2339 (size before relaxing)
- .debug_str     0x000000000000291f      0x4cc .build/obj_massdrop_ctrl_greyasteroid/quantum/keymap_common.o
+ .debug_str     0x000000000000294f      0x4cc .build/obj_massdrop_ctrl_greyasteroid/quantum/keymap_common.o
                                        0x261a (size before relaxing)
- .debug_str     0x0000000000002deb       0x6a .build/obj_massdrop_ctrl_greyasteroid/quantum/keycode_config.o
+ .debug_str     0x0000000000002e1b       0x6a .build/obj_massdrop_ctrl_greyasteroid/quantum/keycode_config.o
                                         0x8ee (size before relaxing)
- .debug_str     0x0000000000002e55      0x112 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/eeprom.o
+ .debug_str     0x0000000000002e85      0x112 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/eeprom.o
                                         0x723 (size before relaxing)
- .debug_str     0x0000000000002f67       0x3f .build/obj_massdrop_ctrl_greyasteroid/quantum/color.o
+ .debug_str     0x0000000000002f97       0x3f .build/obj_massdrop_ctrl_greyasteroid/quantum/color.o
                                         0x227 (size before relaxing)
- .debug_str     0x0000000000002fa6      0x7c0 .build/obj_massdrop_ctrl_greyasteroid/quantum/rgb_matrix.o
+ .debug_str     0x0000000000002fd6      0x7c0 .build/obj_massdrop_ctrl_greyasteroid/quantum/rgb_matrix.o
                                        0x129b (size before relaxing)
- .debug_str     0x0000000000003766       0x63 .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_rgb.o
+ .debug_str     0x0000000000003796       0x63 .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_rgb.o
                                        0x1fd1 (size before relaxing)
- .debug_str     0x00000000000037c9       0x15 .build/obj_massdrop_ctrl_greyasteroid/quantum/led_tables.o
+ .debug_str     0x00000000000037f9       0x15 .build/obj_massdrop_ctrl_greyasteroid/quantum/led_tables.o
                                         0x1f7 (size before relaxing)
- .debug_str     0x00000000000037de       0x8b .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_space_cadet.o
+ .debug_str     0x000000000000380e       0x8b .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_space_cadet.o
                                        0x1ea7 (size before relaxing)
- .debug_str     0x0000000000003869       0x6f .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_magic.o
+ .debug_str     0x0000000000003899       0x6f .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_magic.o
                                        0x18c1 (size before relaxing)
- .debug_str     0x00000000000038d8       0x67 .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_grave_esc.o
+ .debug_str     0x0000000000003908       0x67 .build/obj_massdrop_ctrl_greyasteroid/quantum/process_keycode/process_grave_esc.o
                                        0x1e7b (size before relaxing)
- .debug_str     0x000000000000393f      0x12b .build/obj_massdrop_ctrl_greyasteroid/common/host.o
+ .debug_str     0x000000000000396f      0x12b .build/obj_massdrop_ctrl_greyasteroid/common/host.o
                                         0x4ee (size before relaxing)
- .debug_str     0x0000000000003a6a      0x17d .build/obj_massdrop_ctrl_greyasteroid/common/keyboard.o
+ .debug_str     0x0000000000003a9a      0x17d .build/obj_massdrop_ctrl_greyasteroid/common/keyboard.o
                                         0x59f (size before relaxing)
- .debug_str     0x0000000000003be7      0x42f .build/obj_massdrop_ctrl_greyasteroid/common/action.o
+ .debug_str     0x0000000000003c17      0x42f .build/obj_massdrop_ctrl_greyasteroid/common/action.o
                                        0x1712 (size before relaxing)
- .debug_str     0x0000000000004016       0xf7 .build/obj_massdrop_ctrl_greyasteroid/common/action_tapping.o
+ .debug_str     0x0000000000004046       0xf7 .build/obj_massdrop_ctrl_greyasteroid/common/action_tapping.o
                                         0xc1e (size before relaxing)
- .debug_str     0x000000000000410d       0x6b .build/obj_massdrop_ctrl_greyasteroid/common/action_macro.o
+ .debug_str     0x000000000000413d       0x6b .build/obj_massdrop_ctrl_greyasteroid/common/action_macro.o
                                         0x9b9 (size before relaxing)
- .debug_str     0x0000000000004178       0xd3 .build/obj_massdrop_ctrl_greyasteroid/common/action_layer.o
+ .debug_str     0x00000000000041a8       0xd3 .build/obj_massdrop_ctrl_greyasteroid/common/action_layer.o
                                         0x615 (size before relaxing)
- .debug_str     0x000000000000424b      0x21a .build/obj_massdrop_ctrl_greyasteroid/common/action_util.o
+ .debug_str     0x000000000000427b      0x21a .build/obj_massdrop_ctrl_greyasteroid/common/action_util.o
                                         0x7d6 (size before relaxing)
- .debug_str     0x0000000000004465       0x18 .build/obj_massdrop_ctrl_greyasteroid/common/debug.o
+ .debug_str     0x0000000000004495       0x18 .build/obj_massdrop_ctrl_greyasteroid/common/debug.o
                                         0x234 (size before relaxing)
- .debug_str     0x000000000000447d      0x1be .build/obj_massdrop_ctrl_greyasteroid/common/eeconfig.o
+ .debug_str     0x00000000000044ad      0x1be .build/obj_massdrop_ctrl_greyasteroid/common/eeconfig.o
                                         0x8e3 (size before relaxing)
- .debug_str     0x000000000000463b       0x70 .build/obj_massdrop_ctrl_greyasteroid/common/report.o
+ .debug_str     0x000000000000466b       0x70 .build/obj_massdrop_ctrl_greyasteroid/common/report.o
                                         0xdcb (size before relaxing)
- .debug_str     0x00000000000046ab      0x105 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/suspend.o
+ .debug_str     0x00000000000046db      0x105 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/suspend.o
                                         0xc3f (size before relaxing)
- .debug_str     0x00000000000047b0       0x39 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/timer.o
+ .debug_str     0x00000000000047e0       0x39 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/timer.o
                                         0x360 (size before relaxing)
- .debug_str     0x00000000000047e9      0x191 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/bootloader.o
+ .debug_str     0x0000000000004819      0x191 .build/obj_massdrop_ctrl_greyasteroid/common/arm_atsam/bootloader.o
                                         0x40f (size before relaxing)
- .debug_str     0x000000000000497a       0x18 .build/obj_massdrop_ctrl_greyasteroid/common/magic.o
+ .debug_str     0x00000000000049aa       0x18 .build/obj_massdrop_ctrl_greyasteroid/common/magic.o
                                         0x417 (size before relaxing)
- .debug_str     0x0000000000004992     0x19e6 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/adc.o
+ .debug_str     0x00000000000049c2     0x19e6 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/adc.o
                                        0x282b (size before relaxing)
- .debug_str     0x0000000000006378     0x1985 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/clks.o
+ .debug_str     0x00000000000063a8     0x1985 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/clks.o
                                        0x3d56 (size before relaxing)
- .debug_str     0x0000000000007cfd      0x269 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/d51_util.o
+ .debug_str     0x0000000000007d2d      0x269 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/d51_util.o
                                        0x1ee2 (size before relaxing)
- .debug_str     0x0000000000007f66      0x9d0 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/i2c_master.o
+ .debug_str     0x0000000000007f96      0x9d0 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/i2c_master.o
                                        0x3b01 (size before relaxing)
- .debug_str     0x0000000000008936      0x13a .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/led_matrix.o
+ .debug_str     0x0000000000008966      0x13a .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/led_matrix.o
                                        0x30d2 (size before relaxing)
- .debug_str     0x0000000000008a70      0x874 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/main_arm_atsam.o
+ .debug_str     0x0000000000008aa0      0x874 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/main_arm_atsam.o
                                        0x2c4e (size before relaxing)
- .debug_str     0x00000000000092e4       0x22 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/spi.o
+ .debug_str     0x0000000000009314       0x22 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/spi.o
                                        0x28ab (size before relaxing)
- .debug_str     0x0000000000009306      0xb4c .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/startup.o
+ .debug_str     0x0000000000009336      0xb4c .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/startup.o
                                         0xe1a (size before relaxing)
- .debug_str     0x0000000000009e52      0x154 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/main_usb.o
+ .debug_str     0x0000000000009e82      0x154 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/main_usb.o
                                         0xba3 (size before relaxing)
- .debug_str     0x0000000000009fa6      0x93c .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udc.o
+ .debug_str     0x0000000000009fd6      0x93c .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udc.o
                                        0x13a6 (size before relaxing)
- .debug_str     0x000000000000a8e2       0x50 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_cdc.o
+ .debug_str     0x000000000000a912       0x50 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_cdc.o
                                         0xb60 (size before relaxing)
- .debug_str     0x000000000000a932      0x1b1 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_hid.o
+ .debug_str     0x000000000000a962      0x1b1 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_hid.o
                                         0xcd9 (size before relaxing)
- .debug_str     0x000000000000aae3      0x447 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_hid_kbd.o
+ .debug_str     0x000000000000ab13      0x447 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_hid_kbd.o
                                         0xfd5 (size before relaxing)
- .debug_str     0x000000000000af2a      0x111 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_hid_kbd_desc.o
+ .debug_str     0x000000000000af5a      0x111 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/udi_hid_kbd_desc.o
                                         0xd2f (size before relaxing)
- .debug_str     0x000000000000b03b       0x44 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/ui.o
+ .debug_str     0x000000000000b06b       0x44 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/ui.o
                                         0x2ba (size before relaxing)
- .debug_str     0x000000000000b07f      0x538 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb2422.o
+ .debug_str     0x000000000000b0af      0x538 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb2422.o
                                        0x3cd1 (size before relaxing)
- .debug_str     0x000000000000b5b7      0xc9f .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb.o
+ .debug_str     0x000000000000b5e7      0xc9f .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb.o
                                        0x2b4b (size before relaxing)
- .debug_str     0x000000000000c256      0x4e4 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb_device_udd.o
+ .debug_str     0x000000000000c286      0x4e4 .build/obj_massdrop_ctrl_greyasteroid/protocol/arm_atsam/usb/usb_device_udd.o
                                        0x2362 (size before relaxing)
 
 .debug_frame    0x0000000000000000     0x38e0
