@@ -1815,98 +1815,98 @@
  1306              		.file 23 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 udi_hid_kbd.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:18     .text.udi_hid_kbd_getsetting:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:26     .text.udi_hid_kbd_getsetting:0000000000000000 udi_hid_kbd_getsetting
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:42     .text.udi_hid_kbd_setreport:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:48     .text.udi_hid_kbd_setreport:0000000000000000 udi_hid_kbd_setreport
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:94     .text.udi_hid_kbd_setreport:0000000000000028 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:18     .text.udi_hid_kbd_getsetting:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:26     .text.udi_hid_kbd_getsetting:0000000000000000 udi_hid_kbd_getsetting
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:42     .text.udi_hid_kbd_setreport:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:48     .text.udi_hid_kbd_setreport:0000000000000000 udi_hid_kbd_setreport
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:94     .text.udi_hid_kbd_setreport:0000000000000028 $d
                             *COM*:0000000000000001 udi_hid_kbd_report_set
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:107    .text.udi_hid_kbd_setreport_valid:0000000000000000 udi_hid_kbd_setreport_valid
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:101    .text.udi_hid_kbd_setreport_valid:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:120    .text.udi_hid_nkro_setreport:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:126    .text.udi_hid_nkro_setreport:0000000000000000 udi_hid_nkro_setreport
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:172    .text.udi_hid_nkro_setreport:0000000000000028 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:107    .text.udi_hid_kbd_setreport_valid:0000000000000000 udi_hid_kbd_setreport_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:101    .text.udi_hid_kbd_setreport_valid:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:120    .text.udi_hid_nkro_setreport:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:126    .text.udi_hid_nkro_setreport:0000000000000000 udi_hid_nkro_setreport
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:172    .text.udi_hid_nkro_setreport:0000000000000028 $d
                             *COM*:0000000000000001 udi_hid_nkro_report_set
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:581    .text.udi_hid_nkro_setreport_valid:0000000000000000 udi_hid_nkro_setreport_valid
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:179    .text.udi_hid_exk_setreport:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:185    .text.udi_hid_exk_setreport:0000000000000000 udi_hid_exk_setreport
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:231    .text.udi_hid_exk_setreport:0000000000000028 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:581    .text.udi_hid_nkro_setreport_valid:0000000000000000 udi_hid_nkro_setreport_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:179    .text.udi_hid_exk_setreport:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:185    .text.udi_hid_exk_setreport:0000000000000000 udi_hid_exk_setreport
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:231    .text.udi_hid_exk_setreport:0000000000000028 $d
                             *COM*:0000000000000001 udi_hid_exk_report_set
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:564    .text.udi_hid_exk_setreport_valid:0000000000000000 udi_hid_exk_setreport_valid
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:238    .text.udi_hid_kbd_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:245    .text.udi_hid_kbd_enable:0000000000000000 udi_hid_kbd_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:278    .text.udi_hid_kbd_enable:000000000000001c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:564    .text.udi_hid_exk_setreport_valid:0000000000000000 udi_hid_exk_setreport_valid
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:238    .text.udi_hid_kbd_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:245    .text.udi_hid_kbd_enable:0000000000000000 udi_hid_kbd_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:278    .text.udi_hid_kbd_enable:000000000000001c $d
                             *COM*:0000000000000001 udi_hid_kbd_b_report_trans_ongoing
                             *COM*:0000000000000008 udi_hid_kbd_report
                             *COM*:0000000000000001 udi_hid_kbd_b_report_valid
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:286    .text.udi_hid_kbd_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:293    .text.udi_hid_kbd_disable:0000000000000000 udi_hid_kbd_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:307    .text.udi_hid_kbd_setup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:314    .text.udi_hid_kbd_setup:0000000000000000 udi_hid_kbd_setup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:332    .text.udi_hid_kbd_setup:000000000000000c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:339    .text.udi_hid_nkro_setup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:346    .text.udi_hid_nkro_setup:0000000000000000 udi_hid_nkro_setup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:365    .text.udi_hid_nkro_setup:0000000000000010 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:372    .text.udi_hid_exk_setup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:379    .text.udi_hid_exk_setup:0000000000000000 udi_hid_exk_setup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:398    .text.udi_hid_exk_setup:0000000000000010 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:405    .text.udi_hid_nkro_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:412    .text.udi_hid_nkro_enable:0000000000000000 udi_hid_nkro_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:461    .text.udi_hid_nkro_enable:0000000000000024 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:286    .text.udi_hid_kbd_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:293    .text.udi_hid_kbd_disable:0000000000000000 udi_hid_kbd_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:307    .text.udi_hid_kbd_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:314    .text.udi_hid_kbd_setup:0000000000000000 udi_hid_kbd_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:332    .text.udi_hid_kbd_setup:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:339    .text.udi_hid_nkro_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:346    .text.udi_hid_nkro_setup:0000000000000000 udi_hid_nkro_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:365    .text.udi_hid_nkro_setup:0000000000000010 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:372    .text.udi_hid_exk_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:379    .text.udi_hid_exk_setup:0000000000000000 udi_hid_exk_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:398    .text.udi_hid_exk_setup:0000000000000010 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:405    .text.udi_hid_nkro_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:412    .text.udi_hid_nkro_enable:0000000000000000 udi_hid_nkro_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:461    .text.udi_hid_nkro_enable:0000000000000024 $d
                             *COM*:0000000000000020 udi_hid_nkro_report
                             *COM*:0000000000000001 udi_hid_nkro_b_report_trans_ongoing
                             *COM*:0000000000000001 udi_hid_nkro_b_report_valid
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:469    .text.udi_hid_nkro_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:476    .text.udi_hid_nkro_disable:0000000000000000 udi_hid_nkro_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:490    .text.udi_hid_exk_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:497    .text.udi_hid_exk_enable:0000000000000000 udi_hid_exk_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:530    .text.udi_hid_exk_enable:0000000000000018 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:469    .text.udi_hid_nkro_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:476    .text.udi_hid_nkro_disable:0000000000000000 udi_hid_nkro_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:490    .text.udi_hid_exk_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:497    .text.udi_hid_exk_enable:0000000000000000 udi_hid_exk_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:530    .text.udi_hid_exk_enable:0000000000000018 $d
                             *COM*:0000000000000003 udi_hid_exk_report
                             *COM*:0000000000000001 udi_hid_exk_b_report_valid
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:537    .text.udi_hid_exk_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:544    .text.udi_hid_exk_disable:0000000000000000 udi_hid_exk_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:558    .text.udi_hid_exk_setreport_valid:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:575    .text.udi_hid_nkro_setreport_valid:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:592    .text.udi_hid_exk_getsetting:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:599    .text.udi_hid_exk_getsetting:0000000000000000 udi_hid_exk_getsetting
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:611    .text.udi_hid_nkro_getsetting:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:618    .text.udi_hid_nkro_getsetting:0000000000000000 udi_hid_nkro_getsetting
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:630    .text.udi_hid_kbd_send_report:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:637    .text.udi_hid_kbd_send_report:0000000000000000 udi_hid_kbd_send_report
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:704    .text.udi_hid_kbd_send_report:0000000000000044 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:720    .text.udi_hid_kbd_report_sent:0000000000000000 udi_hid_kbd_report_sent
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:714    .text.udi_hid_kbd_report_sent:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:753    .text.udi_hid_kbd_report_sent:0000000000000014 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:759    .text.udi_hid_nkro_send_report:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:766    .text.udi_hid_nkro_send_report:0000000000000000 udi_hid_nkro_send_report
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:836    .text.udi_hid_nkro_send_report:000000000000004c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:852    .text.udi_hid_nkro_report_sent:0000000000000000 udi_hid_nkro_report_sent
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:846    .text.udi_hid_nkro_report_sent:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:885    .text.udi_hid_nkro_report_sent:0000000000000014 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:891    .text.udi_hid_exk_send_report:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:898    .text.udi_hid_exk_send_report:0000000000000000 udi_hid_exk_send_report
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:959    .text.udi_hid_exk_send_report:0000000000000040 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:974    .text.udi_hid_exk_report_sent:0000000000000000 udi_hid_exk_report_sent
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:968    .text.udi_hid_exk_report_sent:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1007   .text.udi_hid_exk_report_sent:0000000000000014 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1158   .data:0000000000000078 udi_hid_exk_report_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1212   .data:00000000000000ac udi_api_hid_exk
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1097   .data:000000000000003c udi_hid_nkro_report_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1220   .data:00000000000000c0 udi_api_hid_nkro
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1034   .data:0000000000000000 udi_hid_kbd_report_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1228   .data:00000000000000d4 udi_api_hid_kbd
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1030   .data:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1235   .bss:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1239   .bss:0000000000000000 udi_hid_kbd_rate
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1244   .bss:0000000000000004 udi_hid_kbd_protocol
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1249   .bss:0000000000000008 udi_hid_nkro_protocol
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1254   .bss:000000000000000c udi_hid_nkro_rate
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1259   .bss:0000000000000010 udi_hid_exk_protocol
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1264   .bss:0000000000000014 udi_hid_exk_rate
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1268   .bss:0000000000000015 udi_hid_exk_b_report_trans_ongoing
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1273   .bss:0000000000000018 udi_hid_kbd_report_trans
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1277   .bss:0000000000000020 udi_hid_nkro_report_trans
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0AXJeM.s:1281   .bss:0000000000000040 udi_hid_exk_report_trans
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:537    .text.udi_hid_exk_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:544    .text.udi_hid_exk_disable:0000000000000000 udi_hid_exk_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:558    .text.udi_hid_exk_setreport_valid:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:575    .text.udi_hid_nkro_setreport_valid:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:592    .text.udi_hid_exk_getsetting:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:599    .text.udi_hid_exk_getsetting:0000000000000000 udi_hid_exk_getsetting
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:611    .text.udi_hid_nkro_getsetting:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:618    .text.udi_hid_nkro_getsetting:0000000000000000 udi_hid_nkro_getsetting
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:630    .text.udi_hid_kbd_send_report:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:637    .text.udi_hid_kbd_send_report:0000000000000000 udi_hid_kbd_send_report
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:704    .text.udi_hid_kbd_send_report:0000000000000044 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:720    .text.udi_hid_kbd_report_sent:0000000000000000 udi_hid_kbd_report_sent
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:714    .text.udi_hid_kbd_report_sent:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:753    .text.udi_hid_kbd_report_sent:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:759    .text.udi_hid_nkro_send_report:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:766    .text.udi_hid_nkro_send_report:0000000000000000 udi_hid_nkro_send_report
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:836    .text.udi_hid_nkro_send_report:000000000000004c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:852    .text.udi_hid_nkro_report_sent:0000000000000000 udi_hid_nkro_report_sent
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:846    .text.udi_hid_nkro_report_sent:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:885    .text.udi_hid_nkro_report_sent:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:891    .text.udi_hid_exk_send_report:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:898    .text.udi_hid_exk_send_report:0000000000000000 udi_hid_exk_send_report
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:959    .text.udi_hid_exk_send_report:0000000000000040 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:974    .text.udi_hid_exk_report_sent:0000000000000000 udi_hid_exk_report_sent
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:968    .text.udi_hid_exk_report_sent:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1007   .text.udi_hid_exk_report_sent:0000000000000014 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1158   .data:0000000000000078 udi_hid_exk_report_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1212   .data:00000000000000ac udi_api_hid_exk
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1097   .data:000000000000003c udi_hid_nkro_report_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1220   .data:00000000000000c0 udi_api_hid_nkro
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1034   .data:0000000000000000 udi_hid_kbd_report_desc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1228   .data:00000000000000d4 udi_api_hid_kbd
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1030   .data:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1235   .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1239   .bss:0000000000000000 udi_hid_kbd_rate
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1244   .bss:0000000000000004 udi_hid_kbd_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1249   .bss:0000000000000008 udi_hid_nkro_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1254   .bss:000000000000000c udi_hid_nkro_rate
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1259   .bss:0000000000000010 udi_hid_exk_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1264   .bss:0000000000000014 udi_hid_exk_rate
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1268   .bss:0000000000000015 udi_hid_exk_b_report_trans_ongoing
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1273   .bss:0000000000000018 udi_hid_kbd_report_trans
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1277   .bss:0000000000000020 udi_hid_nkro_report_trans
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccnjCxfl.s:1281   .bss:0000000000000040 udi_hid_exk_report_trans
 
 UNDEFINED SYMBOLS
 udd_g_ctrlreq

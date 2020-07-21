@@ -2,8 +2,9 @@
  tmk_core/common/arm_atsam/suspend.c keyboards/massdrop/ctrl/config.h \
  quantum/config_common.h quantum/audio/song_list.h \
  quantum/audio/musical_notes.h keyboards/massdrop/ctrl/config_led.h \
- keyboards/massdrop/ctrl/matrix.h tmk_core/common/keyboard.h \
- tmk_core/protocol/arm_atsam/i2c_master.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h \
+ tmk_core/common/keyboard.h tmk_core/protocol/arm_atsam/i2c_master.h \
  lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/samd51j18a.h \
  lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h \
  lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/cmsis_compiler.h \
@@ -169,7 +170,9 @@ quantum/audio/musical_notes.h:
 
 keyboards/massdrop/ctrl/config_led.h:
 
-keyboards/massdrop/ctrl/matrix.h:
+keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h:
+
+keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h:
 
 tmk_core/common/keyboard.h:
 

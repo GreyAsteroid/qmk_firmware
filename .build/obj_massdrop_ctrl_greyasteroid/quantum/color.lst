@@ -403,12 +403,12 @@
  250              		.file 5 "quantum/led_tables.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 color.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccAa2YB9.s:18     .text.hsv_to_rgb:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccAa2YB9.s:26     .text.hsv_to_rgb:0000000000000000 hsv_to_rgb
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccAa2YB9.s:149    .text.hsv_to_rgb:0000000000000092 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccAa2YB9.s:241    .text.hsv_to_rgb:00000000000000d0 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccAa2YB9.s:156    .text.hsv_to_rgb:0000000000000099 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccAa2YB9.s:156    .text.hsv_to_rgb:000000000000009a $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccWBfRi6.s:18     .text.hsv_to_rgb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccWBfRi6.s:26     .text.hsv_to_rgb:0000000000000000 hsv_to_rgb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccWBfRi6.s:149    .text.hsv_to_rgb:0000000000000092 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccWBfRi6.s:241    .text.hsv_to_rgb:00000000000000d0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccWBfRi6.s:156    .text.hsv_to_rgb:0000000000000099 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccWBfRi6.s:156    .text.hsv_to_rgb:000000000000009a $t
 
 UNDEFINED SYMBOLS
 CIE1931_CURVE

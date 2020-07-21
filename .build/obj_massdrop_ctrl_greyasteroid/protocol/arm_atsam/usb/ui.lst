@@ -230,19 +230,19 @@
  161              		.file 5 "lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/system_samd51.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ui.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:18     .text.ui_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:26     .text.ui_init:0000000000000000 ui_init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:41     .text.ui_powerdown:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:48     .text.ui_powerdown:0000000000000000 ui_powerdown
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:59     .text.ui_wakeup_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:66     .text.ui_wakeup_enable:0000000000000000 ui_wakeup_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:77     .text.ui_wakeup_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:84     .text.ui_wakeup_disable:0000000000000000 ui_wakeup_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:95     .text.ui_wakeup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:102    .text.ui_wakeup:0000000000000000 ui_wakeup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:113    .text.ui_process:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:120    .text.ui_process:0000000000000000 ui_process
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:135    .text.ui_kbd_led:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccDOSe4J.s:142    .text.ui_kbd_led:0000000000000000 ui_kbd_led
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:18     .text.ui_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:26     .text.ui_init:0000000000000000 ui_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:41     .text.ui_powerdown:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:48     .text.ui_powerdown:0000000000000000 ui_powerdown
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:59     .text.ui_wakeup_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:66     .text.ui_wakeup_enable:0000000000000000 ui_wakeup_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:77     .text.ui_wakeup_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:84     .text.ui_wakeup_disable:0000000000000000 ui_wakeup_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:95     .text.ui_wakeup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:102    .text.ui_wakeup:0000000000000000 ui_wakeup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:113    .text.ui_process:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:120    .text.ui_process:0000000000000000 ui_process
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:135    .text.ui_kbd_led:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccjzGoBk.s:142    .text.ui_kbd_led:0000000000000000 ui_kbd_led
 
 NO UNDEFINED SYMBOLS

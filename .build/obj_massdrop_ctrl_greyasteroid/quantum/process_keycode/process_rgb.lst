@@ -328,7 +328,7 @@
  277 0004 0546     		mov	r5, r0
  278              		.loc 1 54 8 view .LVU14
  279 0006 002C     		cmp	r4, #0
- 280 0008 43D0     		beq	.L33
+ 280 0008 3DD0     		beq	.L30
  281              	.LBB2:
   55:quantum/process_keycode/process_rgb.c **** #else
   56:quantum/process_keycode/process_rgb.c ****     // Split keyboards need to trigger on key-up for edge-case issue
@@ -352,28 +352,28 @@
  294 001a 0ED8     		bhi	.L15
  295 001c DFE803F0 		tbb	[pc, r3]
  296              	.L17:
- 297 0020 0A       		.byte	(.L32-.L17)/2
- 298 0021 0F       		.byte	(.L31-.L17)/2
- 299 0022 14       		.byte	(.L30-.L17)/2
- 300 0023 17       		.byte	(.L29-.L17)/2
- 301 0024 1A       		.byte	(.L28-.L17)/2
- 302 0025 1D       		.byte	(.L27-.L17)/2
- 303 0026 20       		.byte	(.L26-.L17)/2
- 304 0027 23       		.byte	(.L25-.L17)/2
- 305 0028 26       		.byte	(.L24-.L17)/2
- 306 0029 29       		.byte	(.L23-.L17)/2
- 307 002a 2C       		.byte	(.L22-.L17)/2
- 308 002b 2F       		.byte	(.L21-.L17)/2
- 309 002c 33       		.byte	(.L20-.L17)/2
- 310 002d 35       		.byte	(.L19-.L17)/2
- 311 002e 37       		.byte	(.L18-.L17)/2
- 312 002f 0C       		.byte	(.L34-.L17)/2
- 313 0030 0C       		.byte	(.L34-.L17)/2
- 314 0031 0C       		.byte	(.L34-.L17)/2
- 315 0032 0C       		.byte	(.L34-.L17)/2
- 316 0033 0C       		.byte	(.L34-.L17)/2
+ 297 0020 0A       		.byte	(.L29-.L17)/2
+ 298 0021 0F       		.byte	(.L28-.L17)/2
+ 299 0022 14       		.byte	(.L27-.L17)/2
+ 300 0023 17       		.byte	(.L26-.L17)/2
+ 301 0024 1A       		.byte	(.L25-.L17)/2
+ 302 0025 1D       		.byte	(.L24-.L17)/2
+ 303 0026 20       		.byte	(.L23-.L17)/2
+ 304 0027 23       		.byte	(.L22-.L17)/2
+ 305 0028 26       		.byte	(.L21-.L17)/2
+ 306 0029 29       		.byte	(.L20-.L17)/2
+ 307 002a 2C       		.byte	(.L19-.L17)/2
+ 308 002b 2F       		.byte	(.L18-.L17)/2
+ 309 002c 0C       		.byte	(.L31-.L17)/2
+ 310 002d 0C       		.byte	(.L31-.L17)/2
+ 311 002e 0C       		.byte	(.L31-.L17)/2
+ 312 002f 0C       		.byte	(.L31-.L17)/2
+ 313 0030 0C       		.byte	(.L31-.L17)/2
+ 314 0031 0C       		.byte	(.L31-.L17)/2
+ 315 0032 0C       		.byte	(.L31-.L17)/2
+ 316 0033 0C       		.byte	(.L31-.L17)/2
  317              		.p2align 1
- 318              	.L32:
+ 318              	.L29:
   61:quantum/process_keycode/process_rgb.c ****             case RGB_TOG:
   62:quantum/process_keycode/process_rgb.c **** #if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_DISABLE_KEYCODES)
   63:quantum/process_keycode/process_rgb.c ****                 rgblight_toggle();
@@ -383,7 +383,7 @@
  319              		.loc 1 66 17 view .LVU20
  320 0034 FFF7FEFF 		bl	rgb_matrix_toggle
  321              	.LVL6:
- 322              	.L34:
+ 322              	.L31:
   67:quantum/process_keycode/process_rgb.c **** #endif
   68:quantum/process_keycode/process_rgb.c ****                 return false;
  323              		.loc 1 68 17 view .LVU21
@@ -538,197 +538,169 @@
  330 003a 2046     		mov	r0, r4
  331 003c 38BD     		pop	{r3, r4, r5, pc}
  332              	.LVL7:
- 333              	.L31:
+ 333              	.L28:
  334              	.LBB3:
   74:quantum/process_keycode/process_rgb.c **** #endif
  335              		.loc 1 74 17 is_stmt 1 view .LVU25
- 336 003e 164A     		ldr	r2, .L37
- 337 0040 1649     		ldr	r1, .L37+4
- 338              	.L35:
+ 336 003e 134A     		ldr	r2, .L33
+ 337 0040 1349     		ldr	r1, .L33+4
+ 338              	.L32:
   82:quantum/process_keycode/process_rgb.c **** #endif
  339              		.loc 1 82 17 is_stmt 0 view .LVU26
  340 0042 FFF7FEFF 		bl	handleKeycodeRGB
  341              	.LVL8:
   84:quantum/process_keycode/process_rgb.c ****             case RGB_HUI:
  342              		.loc 1 84 17 is_stmt 1 view .LVU27
- 343 0046 F7E7     		b	.L34
+ 343 0046 F7E7     		b	.L31
  344              	.LVL9:
- 345              	.L30:
+ 345              	.L27:
   82:quantum/process_keycode/process_rgb.c **** #endif
  346              		.loc 1 82 17 view .LVU28
- 347 0048 144A     		ldr	r2, .L37+4
- 348 004a 1349     		ldr	r1, .L37
- 349 004c F9E7     		b	.L35
- 350              	.L29:
+ 347 0048 114A     		ldr	r2, .L33+4
+ 348 004a 1049     		ldr	r1, .L33
+ 349 004c F9E7     		b	.L32
+ 350              	.L26:
   90:quantum/process_keycode/process_rgb.c **** #endif
  351              		.loc 1 90 17 view .LVU29
- 352 004e 144A     		ldr	r2, .L37+8
- 353 0050 1449     		ldr	r1, .L37+12
- 354 0052 F6E7     		b	.L35
- 355              	.L28:
+ 352 004e 114A     		ldr	r2, .L33+8
+ 353 0050 1149     		ldr	r1, .L33+12
+ 354 0052 F6E7     		b	.L32
+ 355              	.L25:
   98:quantum/process_keycode/process_rgb.c **** #endif
  356              		.loc 1 98 17 view .LVU30
- 357 0054 134A     		ldr	r2, .L37+12
- 358 0056 1249     		ldr	r1, .L37+8
- 359 0058 F3E7     		b	.L35
- 360              	.L27:
+ 357 0054 104A     		ldr	r2, .L33+12
+ 358 0056 0F49     		ldr	r1, .L33+8
+ 359 0058 F3E7     		b	.L32
+ 360              	.L24:
  106:quantum/process_keycode/process_rgb.c **** #endif
  361              		.loc 1 106 17 view .LVU31
- 362 005a 134A     		ldr	r2, .L37+16
- 363 005c 1349     		ldr	r1, .L37+20
- 364 005e F0E7     		b	.L35
- 365              	.L26:
+ 362 005a 104A     		ldr	r2, .L33+16
+ 363 005c 1049     		ldr	r1, .L33+20
+ 364 005e F0E7     		b	.L32
+ 365              	.L23:
  114:quantum/process_keycode/process_rgb.c **** #endif
  366              		.loc 1 114 17 view .LVU32
- 367 0060 124A     		ldr	r2, .L37+20
- 368 0062 1149     		ldr	r1, .L37+16
- 369 0064 EDE7     		b	.L35
- 370              	.L25:
+ 367 0060 0F4A     		ldr	r2, .L33+20
+ 368 0062 0E49     		ldr	r1, .L33+16
+ 369 0064 EDE7     		b	.L32
+ 370              	.L22:
  122:quantum/process_keycode/process_rgb.c **** #endif
  371              		.loc 1 122 17 view .LVU33
- 372 0066 124A     		ldr	r2, .L37+24
- 373 0068 1249     		ldr	r1, .L37+28
- 374 006a EAE7     		b	.L35
- 375              	.L24:
+ 372 0066 0F4A     		ldr	r2, .L33+24
+ 373 0068 0F49     		ldr	r1, .L33+28
+ 374 006a EAE7     		b	.L32
+ 375              	.L21:
  130:quantum/process_keycode/process_rgb.c **** #endif
  376              		.loc 1 130 17 view .LVU34
- 377 006c 114A     		ldr	r2, .L37+28
- 378 006e 1049     		ldr	r1, .L37+24
- 379 0070 E7E7     		b	.L35
- 380              	.L23:
+ 377 006c 0E4A     		ldr	r2, .L33+28
+ 378 006e 0D49     		ldr	r1, .L33+24
+ 379 0070 E7E7     		b	.L32
+ 380              	.L20:
  138:quantum/process_keycode/process_rgb.c **** #endif
  381              		.loc 1 138 17 view .LVU35
- 382 0072 114A     		ldr	r2, .L37+32
- 383 0074 1149     		ldr	r1, .L37+36
- 384 0076 E4E7     		b	.L35
- 385              	.L22:
+ 382 0072 0E4A     		ldr	r2, .L33+32
+ 383 0074 0E49     		ldr	r1, .L33+36
+ 384 0076 E4E7     		b	.L32
+ 385              	.L19:
  146:quantum/process_keycode/process_rgb.c **** #endif
  386              		.loc 1 146 17 view .LVU36
- 387 0078 104A     		ldr	r2, .L37+36
- 388 007a 0F49     		ldr	r1, .L37+32
- 389 007c E1E7     		b	.L35
- 390              	.L21:
+ 387 0078 0D4A     		ldr	r2, .L33+36
+ 388 007a 0C49     		ldr	r1, .L33+32
+ 389 007c E1E7     		b	.L32
+ 390              	.L18:
  154:quantum/process_keycode/process_rgb.c **** #endif
  391              		.loc 1 154 17 view .LVU37
  392 007e 0120     		movs	r0, #1
  393              	.LVL10:
- 394              	.L36:
- 178:quantum/process_keycode/process_rgb.c **** #endif
- 395              		.loc 1 178 17 is_stmt 0 view .LVU38
- 396 0080 FFF7FEFF 		bl	rgb_matrix_mode
- 397              	.LVL11:
- 180:quantum/process_keycode/process_rgb.c ****             case RGB_MODE_SNAKE:
- 398              		.loc 1 180 17 is_stmt 1 view .LVU39
- 399 0084 D8E7     		b	.L34
- 400              	.LVL12:
- 401              	.L20:
- 162:quantum/process_keycode/process_rgb.c **** #endif
- 402              		.loc 1 162 17 view .LVU40
- 403 0086 0520     		movs	r0, #5
- 404              	.LVL13:
- 162:quantum/process_keycode/process_rgb.c **** #endif
- 405              		.loc 1 162 17 is_stmt 0 view .LVU41
- 406 0088 FAE7     		b	.L36
- 407              	.LVL14:
- 408              	.L19:
- 170:quantum/process_keycode/process_rgb.c **** #endif
- 409              		.loc 1 170 17 is_stmt 1 view .LVU42
- 410 008a 0D20     		movs	r0, #13
- 411              	.LVL15:
- 170:quantum/process_keycode/process_rgb.c **** #endif
- 412              		.loc 1 170 17 is_stmt 0 view .LVU43
- 413 008c F8E7     		b	.L36
- 414              	.LVL16:
- 415              	.L18:
- 178:quantum/process_keycode/process_rgb.c **** #endif
- 416              		.loc 1 178 17 is_stmt 1 view .LVU44
- 417 008e 1220     		movs	r0, #18
- 418              	.LVL17:
- 178:quantum/process_keycode/process_rgb.c **** #endif
- 419              		.loc 1 178 17 is_stmt 0 view .LVU45
- 420 0090 F6E7     		b	.L36
- 421              	.LVL18:
- 422              	.L33:
- 178:quantum/process_keycode/process_rgb.c **** #endif
- 423              		.loc 1 178 17 view .LVU46
- 424              	.LBE3:
+ 154:quantum/process_keycode/process_rgb.c **** #endif
+ 394              		.loc 1 154 17 is_stmt 0 view .LVU38
+ 395 0080 FFF7FEFF 		bl	rgb_matrix_mode
+ 396              	.LVL11:
+ 156:quantum/process_keycode/process_rgb.c ****             case RGB_MODE_BREATHE:
+ 397              		.loc 1 156 17 is_stmt 1 view .LVU39
+ 398 0084 D8E7     		b	.L31
+ 399              	.LVL12:
+ 400              	.L30:
+ 156:quantum/process_keycode/process_rgb.c ****             case RGB_MODE_BREATHE:
+ 401              		.loc 1 156 17 is_stmt 0 view .LVU40
+ 402              	.LBE3:
  209:quantum/process_keycode/process_rgb.c **** }
- 425              		.loc 1 209 12 view .LVU47
- 426 0092 0124     		movs	r4, #1
- 427 0094 D1E7     		b	.L15
- 428              	.L38:
- 429 0096 00BF     		.align	2
- 430              	.L37:
- 431 0098 00000000 		.word	rgb_matrix_step_reverse
- 432 009c 00000000 		.word	rgb_matrix_step
- 433 00a0 00000000 		.word	rgb_matrix_decrease_hue
- 434 00a4 00000000 		.word	rgb_matrix_increase_hue
- 435 00a8 00000000 		.word	rgb_matrix_decrease_sat
- 436 00ac 00000000 		.word	rgb_matrix_increase_sat
- 437 00b0 00000000 		.word	rgb_matrix_decrease_val
- 438 00b4 00000000 		.word	rgb_matrix_increase_val
- 439 00b8 00000000 		.word	rgb_matrix_decrease_speed
- 440 00bc 00000000 		.word	rgb_matrix_increase_speed
- 441              		.cfi_endproc
- 442              	.LFE21:
- 444              		.text
- 445              	.Letext0:
- 446              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
- 447              		.file 4 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
- 448              		.file 5 "tmk_core/protocol/arm_atsam/clks.h"
- 449              		.file 6 "tmk_core/common/keyboard.h"
- 450              		.file 7 "tmk_core/common/action.h"
- 451              		.file 8 "tmk_core/common/report.h"
- 452              		.file 9 "tmk_core/common/host.h"
- 453              		.file 10 "tmk_core/common/debug.h"
- 454              		.file 11 "quantum/keycode_config.h"
- 455              		.file 12 "tmk_core/common/keycode.h"
- 456              		.file 13 "quantum/quantum_keycodes.h"
- 457              		.file 14 "quantum/keymap.h"
- 458              		.file 15 "quantum/color.h"
- 459              		.file 16 "quantum/rgb_matrix_types.h"
- 460              		.file 17 "quantum/rgb_matrix.h"
- 461              		.file 18 "tmk_core/common/action_layer.h"
- 462              		.file 19 "tmk_core/common/timer.h"
- 463              		.file 20 "tmk_core/common/action_util.h"
- 464              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
- 465              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
- 466              		.file 23 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
- 467              		.file 24 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
- 468              		.file 25 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
- 469              		.file 26 "quantum/quantum.h"
+ 403              		.loc 1 209 12 view .LVU41
+ 404 0086 0124     		movs	r4, #1
+ 405 0088 D7E7     		b	.L15
+ 406              	.L34:
+ 407 008a 00BF     		.align	2
+ 408              	.L33:
+ 409 008c 00000000 		.word	rgb_matrix_step_reverse
+ 410 0090 00000000 		.word	rgb_matrix_step
+ 411 0094 00000000 		.word	rgb_matrix_decrease_hue
+ 412 0098 00000000 		.word	rgb_matrix_increase_hue
+ 413 009c 00000000 		.word	rgb_matrix_decrease_sat
+ 414 00a0 00000000 		.word	rgb_matrix_increase_sat
+ 415 00a4 00000000 		.word	rgb_matrix_decrease_val
+ 416 00a8 00000000 		.word	rgb_matrix_increase_val
+ 417 00ac 00000000 		.word	rgb_matrix_decrease_speed
+ 418 00b0 00000000 		.word	rgb_matrix_increase_speed
+ 419              		.cfi_endproc
+ 420              	.LFE21:
+ 422              		.text
+ 423              	.Letext0:
+ 424              		.file 3 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/machine/_default_t
+ 425              		.file 4 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_stdint.h"
+ 426              		.file 5 "tmk_core/protocol/arm_atsam/clks.h"
+ 427              		.file 6 "tmk_core/common/keyboard.h"
+ 428              		.file 7 "tmk_core/common/action.h"
+ 429              		.file 8 "tmk_core/common/report.h"
+ 430              		.file 9 "tmk_core/common/host.h"
+ 431              		.file 10 "tmk_core/common/debug.h"
+ 432              		.file 11 "quantum/keycode_config.h"
+ 433              		.file 12 "tmk_core/common/keycode.h"
+ 434              		.file 13 "quantum/quantum_keycodes.h"
+ 435              		.file 14 "quantum/keymap.h"
+ 436              		.file 15 "quantum/color.h"
+ 437              		.file 16 "quantum/rgb_matrix_types.h"
+ 438              		.file 17 "quantum/rgb_matrix.h"
+ 439              		.file 18 "tmk_core/common/action_layer.h"
+ 440              		.file 19 "tmk_core/common/timer.h"
+ 441              		.file 20 "tmk_core/common/action_util.h"
+ 442              		.file 21 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/lib/gcc/arm-none-eabi/8.3.1/include/std
+ 443              		.file 22 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/_types.h"
+ 444              		.file 23 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/reent.h"
+ 445              		.file 24 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/sys/lock.h"
+ 446              		.file 25 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
+ 447              		.file 26 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_rgb.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:18     .text.handleKeycodeRGB:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:25     .text.handleKeycodeRGB:0000000000000000 handleKeycodeRGB
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:49     .text.rgb_matrix_toggle:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:56     .text.rgb_matrix_toggle:0000000000000000 rgb_matrix_toggle
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:56     .text.rgb_matrix_toggle:0000000000000000 rgb_matrix_toggle.localalias.0
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:72     .text.rgb_matrix_step:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:79     .text.rgb_matrix_step:0000000000000000 rgb_matrix_step
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:90     .text.rgb_matrix_step_reverse:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:97     .text.rgb_matrix_step_reverse:0000000000000000 rgb_matrix_step_reverse
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:108    .text.rgb_matrix_increase_hue:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:115    .text.rgb_matrix_increase_hue:0000000000000000 rgb_matrix_increase_hue
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:126    .text.rgb_matrix_decrease_hue:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:133    .text.rgb_matrix_decrease_hue:0000000000000000 rgb_matrix_decrease_hue
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:144    .text.rgb_matrix_increase_sat:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:151    .text.rgb_matrix_increase_sat:0000000000000000 rgb_matrix_increase_sat
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:162    .text.rgb_matrix_decrease_sat:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:169    .text.rgb_matrix_decrease_sat:0000000000000000 rgb_matrix_decrease_sat
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:180    .text.rgb_matrix_increase_val:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:187    .text.rgb_matrix_increase_val:0000000000000000 rgb_matrix_increase_val
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:198    .text.rgb_matrix_decrease_val:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:205    .text.rgb_matrix_decrease_val:0000000000000000 rgb_matrix_decrease_val
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:216    .text.rgb_matrix_increase_speed:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:223    .text.rgb_matrix_increase_speed:0000000000000000 rgb_matrix_increase_speed
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:234    .text.rgb_matrix_decrease_speed:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:241    .text.rgb_matrix_decrease_speed:0000000000000000 rgb_matrix_decrease_speed
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:252    .text.process_rgb:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:259    .text.process_rgb:0000000000000000 process_rgb
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:297    .text.process_rgb:0000000000000020 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:317    .text.process_rgb:0000000000000034 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccbBpVE9.s:431    .text.process_rgb:0000000000000098 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:18     .text.handleKeycodeRGB:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:25     .text.handleKeycodeRGB:0000000000000000 handleKeycodeRGB
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:49     .text.rgb_matrix_toggle:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:56     .text.rgb_matrix_toggle:0000000000000000 rgb_matrix_toggle
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:56     .text.rgb_matrix_toggle:0000000000000000 rgb_matrix_toggle.localalias.0
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:72     .text.rgb_matrix_step:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:79     .text.rgb_matrix_step:0000000000000000 rgb_matrix_step
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:90     .text.rgb_matrix_step_reverse:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:97     .text.rgb_matrix_step_reverse:0000000000000000 rgb_matrix_step_reverse
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:108    .text.rgb_matrix_increase_hue:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:115    .text.rgb_matrix_increase_hue:0000000000000000 rgb_matrix_increase_hue
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:126    .text.rgb_matrix_decrease_hue:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:133    .text.rgb_matrix_decrease_hue:0000000000000000 rgb_matrix_decrease_hue
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:144    .text.rgb_matrix_increase_sat:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:151    .text.rgb_matrix_increase_sat:0000000000000000 rgb_matrix_increase_sat
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:162    .text.rgb_matrix_decrease_sat:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:169    .text.rgb_matrix_decrease_sat:0000000000000000 rgb_matrix_decrease_sat
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:180    .text.rgb_matrix_increase_val:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:187    .text.rgb_matrix_increase_val:0000000000000000 rgb_matrix_increase_val
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:198    .text.rgb_matrix_decrease_val:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:205    .text.rgb_matrix_decrease_val:0000000000000000 rgb_matrix_decrease_val
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:216    .text.rgb_matrix_increase_speed:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:223    .text.rgb_matrix_increase_speed:0000000000000000 rgb_matrix_increase_speed
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:234    .text.rgb_matrix_decrease_speed:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:241    .text.rgb_matrix_decrease_speed:0000000000000000 rgb_matrix_decrease_speed
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:252    .text.process_rgb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:259    .text.process_rgb:0000000000000000 process_rgb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:297    .text.process_rgb:0000000000000020 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:317    .text.process_rgb:0000000000000034 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccyA8Pjf.s:409    .text.process_rgb:000000000000008c $d
 
 UNDEFINED SYMBOLS
 get_mods

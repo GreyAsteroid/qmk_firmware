@@ -710,12 +710,12 @@
  459              		.file 6 "quantum/keycode_config.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keycode_config.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccswXqRF.s:18     .text.keycode_config:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccswXqRF.s:26     .text.keycode_config:0000000000000000 keycode_config
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccswXqRF.s:272    .text.keycode_config:0000000000000100 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccswXqRF.s:277    .text.mod_config:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccswXqRF.s:284    .text.mod_config:0000000000000000 mod_config
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccswXqRF.s:449    .text.mod_config:00000000000000a8 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclAs5M2.s:18     .text.keycode_config:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclAs5M2.s:26     .text.keycode_config:0000000000000000 keycode_config
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclAs5M2.s:272    .text.keycode_config:0000000000000100 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclAs5M2.s:277    .text.mod_config:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclAs5M2.s:284    .text.mod_config:0000000000000000 mod_config
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclAs5M2.s:449    .text.mod_config:00000000000000a8 $d
 
 UNDEFINED SYMBOLS
 keymap_config

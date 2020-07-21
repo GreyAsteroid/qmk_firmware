@@ -1,9 +1,12 @@
 .build/obj_massdrop_ctrl_greyasteroid/matrix.o: \
- keyboards/massdrop/ctrl/matrix.c keyboards/massdrop/ctrl/config.h \
- quantum/config_common.h quantum/audio/song_list.h \
- quantum/audio/musical_notes.h keyboards/massdrop/ctrl/config_led.h \
- keyboards/massdrop/ctrl/ctrl.h quantum/quantum.h tmk_core/common/wait.h \
- tmk_core/protocol/arm_atsam/clks.h keyboards/massdrop/ctrl/matrix.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.c \
+ keyboards/massdrop/ctrl/config.h quantum/config_common.h \
+ quantum/audio/song_list.h quantum/audio/musical_notes.h \
+ keyboards/massdrop/ctrl/config_led.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/ctrl.h quantum/quantum.h \
+ tmk_core/common/wait.h tmk_core/protocol/arm_atsam/clks.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h \
  tmk_core/common/keyboard.h quantum/keymap.h tmk_core/common/action.h \
  tmk_core/common/keyboard.h tmk_core/common/keycode.h \
  tmk_core/common/action_code.h tmk_core/common/action_macro.h \
@@ -59,7 +62,8 @@
  quantum/process_keycode/process_space_cadet.h \
  quantum/process_keycode/process_magic.h \
  quantum/process_keycode/process_grave_esc.h \
- quantum/process_keycode/process_rgb.h keyboards/massdrop/ctrl/matrix.h \
+ quantum/process_keycode/process_rgb.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h \
  tmk_core/protocol/arm_atsam/i2c_master.h \
  lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/samd51j18a.h \
  lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h \
@@ -172,7 +176,9 @@ quantum/audio/musical_notes.h:
 
 keyboards/massdrop/ctrl/config_led.h:
 
-keyboards/massdrop/ctrl/ctrl.h:
+keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h:
+
+keyboards/massdrop/ctrl/keymaps/greyasteroid/ctrl.h:
 
 quantum/quantum.h:
 
@@ -180,7 +186,7 @@ tmk_core/common/wait.h:
 
 tmk_core/protocol/arm_atsam/clks.h:
 
-keyboards/massdrop/ctrl/matrix.h:
+keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h:
 
 tmk_core/common/keyboard.h:
 
@@ -334,7 +340,7 @@ quantum/process_keycode/process_grave_esc.h:
 
 quantum/process_keycode/process_rgb.h:
 
-keyboards/massdrop/ctrl/matrix.h:
+keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h:
 
 tmk_core/protocol/arm_atsam/i2c_master.h:
 

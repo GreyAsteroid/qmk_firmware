@@ -1046,35 +1046,35 @@
  592              		.file 15 "tmk_core/common/magic.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keyboard.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:18     .text.disable_jtag:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:26     .text.disable_jtag:0000000000000000 disable_jtag
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:40     .text.keyboard_pre_init_user:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:47     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:47     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user.localalias.0
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:62     .text.matrix_setup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:69     .text.matrix_setup:0000000000000000 matrix_setup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:80     .text.keyboard_pre_init_kb:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:87     .text.keyboard_pre_init_kb:0000000000000000 keyboard_pre_init_kb
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:108    .text.keyboard_post_init_user:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:115    .text.keyboard_post_init_user:0000000000000000 keyboard_post_init_user
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:126    .text.keyboard_post_init_kb:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:133    .text.keyboard_post_init_kb:0000000000000000 keyboard_post_init_kb
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:154    .text.keyboard_setup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:161    .text.keyboard_setup:0000000000000000 keyboard_setup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:186    .text.is_keyboard_master:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:193    .text.is_keyboard_master:0000000000000000 is_keyboard_master
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:208    .text.should_process_keypress:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:215    .text.should_process_keypress:0000000000000000 should_process_keypress
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:236    .text.keyboard_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:243    .text.keyboard_init:0000000000000000 keyboard_init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:273    .text.keyboard_task:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:280    .text.keyboard_task:0000000000000000 keyboard_task
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:535    .text.keyboard_task:00000000000000d4 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:541    .text.keyboard_set_leds:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:548    .text.keyboard_set_leds:0000000000000000 keyboard_set_leds
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:571    .bss:0000000000000000 matrix_prev.6801
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:572    .bss:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6GWucO.s:575    .bss:000000000000000b led_status.6802
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:18     .text.disable_jtag:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:26     .text.disable_jtag:0000000000000000 disable_jtag
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:40     .text.keyboard_pre_init_user:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:47     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:47     .text.keyboard_pre_init_user:0000000000000000 keyboard_pre_init_user.localalias.0
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:62     .text.matrix_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:69     .text.matrix_setup:0000000000000000 matrix_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:80     .text.keyboard_pre_init_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:87     .text.keyboard_pre_init_kb:0000000000000000 keyboard_pre_init_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:108    .text.keyboard_post_init_user:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:115    .text.keyboard_post_init_user:0000000000000000 keyboard_post_init_user
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:126    .text.keyboard_post_init_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:133    .text.keyboard_post_init_kb:0000000000000000 keyboard_post_init_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:154    .text.keyboard_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:161    .text.keyboard_setup:0000000000000000 keyboard_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:186    .text.is_keyboard_master:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:193    .text.is_keyboard_master:0000000000000000 is_keyboard_master
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:208    .text.should_process_keypress:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:215    .text.should_process_keypress:0000000000000000 should_process_keypress
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:236    .text.keyboard_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:243    .text.keyboard_init:0000000000000000 keyboard_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:273    .text.keyboard_task:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:280    .text.keyboard_task:0000000000000000 keyboard_task
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:535    .text.keyboard_task:00000000000000d4 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:541    .text.keyboard_set_leds:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:548    .text.keyboard_set_leds:0000000000000000 keyboard_set_leds
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:571    .bss:0000000000000000 matrix_prev.6801
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:572    .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc4WTWTf.s:575    .bss:000000000000000b led_status.6802
 
 UNDEFINED SYMBOLS
 timer_init

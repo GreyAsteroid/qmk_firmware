@@ -26,7 +26,7 @@
   28              		.file 4 "tmk_core/common/debug.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 debug.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccJFwByg.s:21     .bss:0000000000000000 debug_config
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccJFwByg.s:22     .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFP1dz6.s:21     .bss:0000000000000000 debug_config
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFP1dz6.s:22     .bss:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

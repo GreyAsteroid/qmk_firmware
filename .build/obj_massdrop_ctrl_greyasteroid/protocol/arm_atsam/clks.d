@@ -2,6 +2,7 @@
  tmk_core/protocol/arm_atsam/clks.c keyboards/massdrop/ctrl/config.h \
  quantum/config_common.h quantum/audio/song_list.h \
  quantum/audio/musical_notes.h keyboards/massdrop/ctrl/config_led.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h \
  tmk_core/protocol/arm_atsam/arm_atsam_protocol.h \
  lib/arm_atsam/packs/atmel/SAMD51_DFP/1.0.70/include/samd51j18a.h \
  lib/arm_atsam/packs/arm/cmsis/5.0.1/CMSIS/Include/core_cm4.h \
@@ -108,12 +109,12 @@
  tmk_core/protocol/arm_atsam/./usb/usb2422.h \
  tmk_core/protocol/arm_atsam/main_arm_atsam.h \
  tmk_core/protocol/arm_atsam/led_matrix.h quantum/quantum.h \
- keyboards/massdrop/ctrl/matrix.h tmk_core/common/keyboard.h \
- quantum/keymap.h tmk_core/common/action.h tmk_core/common/keyboard.h \
- tmk_core/common/keycode.h tmk_core/common/action_code.h \
- tmk_core/common/action_macro.h tmk_core/common/progmem.h \
- tmk_core/common/keycode.h tmk_core/common/action_macro.h \
- tmk_core/common/report.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h \
+ tmk_core/common/keyboard.h quantum/keymap.h tmk_core/common/action.h \
+ tmk_core/common/keyboard.h tmk_core/common/keycode.h \
+ tmk_core/common/action_code.h tmk_core/common/action_macro.h \
+ tmk_core/common/progmem.h tmk_core/common/keycode.h \
+ tmk_core/common/action_macro.h tmk_core/common/report.h \
  tmk_core/protocol/arm_atsam/usb/udi_device_epsize.h \
  tmk_core/common/host.h tmk_core/common/host_driver.h \
  tmk_core/common/led.h tmk_core/common/debug.h tmk_core/common/print.h \
@@ -192,6 +193,8 @@ quantum/audio/song_list.h:
 quantum/audio/musical_notes.h:
 
 keyboards/massdrop/ctrl/config_led.h:
+
+keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h:
 
 tmk_core/protocol/arm_atsam/arm_atsam_protocol.h:
 
@@ -413,7 +416,7 @@ tmk_core/protocol/arm_atsam/led_matrix.h:
 
 quantum/quantum.h:
 
-keyboards/massdrop/ctrl/matrix.h:
+keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h:
 
 tmk_core/common/keyboard.h:
 

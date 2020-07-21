@@ -405,30 +405,30 @@
  331              		.file 25 "/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update/arm-none-eabi/include/stdlib.h"
  332              		.file 26 "quantum/quantum.h"
  333              		.file 27 "tmk_core/protocol/arm_atsam/led_matrix.h"
- 334              		.file 28 "keyboards/massdrop/ctrl/matrix.h"
+ 334              		.file 28 "keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 suspend.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:18     .text.suspend_idle:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:26     .text.suspend_idle:0000000000000000 suspend_idle
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:41     .text.matrix_power_up:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:48     .text.matrix_power_up:0000000000000000 matrix_power_up
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:48     .text.matrix_power_up:0000000000000000 matrix_power_up.localalias.0
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:63     .text.suspend_power_down_user:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:70     .text.suspend_power_down_user:0000000000000000 suspend_power_down_user
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:81     .text.suspend_power_down_kb:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:88     .text.suspend_power_down_kb:0000000000000000 suspend_power_down_kb
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:109    .text.suspend_power_down:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:116    .text.suspend_power_down:0000000000000000 suspend_power_down
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:141    .text.matrix_power_down:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:148    .text.matrix_power_down:0000000000000000 matrix_power_down
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:159    .text.suspend_wakeup_condition:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:166    .text.suspend_wakeup_condition:0000000000000000 suspend_wakeup_condition
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:227    .text.suspend_wakeup_init_user:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:234    .text.suspend_wakeup_init_user:0000000000000000 suspend_wakeup_init_user
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:245    .text.suspend_wakeup_init_kb:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:252    .text.suspend_wakeup_init_kb:0000000000000000 suspend_wakeup_init_kb
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:273    .text.suspend_wakeup_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccYfEuCd.s:280    .text.suspend_wakeup_init:0000000000000000 suspend_wakeup_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:18     .text.suspend_idle:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:26     .text.suspend_idle:0000000000000000 suspend_idle
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:41     .text.matrix_power_up:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:48     .text.matrix_power_up:0000000000000000 matrix_power_up
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:48     .text.matrix_power_up:0000000000000000 matrix_power_up.localalias.0
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:63     .text.suspend_power_down_user:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:70     .text.suspend_power_down_user:0000000000000000 suspend_power_down_user
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:81     .text.suspend_power_down_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:88     .text.suspend_power_down_kb:0000000000000000 suspend_power_down_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:109    .text.suspend_power_down:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:116    .text.suspend_power_down:0000000000000000 suspend_power_down
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:141    .text.matrix_power_down:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:148    .text.matrix_power_down:0000000000000000 matrix_power_down
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:159    .text.suspend_wakeup_condition:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:166    .text.suspend_wakeup_condition:0000000000000000 suspend_wakeup_condition
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:227    .text.suspend_wakeup_init_user:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:234    .text.suspend_wakeup_init_user:0000000000000000 suspend_wakeup_init_user
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:245    .text.suspend_wakeup_init_kb:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:252    .text.suspend_wakeup_init_kb:0000000000000000 suspend_wakeup_init_kb
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:273    .text.suspend_wakeup_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvPFbGn.s:280    .text.suspend_wakeup_init:0000000000000000 suspend_wakeup_init
                             *COM*:0000000000000010 dmac_desc_wb
                             *COM*:0000000000000010 dmac_desc
 

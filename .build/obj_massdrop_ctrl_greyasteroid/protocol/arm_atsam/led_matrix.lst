@@ -3748,50 +3748,50 @@
  2716              		.file 46 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 led_matrix.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:18     .text.led_set_one:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:26     .text.led_set_one:0000000000000000 led_set_one
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:66     .text.led_set_one:0000000000000018 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:18     .text.led_set_one:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:26     .text.led_set_one:0000000000000000 led_set_one
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:66     .text.led_set_one:0000000000000018 $d
                             *COM*:0000000000000165 led_buffer
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:71     .text.flush:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:78     .text.flush:0000000000000000 flush
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:278    .text.flush:00000000000000cc $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:1107   .data:0000000000000000 led_map
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:71     .text.flush:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:78     .text.flush:0000000000000000 flush
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:278    .text.flush:00000000000000cc $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:1107   .data:0000000000000000 led_map
                             *COM*:0000000000000001 gcr_actual
                             *COM*:0000000000000001 gcr_actual_last
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:288    .text.led_set_all:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:295    .text.led_set_all:0000000000000000 led_set_all
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:356    .text.led_set_all:0000000000000018 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:361    .text.SERCOM1_0_Handler:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:368    .text.SERCOM1_0_Handler:0000000000000000 SERCOM1_0_Handler
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:391    .text.SERCOM1_0_Handler:0000000000000010 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:396    .text.DMAC_0_Handler:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:403    .text.DMAC_0_Handler:0000000000000000 DMAC_0_Handler
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:460    .text.DMAC_0_Handler:0000000000000034 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:466    .text.gcr_compute:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:473    .text.gcr_compute:0000000000000000 gcr_compute
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:684    .text.gcr_compute:00000000000000c0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:288    .text.led_set_all:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:295    .text.led_set_all:0000000000000000 led_set_all
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:356    .text.led_set_all:0000000000000018 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:361    .text.SERCOM1_0_Handler:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:368    .text.SERCOM1_0_Handler:0000000000000000 SERCOM1_0_Handler
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:391    .text.SERCOM1_0_Handler:0000000000000010 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:396    .text.DMAC_0_Handler:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:403    .text.DMAC_0_Handler:0000000000000000 DMAC_0_Handler
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:460    .text.DMAC_0_Handler:0000000000000034 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:466    .text.gcr_compute:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:473    .text.gcr_compute:0000000000000000 gcr_compute
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:684    .text.gcr_compute:00000000000000c0 $d
                             *COM*:0000000000000001 gcr_desired
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:698    .text.issi3733_prepare_arrays:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:705    .text.issi3733_prepare_arrays:0000000000000000 issi3733_prepare_arrays
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:859    .text.issi3733_prepare_arrays:00000000000000d8 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:698    .text.issi3733_prepare_arrays:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:705    .text.issi3733_prepare_arrays:0000000000000000 issi3733_prepare_arrays
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:859    .text.issi3733_prepare_arrays:00000000000000d8 $d
                             *COM*:00000000000003c2 issidrv
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:865    .text.led_matrix_prepare:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:872    .text.led_matrix_prepare:0000000000000000 led_matrix_prepare
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:922    .text.led_matrix_prepare:0000000000000020 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:927    .text.init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:934    .text.init:0000000000000000 init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:972    .text.init:0000000000000020 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:978    .text.led_matrix_indicators:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:985    .text.led_matrix_indicators:0000000000000000 led_matrix_indicators
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:1078   .text.led_matrix_indicators:0000000000000054 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:1098   .rodata:0000000000000000 rgb_matrix_driver
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:865    .text.led_matrix_prepare:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:872    .text.led_matrix_prepare:0000000000000000 led_matrix_prepare
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:922    .text.led_matrix_prepare:0000000000000020 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:927    .text.init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:934    .text.init:0000000000000000 init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:972    .text.init:0000000000000020 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:978    .text.led_matrix_indicators:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:985    .text.led_matrix_indicators:0000000000000000 led_matrix_indicators
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:1078   .text.led_matrix_indicators:0000000000000054 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:1098   .rodata:0000000000000000 rgb_matrix_driver
                             *COM*:0000000000000010 dmac_desc_wb
                             *COM*:0000000000000010 dmac_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:1095   .rodata:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:1104   .data:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:2659   .bss:0000000000000000 v_5v_cat_hit
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:2660   .bss:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccisURPw.s:2663   .bss:0000000000000001 gcr_min_counter
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:1095   .rodata:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:1104   .data:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:2659   .bss:0000000000000000 v_5v_cat_hit
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:2660   .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc6cqbas.s:2663   .bss:0000000000000001 gcr_min_counter
 
 UNDEFINED SYMBOLS
 i2c_led_q_request_room

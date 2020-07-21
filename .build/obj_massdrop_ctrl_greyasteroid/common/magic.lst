@@ -134,9 +134,9 @@
   97              		.file 10 "tmk_core/common/eeconfig.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 magic.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccc4foYA.s:18     .text.magic:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccc4foYA.s:26     .text.magic:0000000000000000 magic
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccc4foYA.s:81     .text.magic:0000000000000028 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccVZfJ2c.s:18     .text.magic:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccVZfJ2c.s:26     .text.magic:0000000000000000 magic
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccVZfJ2c.s:81     .text.magic:0000000000000028 $d
                             *COM*:0000000000000002 keymap_config
 
 UNDEFINED SYMBOLS

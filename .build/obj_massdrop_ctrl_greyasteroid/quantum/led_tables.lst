@@ -281,6 +281,6 @@
  283              		.file 4 "quantum/led_tables.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 led_tables.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc8rrblm.s:21     .rodata:0000000000000000 CIE1931_CURVE
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cctcaioQ.s:21     .rodata:0000000000000000 CIE1931_CURVE
 
 NO UNDEFINED SYMBOLS

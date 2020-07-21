@@ -2,14 +2,15 @@
  quantum/process_keycode/process_magic.c keyboards/massdrop/ctrl/config.h \
  quantum/config_common.h quantum/audio/song_list.h \
  quantum/audio/musical_notes.h keyboards/massdrop/ctrl/config_led.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h \
  quantum/process_keycode/process_magic.h quantum/quantum.h \
  tmk_core/common/wait.h tmk_core/protocol/arm_atsam/clks.h \
- keyboards/massdrop/ctrl/matrix.h tmk_core/common/keyboard.h \
- quantum/keymap.h tmk_core/common/action.h tmk_core/common/keyboard.h \
- tmk_core/common/keycode.h tmk_core/common/action_code.h \
- tmk_core/common/action_macro.h tmk_core/common/progmem.h \
- tmk_core/common/keycode.h tmk_core/common/action_macro.h \
- tmk_core/common/report.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h \
+ tmk_core/common/keyboard.h quantum/keymap.h tmk_core/common/action.h \
+ tmk_core/common/keyboard.h tmk_core/common/keycode.h \
+ tmk_core/common/action_code.h tmk_core/common/action_macro.h \
+ tmk_core/common/progmem.h tmk_core/common/keycode.h \
+ tmk_core/common/action_macro.h tmk_core/common/report.h \
  tmk_core/protocol/arm_atsam/usb/udi_device_epsize.h \
  tmk_core/common/host.h tmk_core/common/host_driver.h \
  tmk_core/common/led.h tmk_core/common/debug.h tmk_core/common/print.h \
@@ -71,6 +72,8 @@ quantum/audio/musical_notes.h:
 
 keyboards/massdrop/ctrl/config_led.h:
 
+keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h:
+
 quantum/process_keycode/process_magic.h:
 
 quantum/quantum.h:
@@ -79,7 +82,7 @@ tmk_core/common/wait.h:
 
 tmk_core/protocol/arm_atsam/clks.h:
 
-keyboards/massdrop/ctrl/matrix.h:
+keyboards/massdrop/ctrl/keymaps/greyasteroid/matrix.h:
 
 tmk_core/common/keyboard.h:
 

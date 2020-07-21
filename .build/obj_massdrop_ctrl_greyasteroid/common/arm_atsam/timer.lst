@@ -294,29 +294,29 @@
  279              		.file 7 "./tmk_core/protocol/arm_atsam/clks.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 timer.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:18     .text.set_time:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:26     .text.set_time:0000000000000000 set_time
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:44     .text.set_time:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:49     .text.timer_read:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:56     .text.timer_read:0000000000000000 timer_read
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:73     .text.timer_read:000000000000000c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:78     .text.timer_read32:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:85     .text.timer_read32:0000000000000000 timer_read32
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:101    .text.timer_read32:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:106    .text.timer_read64:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:113    .text.timer_read64:0000000000000000 timer_read64
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:128    .text.timer_read64:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:133    .text.timer_elapsed:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:140    .text.timer_elapsed:0000000000000000 timer_elapsed
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:168    .text.timer_elapsed:000000000000000c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:173    .text.timer_elapsed32:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:180    .text.timer_elapsed32:0000000000000000 timer_elapsed32
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:207    .text.timer_elapsed32:000000000000000c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:212    .text.timer_clear:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:219    .text.timer_clear:0000000000000000 timer_clear
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:247    .text.timer_clear:000000000000000c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:252    .text.timer_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccltA4gW.s:259    .text.timer_init:0000000000000000 timer_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:18     .text.set_time:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:26     .text.set_time:0000000000000000 set_time
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:44     .text.set_time:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:49     .text.timer_read:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:56     .text.timer_read:0000000000000000 timer_read
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:73     .text.timer_read:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:78     .text.timer_read32:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:85     .text.timer_read32:0000000000000000 timer_read32
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:101    .text.timer_read32:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:106    .text.timer_read64:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:113    .text.timer_read64:0000000000000000 timer_read64
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:128    .text.timer_read64:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:133    .text.timer_elapsed:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:140    .text.timer_elapsed:0000000000000000 timer_elapsed
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:168    .text.timer_elapsed:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:173    .text.timer_elapsed32:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:180    .text.timer_elapsed32:0000000000000000 timer_elapsed32
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:207    .text.timer_elapsed32:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:212    .text.timer_clear:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:219    .text.timer_clear:0000000000000000 timer_clear
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:247    .text.timer_clear:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:252    .text.timer_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccFfzHqi.s:259    .text.timer_init:0000000000000000 timer_init
 
 UNDEFINED SYMBOLS
 ms_clk

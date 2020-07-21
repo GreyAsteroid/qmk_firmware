@@ -603,15 +603,15 @@
  456              		.file 46 "tmk_core/protocol/arm_atsam/./usb/udi_cdc.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 adc.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:18     .text.ADC0_clock_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:26     .text.ADC0_clock_init:0000000000000000 ADC0_clock_init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:66     .text.ADC0_clock_init:0000000000000034 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:73     .text.ADC0_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:80     .text.ADC0_init:0000000000000000 ADC0_init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:330    .text.ADC0_init:0000000000000150 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:337    .text.adc_get:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:344    .text.adc_get:0000000000000000 adc_get
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc5AALLo.s:398    .text.adc_get:0000000000000030 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:18     .text.ADC0_clock_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:26     .text.ADC0_clock_init:0000000000000000 ADC0_clock_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:66     .text.ADC0_clock_init:0000000000000034 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:73     .text.ADC0_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:80     .text.ADC0_init:0000000000000000 ADC0_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:330    .text.ADC0_init:0000000000000150 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:337    .text.adc_get:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:344    .text.adc_get:0000000000000000 adc_get
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccwDmJJA.s:398    .text.adc_get:0000000000000030 $d
                             *COM*:0000000000000002 v_con_2_boot
                             *COM*:0000000000000002 v_con_1_boot
                             *COM*:0000000000000002 v_con_2

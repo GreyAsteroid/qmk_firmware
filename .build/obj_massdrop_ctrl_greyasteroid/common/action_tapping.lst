@@ -2145,31 +2145,31 @@
  1324              		.file 10 "tmk_core/common/debug.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 action_tapping.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:18     .text.debug_waiting_buffer:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:25     .text.debug_waiting_buffer:0000000000000000 debug_waiting_buffer
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:83     .text.debug_waiting_buffer:0000000000000028 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:89     .text.debug_tapping_key:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:95     .text.debug_tapping_key:0000000000000000 debug_tapping_key
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:112    .text.debug_tapping_key:000000000000000c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:117    .text.waiting_buffer_scan_tap:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:123    .text.waiting_buffer_scan_tap:0000000000000000 waiting_buffer_scan_tap
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:269    .text.waiting_buffer_scan_tap:0000000000000090 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:276    .text.process_tapping:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:282    .text.process_tapping:0000000000000000 process_tapping
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:952    .text.process_tapping:000000000000034c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:958    .text.process_tapping:0000000000000354 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1057   .text.process_tapping:00000000000003d8 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1065   .text.process_tapping:00000000000003e8 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1071   .text.get_tapping_term:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1078   .text.get_tapping_term:0000000000000000 get_tapping_term
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1096   .text.action_tapping_process:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1103   .text.action_tapping_process:0000000000000000 action_tapping_process
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1289   .text.action_tapping_process:00000000000000d0 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1295   .bss:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1299   .bss:0000000000000000 waiting_buffer_tail
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1304   .bss:0000000000000002 waiting_buffer
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1308   .bss:0000000000000042 waiting_buffer_head
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpzS18m.s:1313   .bss:0000000000000044 tapping_key
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:18     .text.debug_waiting_buffer:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:25     .text.debug_waiting_buffer:0000000000000000 debug_waiting_buffer
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:83     .text.debug_waiting_buffer:0000000000000028 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:89     .text.debug_tapping_key:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:95     .text.debug_tapping_key:0000000000000000 debug_tapping_key
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:112    .text.debug_tapping_key:000000000000000c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:117    .text.waiting_buffer_scan_tap:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:123    .text.waiting_buffer_scan_tap:0000000000000000 waiting_buffer_scan_tap
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:269    .text.waiting_buffer_scan_tap:0000000000000090 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:276    .text.process_tapping:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:282    .text.process_tapping:0000000000000000 process_tapping
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:952    .text.process_tapping:000000000000034c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:958    .text.process_tapping:0000000000000354 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1057   .text.process_tapping:00000000000003d8 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1065   .text.process_tapping:00000000000003e8 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1071   .text.get_tapping_term:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1078   .text.get_tapping_term:0000000000000000 get_tapping_term
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1096   .text.action_tapping_process:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1103   .text.action_tapping_process:0000000000000000 action_tapping_process
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1289   .text.action_tapping_process:00000000000000d0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1295   .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1299   .bss:0000000000000000 waiting_buffer_tail
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1304   .bss:0000000000000002 waiting_buffer
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1308   .bss:0000000000000042 waiting_buffer_head
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccLXkGvK.s:1313   .bss:0000000000000044 tapping_key
 
 UNDEFINED SYMBOLS
 debug_record

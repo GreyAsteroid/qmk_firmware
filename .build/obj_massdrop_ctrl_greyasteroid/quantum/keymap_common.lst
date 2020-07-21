@@ -1099,23 +1099,23 @@
  595              		.file 27 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap_common.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:18     .text.action_get_macro:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:26     .text.action_get_macro:0000000000000000 action_get_macro
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:45     .text.action_function:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:52     .text.action_function:0000000000000000 action_function
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:67     .text.keymap_key_to_keycode:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:74     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:105    .text.keymap_key_to_keycode:000000000000001c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:568    .rodata:0000000000000032 fn_actions
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:140    .text.action_for_key:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:147    .text.action_for_key:0000000000000000 action_for_key
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:525    .text.action_for_key:0000000000000198 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:531    .rodata:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:535    .rodata:0000000000000000 CSWTCH.5
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccXqf5zA.s:542    .rodata:0000000000000004 CSWTCH.6
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:18     .text.action_get_macro:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:26     .text.action_get_macro:0000000000000000 action_get_macro
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:45     .text.action_function:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:52     .text.action_function:0000000000000000 action_function
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:67     .text.keymap_key_to_keycode:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:74     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:105    .text.keymap_key_to_keycode:000000000000001c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:568    .rodata:0000000000000032 fn_actions
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:140    .text.action_for_key:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:147    .text.action_for_key:0000000000000000 action_for_key
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:525    .text.action_for_key:0000000000000198 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:531    .rodata:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:535    .rodata:0000000000000000 CSWTCH.5
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccM6aqCe.s:542    .rodata:0000000000000004 CSWTCH.6
 
 UNDEFINED SYMBOLS
 keymaps

@@ -363,16 +363,16 @@
  313              		.file 10 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_util.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:18     .text.digit:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:26     .text.digit:0000000000000000 digit
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:55     .text.UTIL_ltoa_radix:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:62     .text.UTIL_ltoa_radix:0000000000000000 UTIL_ltoa_radix
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:221    .text.UTIL_ltoa:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:228    .text.UTIL_ltoa:0000000000000000 UTIL_ltoa
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:246    .text.UTIL_itoa:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:253    .text.UTIL_itoa:0000000000000000 UTIL_itoa
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:275    .text.UTIL_utoa:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cclHonBW.s:282    .text.UTIL_utoa:0000000000000000 UTIL_utoa
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:18     .text.digit:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:26     .text.digit:0000000000000000 digit
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:55     .text.UTIL_ltoa_radix:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:62     .text.UTIL_ltoa_radix:0000000000000000 UTIL_ltoa_radix
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:221    .text.UTIL_ltoa:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:228    .text.UTIL_ltoa:0000000000000000 UTIL_ltoa
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:246    .text.UTIL_itoa:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:253    .text.UTIL_itoa:0000000000000000 UTIL_itoa
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:275    .text.UTIL_utoa:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccKbRptQ.s:282    .text.UTIL_utoa:0000000000000000 UTIL_utoa
 
 UNDEFINED SYMBOLS
 __aeabi_ldivmod

@@ -389,39 +389,39 @@
  356              		.file 19 "tmk_core/protocol/arm_atsam/usb/ui.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main_usb.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:18     .text.main_suspend_action:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:26     .text.main_suspend_action:0000000000000000 main_suspend_action
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:41     .text.main_resume_action:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:48     .text.main_resume_action:0000000000000000 main_resume_action
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:62     .text.main_sof_action:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:69     .text.main_sof_action:0000000000000000 main_sof_action
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:96     .text.main_remotewakeup_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:103    .text.main_remotewakeup_enable:0000000000000000 main_remotewakeup_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:117    .text.main_remotewakeup_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:124    .text.main_remotewakeup_disable:0000000000000000 main_remotewakeup_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:138    .text.main_kbd_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:145    .text.main_kbd_enable:0000000000000000 main_kbd_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:163    .text.main_kbd_enable:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:168    .text.main_kbd_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:175    .text.main_kbd_disable:0000000000000000 main_kbd_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:192    .text.main_kbd_disable:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:197    .text.main_nkro_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:204    .text.main_nkro_enable:0000000000000000 main_nkro_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:222    .text.main_nkro_enable:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:227    .text.main_nkro_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:234    .text.main_nkro_disable:0000000000000000 main_nkro_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:251    .text.main_nkro_disable:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:256    .text.main_exk_enable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:263    .text.main_exk_enable:0000000000000000 main_exk_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:281    .text.main_exk_enable:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:286    .text.main_exk_disable:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:293    .text.main_exk_disable:0000000000000000 main_exk_disable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:310    .text.main_exk_disable:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:335    .bss:0000000000000002 main_b_exk_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:331    .bss:0000000000000001 main_b_nkro_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:327    .bss:0000000000000000 main_b_kbd_enable
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:321    .data:0000000000000000 keyboard_protocol
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccrVJQx4.s:328    .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:18     .text.main_suspend_action:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:26     .text.main_suspend_action:0000000000000000 main_suspend_action
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:41     .text.main_resume_action:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:48     .text.main_resume_action:0000000000000000 main_resume_action
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:62     .text.main_sof_action:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:69     .text.main_sof_action:0000000000000000 main_sof_action
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:96     .text.main_remotewakeup_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:103    .text.main_remotewakeup_enable:0000000000000000 main_remotewakeup_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:117    .text.main_remotewakeup_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:124    .text.main_remotewakeup_disable:0000000000000000 main_remotewakeup_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:138    .text.main_kbd_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:145    .text.main_kbd_enable:0000000000000000 main_kbd_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:163    .text.main_kbd_enable:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:168    .text.main_kbd_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:175    .text.main_kbd_disable:0000000000000000 main_kbd_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:192    .text.main_kbd_disable:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:197    .text.main_nkro_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:204    .text.main_nkro_enable:0000000000000000 main_nkro_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:222    .text.main_nkro_enable:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:227    .text.main_nkro_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:234    .text.main_nkro_disable:0000000000000000 main_nkro_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:251    .text.main_nkro_disable:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:256    .text.main_exk_enable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:263    .text.main_exk_enable:0000000000000000 main_exk_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:281    .text.main_exk_enable:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:286    .text.main_exk_disable:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:293    .text.main_exk_disable:0000000000000000 main_exk_disable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:310    .text.main_exk_disable:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:335    .bss:0000000000000002 main_b_exk_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:331    .bss:0000000000000001 main_b_nkro_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:327    .bss:0000000000000000 main_b_kbd_enable
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:321    .data:0000000000000000 keyboard_protocol
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccsOQqWH.s:328    .bss:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 ui_powerdown

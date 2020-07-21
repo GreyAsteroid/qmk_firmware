@@ -4135,56 +4135,56 @@
  1898              		.file 49 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 clks.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:18     .text.CLK_oscctrl_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:26     .text.CLK_oscctrl_init:0000000000000000 CLK_oscctrl_init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:295    .text.CLK_oscctrl_init:0000000000000148 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:18     .text.CLK_oscctrl_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:26     .text.CLK_oscctrl_init:0000000000000000 CLK_oscctrl_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:295    .text.CLK_oscctrl_init:0000000000000148 $d
                             *COM*:0000000000000068 system_clks
                             *COM*:0000000000000004 usec_delay_mult
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:308    .text.CLK_set_gclk_freq:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:315    .text.CLK_set_gclk_freq:0000000000000000 CLK_set_gclk_freq
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:468    .text.CLK_set_gclk_freq:00000000000000b4 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:475    .text.CLK_init_osc:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:482    .text.CLK_init_osc:0000000000000000 CLK_init_osc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:609    .text.CLK_init_osc:0000000000000084 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:616    .text.CLK_reset_time:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:623    .text.CLK_reset_time:0000000000000000 CLK_reset_time
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:737    .text.CLK_reset_time:0000000000000078 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:308    .text.CLK_set_gclk_freq:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:315    .text.CLK_set_gclk_freq:0000000000000000 CLK_set_gclk_freq
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:468    .text.CLK_set_gclk_freq:00000000000000b4 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:475    .text.CLK_init_osc:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:482    .text.CLK_init_osc:0000000000000000 CLK_init_osc
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:609    .text.CLK_init_osc:0000000000000084 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:616    .text.CLK_reset_time:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:623    .text.CLK_reset_time:0000000000000000 CLK_reset_time
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:737    .text.CLK_reset_time:0000000000000078 $d
                             *COM*:0000000000000008 ms_clk
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:745    .text.TC4_Handler:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:752    .text.TC4_Handler:0000000000000000 TC4_Handler
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:790    .text.TC4_Handler:0000000000000020 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:796    .text.CLK_enable_timebase:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:803    .text.CLK_enable_timebase:0000000000000000 CLK_enable_timebase
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1160   .text.CLK_enable_timebase:00000000000001d4 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1172   .text.CLK_delay_us:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1179   .text.CLK_delay_us:0000000000000000 CLK_delay_us
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1204   .text.CLK_delay_us:0000000000000014 return
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1202   .text.CLK_delay_us:0000000000000010 loop
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1214   .text.CLK_delay_us:0000000000000018 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1219   .text.CLK_delay_ms:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1226   .text.CLK_delay_ms:0000000000000000 CLK_delay_ms
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1271   .text.clk_enable_sercom_apbmask:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1278   .text.clk_enable_sercom_apbmask:0000000000000000 clk_enable_sercom_apbmask
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1292   .text.clk_enable_sercom_apbmask:0000000000000008 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1296   .text.clk_enable_sercom_apbmask:000000000000000c $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1338   .text.clk_enable_sercom_apbmask:0000000000000038 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1343   .text.CLK_set_spi_freq:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1350   .text.CLK_set_spi_freq:0000000000000000 CLK_set_spi_freq
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1474   .text.CLK_set_spi_freq:000000000000007c $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1482   .text.CLK_set_i2c0_freq:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1489   .text.CLK_set_i2c0_freq:0000000000000000 CLK_set_i2c0_freq
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1618   .text.CLK_set_i2c0_freq:0000000000000084 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1626   .text.CLK_set_i2c1_freq:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1633   .text.CLK_set_i2c1_freq:0000000000000000 CLK_set_i2c1_freq
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1762   .text.CLK_set_i2c1_freq:0000000000000084 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1770   .text.CLK_init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1777   .text.CLK_init:0000000000000000 CLK_init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1817   .text.CLK_init:0000000000000020 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1843   .rodata:0000000000000018 sercom_pchan
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1834   .rodata:0000000000000000 sercom_apbbase
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:745    .text.TC4_Handler:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:752    .text.TC4_Handler:0000000000000000 TC4_Handler
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:790    .text.TC4_Handler:0000000000000020 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:796    .text.CLK_enable_timebase:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:803    .text.CLK_enable_timebase:0000000000000000 CLK_enable_timebase
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1160   .text.CLK_enable_timebase:00000000000001d4 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1172   .text.CLK_delay_us:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1179   .text.CLK_delay_us:0000000000000000 CLK_delay_us
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1204   .text.CLK_delay_us:0000000000000014 return
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1202   .text.CLK_delay_us:0000000000000010 loop
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1214   .text.CLK_delay_us:0000000000000018 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1219   .text.CLK_delay_ms:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1226   .text.CLK_delay_ms:0000000000000000 CLK_delay_ms
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1271   .text.clk_enable_sercom_apbmask:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1278   .text.clk_enable_sercom_apbmask:0000000000000000 clk_enable_sercom_apbmask
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1292   .text.clk_enable_sercom_apbmask:0000000000000008 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1296   .text.clk_enable_sercom_apbmask:000000000000000c $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1338   .text.clk_enable_sercom_apbmask:0000000000000038 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1343   .text.CLK_set_spi_freq:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1350   .text.CLK_set_spi_freq:0000000000000000 CLK_set_spi_freq
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1474   .text.CLK_set_spi_freq:000000000000007c $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1482   .text.CLK_set_i2c0_freq:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1489   .text.CLK_set_i2c0_freq:0000000000000000 CLK_set_i2c0_freq
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1618   .text.CLK_set_i2c0_freq:0000000000000084 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1626   .text.CLK_set_i2c1_freq:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1633   .text.CLK_set_i2c1_freq:0000000000000000 CLK_set_i2c1_freq
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1762   .text.CLK_set_i2c1_freq:0000000000000084 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1770   .text.CLK_init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1777   .text.CLK_init:0000000000000000 CLK_init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1817   .text.CLK_init:0000000000000020 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1843   .rodata:0000000000000018 sercom_pchan
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1834   .rodata:0000000000000000 sercom_apbbase
                             *COM*:0000000000000010 dmac_desc_wb
                             *COM*:0000000000000010 dmac_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccvAvzqG.s:1830   .rodata:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccfQ2eA3.s:1830   .rodata:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 debug_code

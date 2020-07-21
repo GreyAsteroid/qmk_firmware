@@ -459,13 +459,13 @@
  334              		.file 44 "tmk_core/protocol/arm_atsam/./usb/udi_cdc.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc1zcNPA.s:18     .text.SR_EXP_WriteData:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc1zcNPA.s:26     .text.SR_EXP_WriteData:0000000000000000 SR_EXP_WriteData
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc1zcNPA.s:118    .text.SR_EXP_WriteData:0000000000000054 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccEdDtVy.s:18     .text.SR_EXP_WriteData:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccEdDtVy.s:26     .text.SR_EXP_WriteData:0000000000000000 SR_EXP_WriteData
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccEdDtVy.s:118    .text.SR_EXP_WriteData:0000000000000054 $d
                             *COM*:0000000000000002 sr_exp_data
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc1zcNPA.s:126    .text.SR_EXP_Init:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc1zcNPA.s:133    .text.SR_EXP_Init:0000000000000000 SR_EXP_Init
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc1zcNPA.s:280    .text.SR_EXP_Init:00000000000000c0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccEdDtVy.s:126    .text.SR_EXP_Init:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccEdDtVy.s:133    .text.SR_EXP_Init:0000000000000000 SR_EXP_Init
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccEdDtVy.s:280    .text.SR_EXP_Init:00000000000000c0 $d
                             *COM*:0000000000000010 dmac_desc_wb
                             *COM*:0000000000000010 dmac_desc
 

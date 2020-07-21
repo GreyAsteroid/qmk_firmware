@@ -2,6 +2,7 @@
  tmk_core/common/host.c keyboards/massdrop/ctrl/config.h \
  quantum/config_common.h quantum/audio/song_list.h \
  quantum/audio/musical_notes.h keyboards/massdrop/ctrl/config_led.h \
+ keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h \
  tmk_core/common/keycode.h tmk_core/common/host.h \
  tmk_core/common/report.h \
  tmk_core/protocol/arm_atsam/usb/udi_device_epsize.h \
@@ -19,6 +20,8 @@ quantum/audio/song_list.h:
 quantum/audio/musical_notes.h:
 
 keyboards/massdrop/ctrl/config_led.h:
+
+keyboards/massdrop/ctrl/keymaps/greyasteroid/config.h:
 
 tmk_core/common/keycode.h:
 

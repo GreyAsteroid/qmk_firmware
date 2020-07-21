@@ -231,9 +231,9 @@
  233              		.file 31 "keyboards/massdrop/ctrl/keymaps/greyasteroid/keymap.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccQ7zBu1.s:24     .rodata:0000000000000000 keymaps
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccdfgmDG.s:24     .rodata:0000000000000000 keymaps
                             *COM*:0000000000000010 dmac_desc_wb
                             *COM*:0000000000000010 dmac_desc
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccQ7zBu1.s:21     .rodata:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccdfgmDG.s:21     .rodata:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

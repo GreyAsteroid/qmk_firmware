@@ -660,9 +660,9 @@
  406              		.file 25 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_magic.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccgFTKFG.s:18     .text.process_magic:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccgFTKFG.s:26     .text.process_magic:0000000000000000 process_magic
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccgFTKFG.s:377    .text.process_magic:0000000000000224 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpGInze.s:18     .text.process_magic:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpGInze.s:26     .text.process_magic:0000000000000000 process_magic
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccpGInze.s:377    .text.process_magic:0000000000000224 $d
 
 UNDEFINED SYMBOLS
 eeconfig_read_keymap

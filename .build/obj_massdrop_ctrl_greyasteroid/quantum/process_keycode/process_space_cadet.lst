@@ -580,15 +580,15 @@
  370              		.file 25 "quantum/quantum.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_space_cadet.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:18     .text.perform_space_cadet:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:199    .text.perform_space_cadet:00000000000000b0 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:204    .text.process_space_cadet:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:211    .text.process_space_cadet:0000000000000000 process_space_cadet
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:329    .text.process_space_cadet:0000000000000088 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:334    .bss:0000000000000000 $d
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:338    .bss:0000000000000000 sc_last
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccUMh5O6.s:343    .bss:0000000000000002 sc_timer
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:18     .text.perform_space_cadet:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:199    .text.perform_space_cadet:00000000000000b0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:204    .text.process_space_cadet:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:211    .text.process_space_cadet:0000000000000000 process_space_cadet
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:329    .text.process_space_cadet:0000000000000088 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:334    .bss:0000000000000000 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:338    .bss:0000000000000000 sc_last
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccukxYEm.s:343    .bss:0000000000000002 sc_timer
 
 UNDEFINED SYMBOLS
 timer_read

@@ -451,9 +451,9 @@
  264              		.file 18 "tmk_core/protocol/arm_atsam/usb/udc.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 udi_hid.c
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0dRqAt.s:18     .text.udi_hid_setup:0000000000000000 $t
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0dRqAt.s:26     .text.udi_hid_setup:0000000000000000 udi_hid_setup
-/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//cc0dRqAt.s:242    .text.udi_hid_setup:00000000000000a0 $d
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccONt56C.s:18     .text.udi_hid_setup:0000000000000000 $t
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccONt56C.s:26     .text.udi_hid_setup:0000000000000000 udi_hid_setup
+/var/folders/z4/wxlp73js78g02fcv9dbq6g8h0000gn/T//ccONt56C.s:242    .text.udi_hid_setup:00000000000000a0 $d
 
 UNDEFINED SYMBOLS
 udc_get_interface_desc
